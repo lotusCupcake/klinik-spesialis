@@ -1316,7 +1316,7 @@ class Patient extends MX_Controller
         foreach ($data['patients'] as $patient) {
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
-                $options1 = '<button class="btn btn-icon icon-left btn-light editbutton"  onclick="doctorchoose()" data-toggle="modal" data-id="' . $patient->id . '" data-target="' . $patient->id . '"><i class="fas fa-edit"></i> ' . lang('edit') . '</button>';
+                $options1 = '<button class="btn btn-icon icon-left btn-light editbutton" data-toggle="modal" data-id="' . $patient->id . '" data-target="' . $patient->id . '"><i class="fas fa-edit"></i> ' . lang('edit') . '</button>';
             }
 
             $options3 = '<a href="patient/medicalHistory?id=' . $patient->id . '"><button class="btn btn-icon icon-left btn-primary"><i class="fa fa-stethoscope"></i> ' . lang('history') . '</button></a>';
@@ -1490,14 +1490,12 @@ class Patient extends MX_Controller
         foreach ($data['cases'] as $case) {
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
-                //   $options1 = '<a type="button" class="btn editbutton" title="Edit" data-toggle="modal" data-id="463"><i class="fa fa-edit"> </i> Edit</a>';
-                $options1 = ' <a type="button" class="btn btn-info btn-xs btn_width editbutton" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"> </i> </a>';
+                $options1 = '<button class="btn btn-icon icon-left btn-light btn_width editbutton" data-toggle="modal" data-id="' . $case->id . '" data-target="myModal2"><i class="fas fa-edit"></i></button>';
             }
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
-                $options2 = '<a class="btn btn-info btn-xs btn_width delete_button" title="' . lang('delete') . '" href="patient/deleteCaseHistory?id=' . $case->id . '&redirect=case" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i></a>';
-                $options3 = ' <a type="button" class="btn btn-info btn-xs btn_width detailsbutton case" title="' . lang('case') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-file"> </i> </a>';
+                $options2 = '<a href="patient/deleteCaseHistory?id=' . $case->id . '&redirect=case"><button class="btn btn-icon icon-left btn-danger btn_width delete_button" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fas fa-trash"></i></button></a>';
+                $options3 = '<button class="btn btn-icon icon-left btn-success btn_width detailsbutton case" data-toggle="modal" data-id="' . $case->id . '" data-target="caseModal"><i class="fas fa-file"></i></button>';
             }
-
             if (!empty($case->patient_id)) {
                 $patient_info = $this->patient_model->getPatientById($case->patient_id);
                 if (!empty($patient_info)) {
@@ -1514,7 +1512,6 @@ class Patient extends MX_Controller
                 $patient_details,
                 $case->title,
                 $options3 . ' ' . $options1 . ' ' . $options2
-                // $options4
             );
         }
 

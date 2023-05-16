@@ -232,149 +232,6 @@
     </section>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="myModal5">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-print">
-                <h5 class="modal-title"><strong><?php echo lang('invoice'); ?></strong></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <img src="<?php echo $this->settings_model->getSettings()->logo; ?>" alt="" width="200" height="180" class="img-print">
-                        <h3 class="mt-3">
-                            <?php echo $settings->title ?>
-                        </h3>
-                        <h4>
-                            <?php echo $settings->address ?>
-                        </h4>
-                        <h4>
-                            Tel: <?php echo $settings->phone ?>
-                        </h4>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <div class="col-md-4">
-                        <h5><?php echo lang('payment_to'); ?>:</h5>
-                        <p>
-                            <?php echo $settings->title; ?> <br>
-                            <?php echo $settings->address; ?><br>
-                            Tel: <?php echo $settings->phone; ?>
-                        </p>
-                    </div>
-                    <?php if (!empty($payment->patient)) { ?>
-                        <div class="col-md-4">
-                            <h5><?php echo lang('bill_to'); ?>:</h5>
-                            <p>
-                                <?php
-                                if (!empty($patient->name)) {
-                                    echo $patient->name . ' <br>';
-                                }
-                                if (!empty($patient->address)) {
-                                    echo $patient->address . ' <br>';
-                                }
-                                if (!empty($patient->phone)) {
-                                    echo $patient->phone . ' <br>';
-                                }
-                                ?>
-                            </p>
-                        </div>
-                    <?php } ?>
-                    <div class="col-md-4">
-                        <h5><?php echo lang('invoice_info'); ?></h5>
-                        <p>Date : <?php echo date('m/d/Y'); ?></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <div class="space15"></div>
-                            <table class="table table-striped table-bordered" id="editable-sample">
-                                <thead>
-                                    <tr>
-                                        <th class=""><?php echo lang('date'); ?></th>
-                                        <th class=""><?php echo lang('invoice'); ?></th>
-                                        <th class=""><?php echo lang('bill_amount'); ?></th>
-                                        <th class=""><?php echo lang('deposit'); ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $dates = array();
-                                    $datess = array();
-                                    foreach ($payments as $payment) {
-                                        $dates[] = $payment->date;
-                                    }
-                                    foreach ($deposits as $deposit) {
-                                        $datess[] = $deposit->date;
-                                    }
-                                    $dat = array_merge($dates, $datess);
-                                    $dattt = array_unique($dat);
-                                    asort($dattt);
-                                    $total_pur = array();
-                                    $total_p = array();
-                                    ?>
-                                    <?php
-                                    foreach ($dattt as $key => $value) {
-                                        foreach ($payments as $payment) {
-                                            if ($payment->date == $value) {
-                                    ?>
-                                                <tr class="">
-                                                    <td><?php echo date('d/m/y', $payment->date); ?></td>
-                                                    <td> <?php echo $payment->id; ?></td>
-                                                    <td><?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></td>
-                                                    <td><?php
-                                                        if (!empty($payment->amount_received)) {
-                                                            echo $settings->currency;
-                                                        }
-                                                        ?> <?php echo $payment->amount_received; ?>
-                                                    </td>
-                                                </tr>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                        <?php
-                                        foreach ($deposits as $deposit) {
-                                            if ($deposit->date == $value) {
-                                                if (!empty($deposit->deposited_amount) && empty($deposit->amount_received_id)) {
-                                        ?>
-                                                    <tr class="">
-                                                        <td><?php echo date('d-m-y', $deposit->date); ?></td>
-                                                        <td><?php echo $deposit->payment_id; ?></td>
-                                                        <td></td>
-                                                        <td><?php echo $settings->currency; ?> <?php echo $deposit->deposited_amount; ?></td>
-                                                    </tr>
-                                        <?php
-                                                }
-                                            }
-                                        }
-                                        ?>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <p><strong><?php echo lang('grand_total'); ?> : </strong><?php echo $settings->currency; ?> <?php echo $total_payable_bill = $total_bill; ?></p>
-                        <p><strong><?php echo lang('amount_received'); ?> : </strong><?php echo $settings->currency; ?> <?php echo array_sum($total_deposit); ?></p>
-                        <p><strong><?php echo lang('amount_to_be_paid'); ?> : </strong><?php echo $settings->currency; ?> <?php echo $total_payable_bill - array_sum($total_deposit); ?></p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer bg-whitesmoke br no-print">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success invoice_button" onclick="javascript:window.print();"><?php echo lang('print'); ?></button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" role="dialog" id="myModal">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -634,6 +491,149 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal5">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-print">
+                <h5 class="modal-title"><strong><?php echo lang('invoice'); ?></strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <img src="<?php echo $this->settings_model->getSettings()->logo; ?>" alt="" width="200" height="180" class="img-print">
+                        <h3 class="mt-3 font45">
+                            <?php echo $settings->title ?>
+                        </h3>
+                        <h4 class="font30">
+                            <?php echo $settings->address ?>
+                        </h4>
+                        <h4 class="font30">
+                            Tel: <?php echo $settings->phone ?>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-4">
+                        <h5 class="font30"><?php echo lang('payment_to'); ?>:</h5>
+                        <p class="font20">
+                            <?php echo $settings->title; ?> <br>
+                            <?php echo $settings->address; ?><br>
+                            Tel: <?php echo $settings->phone; ?>
+                        </p>
+                    </div>
+                    <?php if (!empty($payment->patient)) { ?>
+                        <div class="col-md-4">
+                            <h5 class="font30"><?php echo lang('bill_to'); ?>:</h5>
+                            <p class="font20">
+                                <?php
+                                if (!empty($patient->name)) {
+                                    echo $patient->name . ' <br>';
+                                }
+                                if (!empty($patient->address)) {
+                                    echo $patient->address . ' <br>';
+                                }
+                                if (!empty($patient->phone)) {
+                                    echo $patient->phone . ' <br>';
+                                }
+                                ?>
+                            </p>
+                        </div>
+                    <?php } ?>
+                    <div class="col-md-4">
+                        <h5 class="font30"><?php echo lang('invoice_info'); ?></h5>
+                        <p class="font20">Date : <?php echo date('m/d/Y'); ?></p>
+                    </div>
+                </div>
+                <div class="row margin">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <div class="space15"></div>
+                            <table class="table table-striped table-bordered" id="editable-sample">
+                                <thead>
+                                    <tr class="font20">
+                                        <th class=""><?php echo lang('date'); ?></th>
+                                        <th class=""><?php echo lang('invoice'); ?></th>
+                                        <th class=""><?php echo lang('bill_amount'); ?></th>
+                                        <th class=""><?php echo lang('deposit'); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $dates = array();
+                                    $datess = array();
+                                    foreach ($payments as $payment) {
+                                        $dates[] = $payment->date;
+                                    }
+                                    foreach ($deposits as $deposit) {
+                                        $datess[] = $deposit->date;
+                                    }
+                                    $dat = array_merge($dates, $datess);
+                                    $dattt = array_unique($dat);
+                                    asort($dattt);
+                                    $total_pur = array();
+                                    $total_p = array();
+                                    ?>
+                                    <?php
+                                    foreach ($dattt as $key => $value) {
+                                        foreach ($payments as $payment) {
+                                            if ($payment->date == $value) {
+                                    ?>
+                                                <tr class="font20">
+                                                    <td><?php echo date('d/m/y', $payment->date); ?></td>
+                                                    <td> <?php echo $payment->id; ?></td>
+                                                    <td><?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></td>
+                                                    <td><?php
+                                                        if (!empty($payment->amount_received)) {
+                                                            echo $settings->currency;
+                                                        }
+                                                        ?> <?php echo $payment->amount_received; ?>
+                                                    </td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                        <?php
+                                        foreach ($deposits as $deposit) {
+                                            if ($deposit->date == $value) {
+                                                if (!empty($deposit->deposited_amount) && empty($deposit->amount_received_id)) {
+                                        ?>
+                                                    <tr class="font20">
+                                                        <td><?php echo date('d-m-y', $deposit->date); ?></td>
+                                                        <td><?php echo $deposit->payment_id; ?></td>
+                                                        <td></td>
+                                                        <td><?php echo $settings->currency; ?> <?php echo $deposit->deposited_amount; ?></td>
+                                                    </tr>
+                                        <?php
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <p class="font20"><strong><?php echo lang('grand_total'); ?> : </strong><?php echo $settings->currency; ?> <?php echo $total_payable_bill = $total_bill; ?></p>
+                        <p class="font20"><strong><?php echo lang('amount_received'); ?> : </strong><?php echo $settings->currency; ?> <?php echo array_sum($total_deposit); ?></p>
+                        <p class="font20"><strong><?php echo lang('amount_to_be_paid'); ?> : </strong><?php echo $settings->currency; ?> <?php echo $total_payable_bill - array_sum($total_deposit); ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br no-print">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success invoice_button" onclick="javascript:window.print();"><?php echo lang('print'); ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="common/js/codearistos.min.js"></script>
 <script src="common/js/codearistos.min.js"></script>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -646,6 +646,27 @@
         .modal-content {
             position: absolute;
             top: 0;
+        }
+
+        .font20 {
+            font-size: 20px;
+        }
+
+        .font45 {
+            font-size: 45px;
+        }
+
+        .font30 {
+            font-size: 30px;
+        }
+
+        .img-print {
+            width: 300px;
+            height: 280px
+        }
+
+        .margin {
+            margin-top: 20px;
         }
 
         .modal {

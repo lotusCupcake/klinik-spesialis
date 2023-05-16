@@ -7,7 +7,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <button class="btn btn-icon icon-left btn-primary" onclick="doctorchoose1()" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -588,55 +588,6 @@
         });
         table.buttons().container().appendTo('.custom_buttons');
     });
-</script>
-<script>
-    function doctorchoose() {
-        $("#doctorchoose").select2({
-            placeholder: '<?php echo lang('select_doctor'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'doctor/getDoctorInfo',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-        });
-    }
-
-    function doctorchoose1() {
-        $("#doctorchoose1").select2({
-            placeholder: '<?php echo lang('select_doctor'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'doctor/getDoctorInfo',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-        });
-    }
 </script>
 <script>
     $(document).ready(function() {

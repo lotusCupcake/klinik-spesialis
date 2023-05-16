@@ -22,6 +22,7 @@
 <script src="template/assets/js/stisla.js"></script>
 <!-- JS Libraies -->
 <script type="text/javascript" src="common/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<script type="text/javascript" src="common/assets/ckeditor/ckeditor.js"></script>
 <script src="template/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="common/assets/DataTables/datatables.min.js"></script>
 <script src="template/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -40,7 +41,105 @@
 <script src="template/assets/js/page/modules-datatables.js"></script>
 <script src="template/assets/js/scripts.js"></script>
 
+<script>
+    CKEDITOR.replace("description", {
+        height: 400
+    });
+</script>
 
+<script>
+    $(document).ready(function() {
+        $("#patientchoose").select2({
+            placeholder: '<?php echo lang('select_patient'); ?>',
+            allowClear: true,
+            ajax: {
+                url: 'patient/getPatientinfo',
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+        $("#patientchoose1").select2({
+            placeholder: '<?php echo lang('select_patient'); ?>',
+            allowClear: true,
+            ajax: {
+                url: 'patient/getPatientinfo',
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#doctorchoose").select2({
+            placeholder: '<?php echo lang('select_doctor'); ?>',
+            allowClear: true,
+            ajax: {
+                url: 'doctor/getDoctorInfo',
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+        $("#doctorchoose1").select2({
+            placeholder: '<?php echo lang('select_doctor'); ?>',
+            allowClear: true,
+            ajax: {
+                url: 'doctor/getDoctorInfo',
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        searchTerm: params.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+    });
+</script>
 
 <?php
 $language = $this->db->get('settings')->row()->language;
