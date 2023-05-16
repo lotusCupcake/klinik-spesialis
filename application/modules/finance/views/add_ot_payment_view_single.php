@@ -9,6 +9,20 @@
                     echo 'Tambah atau Pembayaran';
                 ?></h1>
         </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
+                </div>
+            </div>
+        <?php } ?>
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
