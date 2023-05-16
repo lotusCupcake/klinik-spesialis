@@ -1,50 +1,45 @@
-<footer class="site-footer">
-    <div class="text-center">
-        20<?php echo date('y'); ?> &copy; <?php echo $this->db->get('settings')->row()->system_vendor; ?>.
-        <a href="<?php echo current_url() . '#'; ?>" class="go-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
+<footer class="main-footer no-print">
+    <div class="footer-left">
+        Copyright &copy; 2023 <a href="https://umsu.ac.id/">UMSU</a> Version 1.0.2
     </div>
 </footer>
-<!--footer end-->
-</section>
+</div>
+</div>
 
 
-
-<!-- js placed at the end of the document so the pages load faster -->
+<!-- JS NEW -->
+<!-- General JS Scripts -->
 <script src="common/js/jquery.js"></script>
 <script src="common/js/jquery-1.8.3.min.js"></script>
-<script src="common/js/bootstrap.min.js"></script>
-<script src="common/js/jquery.scrollTo.min.js"></script>
-
-<script src="common/js/moment.min.js"></script>
-
-<!--
-<script src="common/js/jquery.nicescroll.js" type="text/javascript"></script>
--->
-
-<script type="text/javascript" src="common/assets/DataTables/datatables.min.js"></script>
-<script src="common/js/respond.min.js" ></script>
-<script type="text/javascript" src="common/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="common/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript" src="common/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-
-
-<script type="text/javascript" src="common/assets/jquery-multi-select/js/jquery.multi-select.js"></script>
-<script type="text/javascript" src="common/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
-<script type="text/javascript" src="common/assets/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="common/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-<script src="common/js/advanced-form-components.js"></script>
-<script src="common/js/jquery.cookie.js"></script>
-<!--common script for all pages--> 
-<script src="common/js/common-scripts.js"></script>
-<script src="common/js/lightbox.js"></script>
-<script class="include" type="text/javascript" src="common/js/jquery.dcjqaccordion.2.7.js"></script>
-<!--script for this page only-->
-<script src="common/js/editable-table.js"></script>
-<script src="common/assets/fullcalendar/fullcalendar.js"></script>
-
+<!-- <script src="common/js/bootstrap.min.js"></script> -->
+<!-- <script src="http://code.jquery.com/jquery-1.9.0.js"></script> -->
+<!-- <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script> -->
+<!-- <script src="template/node_modules/jquery/dist/jquery.min.js"></script> -->
+<script src="template/node_modules/moment/min/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="template/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="template/node_modules/jquery.nicescroll/dist/jquery.nicescroll.min.js"></script>
+<script src="template/assets/js/stisla.js"></script>
+<!-- JS Libraies -->
 <script type="text/javascript" src="common/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<script src="template/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="common/assets/DataTables/datatables.min.js"></script>
+<script src="template/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="common/assets/DataTables/DataTables-1.10.16/custom/js/datatable-responsive-cdn-version-2-2-5.js"></script>
+<script src="template/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+<script src="template/node_modules/select2/dist/js/select2.full.min.js"></script>
+<script src="template/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="template/node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<script src="template/node_modules/selectric/public/jquery.selectric.min.js"></script>
+<script src="template/node_modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="template/node_modules/cleave.js/dist/cleave.min.js"></script>
+<script src="template/node_modules/cleave.js/dist/addons/cleave-phone.us.js"></script>
+<script src="template/node_modules/summernote/dist/summernote-bs4.js"></script>
+<script src="template/node_modules/izitoast/dist/js/iziToast.min.js"></script>
+<!-- Page Specific JS File -->
+<script src="template/assets/js/page/modules-datatables.js"></script>
+<script src="template/assets/js/scripts.js"></script>
+
 
 
 <?php
@@ -95,39 +90,38 @@ if ($language == 'english') {
 <script src="common/assets/DataTables/DataTables-1.10.16/custom/js/datatable-responsive-cdn-version-2-2-5.js"></script>
 
 
-
 <script>
     $('.multi-select').multiSelect({
         selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder=' search...'>",
         selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder=''>",
-        afterInit: function (ms) {
+        afterInit: function(ms) {
             var that = this,
-                    $selectableSearch = that.$selectableUl.prev(),
-                    $selectionSearch = that.$selectionUl.prev(),
-                    selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
-                    selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+                $selectableSearch = that.$selectableUl.prev(),
+                $selectionSearch = that.$selectionUl.prev(),
+                selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
 
             that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                    .on('keydown', function (e) {
-                        if (e.which === 40) {
-                            that.$selectableUl.focus();
-                            return false;
-                        }
-                    });
+                .on('keydown', function(e) {
+                    if (e.which === 40) {
+                        that.$selectableUl.focus();
+                        return false;
+                    }
+                });
 
             that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-                    .on('keydown', function (e) {
-                        if (e.which == 40) {
-                            that.$selectionUl.focus();
-                            return false;
-                        }
-                    });
+                .on('keydown', function(e) {
+                    if (e.which == 40) {
+                        that.$selectionUl.focus();
+                        return false;
+                    }
+                });
         },
-        afterSelect: function () {
+        afterSelect: function() {
             this.qs1.cache();
             this.qs2.cache();
         },
-        afterDeselect: function () {
+        afterDeselect: function() {
             this.qs1.cache();
             this.qs2.cache();
         }
@@ -149,7 +143,7 @@ if ($language == 'english') {
     });
 
 
-    $('#date').on('changeDate', function () {
+    $('#date').on('changeDate', function() {
         $('#date').datepicker('hide', {
             format: 'dd-mm-yyyy',
             autoclose: true,
@@ -159,7 +153,7 @@ if ($language == 'english') {
         });
     });
 
-    $('#date1').on('changeDate', function () {
+    $('#date1').on('changeDate', function() {
         $('#date1').datepicker('hide', {
             format: 'dd-mm-yyyy',
             autoclose: true,
@@ -168,23 +162,19 @@ if ($language == 'english') {
             language: '<?php echo $langdate; ?>'
         });
     });
-
-
 </script>
 
 
 <script type="text/javascript">
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#calendar').fullCalendar({
             lang: 'en',
             events: 'appointment/getAppointmentByJason',
-            header:
-                    {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay',
-                    },
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay',
+            },
             /*    timeFormat: {// for event elements
              'month': 'h:mm TT A {h:mm TT}', // default
              'week': 'h:mm TT A {h:mm TT}', // default
@@ -193,12 +183,12 @@ if ($language == 'english') {
              
              */
             timeFormat: 'h(:mm) A',
-            eventRender: function (event, element) {
+            eventRender: function(event, element) {
                 element.find('.fc-time').html(element.find('.fc-time').text());
                 element.find('.fc-title').html(element.find('.fc-title').text());
 
             },
-            eventClick: function (event) {
+            eventClick: function(event) {
                 $('#medical_history').html("");
                 if (event.id) {
                     $.ajax({
@@ -206,7 +196,7 @@ if ($language == 'english') {
                         method: 'GET',
                         data: '',
                         dataType: 'json',
-                    }).success(function (response) {
+                    }).success(function(response) {
                         // Populate the form fields with the data returned from server
                         $('#medical_history').html("");
                         $('#medical_history').append(response.view);
@@ -244,7 +234,6 @@ if ($language == 'english') {
 
         });
     });
-
 </script>
 
 
@@ -256,8 +245,10 @@ if ($language == 'english') {
 
 
 <script>
-    $(document).ready(function () {
-        $('.timepicker-default').timepicker({defaultTime: 'value'});
+    $(document).ready(function() {
+        $('.timepicker-default').timepicker({
+            defaultTime: 'value'
+        });
 
     });
 </script>
@@ -266,21 +257,18 @@ if ($language == 'english') {
 
 
 <script type="text/javascript">
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         $(".js-example-basic-single").select2();
 
         $(".js-example-basic-multiple").select2();
     });
-
 </script>
 
 
 
 
 <script type="text/javascript">
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         var windowH = $(window).height();
         var wrapperH = $('#container').height();
         if (windowH > wrapperH) {
@@ -293,8 +281,10 @@ if ($language == 'english') {
             $('#sidebar').removeAttr('style');
         }
     });
+
     function onElementHeightChange(elm, callback) {
-        var lastHeight = elm.clientHeight, newHeight;
+        var lastHeight = elm.clientHeight,
+            newHeight;
         (function run() {
             newHeight = elm.clientHeight;
             if (lastHeight != newHeight)
@@ -309,7 +299,7 @@ if ($language == 'english') {
 
 
 
-    onElementHeightChange(document.body, function () {
+    onElementHeightChange(document.body, function() {
         var windowH = $(window).height();
         var wrapperH = $('#container').height();
         if (windowH > wrapperH) {
@@ -330,7 +320,7 @@ if ($language == 'english') {
 
 
 
-    $(window).resize(function () {
+    $(window).resize(function() {
 
         if (width == GetWidth()) {
             return;
@@ -345,11 +335,9 @@ if ($language == 'english') {
         }
 
     });
-
-
 </script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         //   $('#')
     });
 </script>
@@ -357,10 +345,9 @@ if ($language == 'english') {
 
 
 <script>
-    CKEDITOR.replace("description",
-            {
-                height: 400
-            });
+    CKEDITOR.replace("description", {
+        height: 400
+    });
 </script>
 
 
@@ -372,4 +359,5 @@ if ($language == 'english') {
 
 
 </body>
+
 </html>

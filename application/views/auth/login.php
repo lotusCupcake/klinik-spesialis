@@ -1,136 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <base href="<?php echo base_url(); ?>">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="Rizvi">
-        <meta name="keyword" content="Php, Hospital, Clinic, Management, Software, Php, CodeIgniter, Hms, Accounting">
-        <link rel="shortcut icon" href="uploads/favicon.png">
 
-        <title>Login - <?php echo $this->db->get('settings')->row()->system_vendor; ?></title>
+<head>
+    <base href="<?php echo base_url(); ?>">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Rizvi">
+    <meta name="keyword" content="Php, Hospital, Clinic, Management, Software, Php, CodeIgniter, Hms, Accounting">
+    <link rel="shortcut icon" href="uploads/favicon.png">
 
-        <!-- Bootstrap core CSS -->
-        <link href="common/css/bootstrap.min.css" rel="stylesheet">
-        <link href="common/css/bootstrap-reset.css" rel="stylesheet">
-        <!--external css-->
-        <link href="common/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-        <!-- Custom styles for this template -->
-        <link href="common/css/style.css" rel="stylesheet">
-        <link href="common/css/style-responsive.css" rel="stylesheet" />
+    <title>Login - <?php echo $this->db->get('settings')->row()->system_vendor; ?></title>
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-    </head>
+    <link rel="stylesheet" href="template/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="template/node_modules/@fortawesome/fontawesome-free/css/all.css">
 
-    <body class="login-body">
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="template/node_modules/bootstrap-social/bootstrap-social.css">
+    <link rel="stylesheet" href="template/node_modules/selectric/public/selectric.css">
 
-        <div class="container">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="template/assets/css/style.css">
+    <link rel="stylesheet" href="template/assets/css/components.css">
+</head>
 
-            <style>
+<body>
 
-
-                form{
-
-                    padding: 0px;
-                    border: none;
-
-
-                }
-
-
-            </style>
-
-            <form class="form-signin" method="post" action="auth/login">
-                 <h2 class="login form-signin-heading"><?php echo $this->db->get('settings')->row()->title; ?><br/><br/><img alt="" src="uploads/favicon.png"></h2>
-                <div id="infoMessage"><?php echo $message; ?></div>
-                <div class="login-wrap">
-                    <input type="text" class="form-control" name="identity" placeholder="User Email" autofocus>
-                    <input type="password" class="form-control"  name="password" placeholder="Password">
-
-
-
-
-                   <p><a data-toggle="modal" href="#myModal"> Forgot Password?</a></p>
-                    <!--     
-                          <label class="checkbox">
-                              <input type="checkbox" value="remember-me"> Remember me
-                              <span class="pull-right">
-                                  <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
-              
-                              </span>
-                          </label> 
-                    -->
-                    
-                    
-                    <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
-  <style>
-                        table, th, td {
-                            border: 1px solid #f1f2f7;
-                            border-collapse: collapse;
-                        }
-                        th, td {
-                            padding: 5px;
-                            text-align: left;
-                            font-size:12px;
-                        }
-                        td,th,h4{
-                            color:#aaa;
-                            
-                        }
-                    </style>
-          
-
-
-                </div>
-
-
-
-            </form>
-
-        </div>
-
-
-
-
-
-
-
-
-
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="post" action="auth/forgot_password">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Forgot Password ?</h4>
+    <div id="app">
+        <section class="section">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+                        <div class="login-brand mb-5">
+                            <img src="uploads/logo-klinik-spesialis.PNG" alt="logo" width="250">
                         </div>
 
-                        <div class="modal-body">
-                            <p>Enter your e-mail address below to reset your password.</p>
-                            <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h4>Login</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted"><?php echo $message; ?></p>
+                                <form action="auth/login" method="post">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input id="email" type="text" class="form-control" name="identity" placeholder="User Email" tabindex="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="d-block">
+                                            <label for="password" class="control-label">Password</label>
+                                            <div class="float-right">
+                                                <a href="#" class="text-small" data-toggle="modal" data-target="#myModal">
+                                                    Forgot Password?
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <input id="password" type="password" class="form-control" name="password" tabindex="2" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                            Sign in
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                            <input class="btn detailsbutton" type="submit" name="submit" value="submit">
+                        <div class="simple-footer">
+                            Copyright &copy; 2023 UMSU
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
+        </section>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Forgot Password ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="auth/forgot_password" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Enter your e-mail address below to reset your password.</label>
+                            <input name="email" type="text" class="form-control" placeholder="Email" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
 
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="template/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="template/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="template/node_modules/jquery.nicescroll/dist/jquery.nicescroll.min.js"></script>
+    <script src="template/node_modules/moment/min/moment.min.js"></script>
+    <script src="template/assets/js/stisla.js"></script>
 
+    <!-- JS Libraies -->
+    <script src="template/node_modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+    <script src="template/node_modules/selectric/public/jquery.selectric.min.js"></script>
 
-        <!-- js placed at the end of the document so the pages load faster -->
-        <script src="common/js/jquery.js"></script>
-        <script src="common/js/bootstrap.min.js"></script>
+    <!-- Template JS File -->
+    <script src="template/assets/js/scripts.js"></script>
+    <script src="template/assets/js/custom.js"></script>
 
+    <!-- Page Specific JS File -->
+    <script src="template/assets/js/page/auth-register.js"></script>
+</body>
 
-    </body>
 </html>
