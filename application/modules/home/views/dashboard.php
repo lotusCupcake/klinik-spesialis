@@ -40,8 +40,8 @@
     <link rel="stylesheet" href="template/node_modules/bootstrap-social/bootstrap-social.css">
     <link rel="stylesheet" href="template/node_modules/izitoast/dist/css/iziToast.min.css">
     <link rel="stylesheet" type="text/css" href="common/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
-    <!--fullcalendar plugin files -->
-    <link rel="stylesheet" href="css/fullcalendar.css" />
+    <link href="common/assets/fullcalendar/fullcalendar.css" rel="stylesheet">
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="template/assets/css/style.css">
     <link rel="stylesheet" href="template/assets/css/components.css">

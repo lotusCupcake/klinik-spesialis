@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Appointment extends MX_Controller {
+class Appointment extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
 
         $this->load->model('appointment_model');
@@ -20,7 +22,8 @@ class Appointment extends MX_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -36,7 +39,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function request() {
+    public function request()
+    {
 
 
         $data['patients'] = $this->patient_model->getPatient();
@@ -47,7 +51,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function todays() {
+    public function todays()
+    {
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
@@ -61,7 +66,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function upcoming() {
+    public function upcoming()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -75,7 +81,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function myTodays() {
+    public function myTodays()
+    {
         if (!$this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
         }
@@ -89,7 +96,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function calendar() {
+    function calendar()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -111,7 +119,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNewView() {
+    public function addNewView()
+    {
 
         if ($this->ion_auth->in_group(array('Patient'))) {
             redirect('home/permission');
@@ -125,7 +134,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNew() {
+    public function addNew()
+    {
         $id = $this->input->post('id');
         $patient = $this->input->post('patient');
         $doctor = $this->input->post('doctor');
@@ -347,7 +357,8 @@ class Appointment extends MX_Controller {
         }
     }
 
-    function sendSmsDuringAppointment($id, $data, $patient, $doctor, $status) {
+    function sendSmsDuringAppointment($id, $data, $patient, $doctor, $status)
+    {
         //sms
         $set['settings'] = $this->settings_model->getSettings();
         $patientdetails = $this->patient_model->getPatientById($patient);
@@ -411,7 +422,8 @@ class Appointment extends MX_Controller {
         //end
     }
 
-    function getArrayKey($s_time) {
+    function getArrayKey($s_time)
+    {
         $all_slot = array(
             0 => '12:00 AM',
             1 => '12:05 AM',
@@ -707,7 +719,8 @@ class Appointment extends MX_Controller {
         return $key;
     }
 
-    function getAppointmentByJasonByDoctor() {
+    function getAppointmentByJasonByDoctor()
+    {
 
 
         $id = $this->input->get('id');
@@ -785,8 +798,8 @@ class Appointment extends MX_Controller {
 
             $info = '<br/>' . lang('status') . ': ' . $appointment_status . '<br>' . lang('patient') . ': ' . $patient_name . '<br/>' . lang('phone') . ': ' . $patient_mobile . '<br/> Doctor: ' . $doctor . '<br/>' . lang('remarks') . ': ' . $entry->remarks;
             if ($entry->status == 'Pending Confirmation') {
-                //  $color = '#098098';
-                $color = 'yellowgreen';
+                $color = '#098098';
+                // $color = 'yellowgreen';
             }
             if ($entry->status == 'Confirmed') {
                 $color = '#009988';
@@ -815,7 +828,8 @@ class Appointment extends MX_Controller {
         //  echo json_encode($data);
     }
 
-    function getAppointmentByJason() {
+    function getAppointmentByJason()
+    {
 
 
 
@@ -932,7 +946,8 @@ class Appointment extends MX_Controller {
         //  echo json_encode($data);
     }
 
-    function getAppointmentByDoctorId() {
+    function getAppointmentByDoctorId()
+    {
         $id = $this->input->get('id');
         $data['doctor_id'] = $id;
         $data['appointments'] = $this->appointment_model->getAppointment();
@@ -945,7 +960,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function editAppointment() {
+    function editAppointment()
+    {
         $data = array();
         $id = $this->input->get('id');
 
@@ -958,7 +974,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file 
     }
 
-    function editAppointmentByJason() {
+    function editAppointmentByJason()
+    {
         $id = $this->input->get('id');
         $data['appointment'] = $this->appointment_model->getAppointmentById($id);
         $data['patient'] = $this->patient_model->getPatientById($data['appointment']->patient);
@@ -966,7 +983,8 @@ class Appointment extends MX_Controller {
         echo json_encode($data);
     }
 
-    function treatmentReport() {
+    function treatmentReport()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $data['doctors'] = $this->doctor_model->getDoctor();
 
@@ -989,7 +1007,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function myAppointments() {
+    function myAppointments()
+    {
         $data['appointments'] = $this->appointment_model->getAppointment();
         $data['settings'] = $this->settings_model->getSettings();
         $user_id = $this->ion_auth->user()->row()->id;
@@ -999,7 +1018,8 @@ class Appointment extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function delete() {
+    function delete()
+    {
         $data = array();
         $id = $this->input->get('id');
         $doctor_id = $this->input->get('doctor_id');
@@ -1012,7 +1032,8 @@ class Appointment extends MX_Controller {
         }
     }
 
-    function getAppointment() {
+    function getAppointment()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1067,7 +1088,7 @@ class Appointment extends MX_Controller {
                 $appointment->phone,
                 $this->settings_model->getSettings()->currency . $this->appointment_model->getDueBalanceByAppointmentId($appointment->id),
                 $options1 . ' ' . $options2 . ' ' . $options3 . ' ' . $options4 . ' ' . $options5,
-                    //  $options2
+                //  $options2
             );
         }
 
@@ -1090,7 +1111,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getAppoinmentList() {
+    function getAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1215,7 +1237,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getRequestedAppointmentList() {
+    function getRequestedAppointmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1326,7 +1349,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getPendingAppoinmentList() {
+    function getPendingAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1439,7 +1463,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getConfirmedAppoinmentList() {
+    function getConfirmedAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1560,7 +1585,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getTreatedAppoinmentList() {
+    function getTreatedAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1681,7 +1707,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getCancelledAppoinmentList() {
+    function getCancelledAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1792,7 +1819,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getTodaysAppoinmentList() {
+    function getTodaysAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1893,7 +1921,8 @@ class Appointment extends MX_Controller {
                 );
                 $i = $i + 1;
             } else {
-                $info1[] = array($appointment->id,
+                $info1[] = array(
+                    $appointment->id,
                     $appointment->patientname,
                     $appointment->doctorname,
                     date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
@@ -1923,7 +1952,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getUpcomingAppoinmentList() {
+    function getUpcomingAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2032,7 +2062,8 @@ class Appointment extends MX_Controller {
                 } else {
                     $options7 = '';
                 }
-                $info1[] = array($appointment->id,
+                $info1[] = array(
+                    $appointment->id,
                     $appointment->patientname,
                     $appointment->doctorname,
                     date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
@@ -2062,7 +2093,8 @@ class Appointment extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getMyTodaysAppoinmentList() {
+    function getMyTodaysAppoinmentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2169,7 +2201,8 @@ class Appointment extends MX_Controller {
                     );
                     $i = $i + 1;
                 } else {
-                    $info1[] = array($appointment->id,
+                    $info1[] = array(
+                        $appointment->id,
                         $appointment->patientname,
                         $appointment->doctorname,
                         date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
@@ -2199,9 +2232,7 @@ class Appointment extends MX_Controller {
 
         echo json_encode($output);
     }
-
 }
 
 /* End of file appointment.php */
     /* Location: ./application/modules/appointment/controllers/appointment.php */
-    

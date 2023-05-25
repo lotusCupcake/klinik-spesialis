@@ -38,6 +38,7 @@
 <script src="template/node_modules/summernote/dist/summernote-bs4.js"></script>
 <script src="template/node_modules/izitoast/dist/js/iziToast.min.js"></script>
 <!-- Page Specific JS File -->
+<script src="common/assets/fullcalendar/fullcalendar.js"></script>
 <script src="template/assets/js/page/modules-datatables.js"></script>
 <script src="template/assets/js/scripts.js"></script>
 
@@ -180,11 +181,10 @@ if ($language == 'english') {
 }
 ?>
 
-
-
 <script src='common/assets/fullcalendar/locale/<?php echo $lang; ?>.js'></script>
 
 <script type="text/javascript" src="common/assets/bootstrap-datepicker/locales/bootstrap-datepicker.<?php echo $langdate; ?>.min.js"></script>
+
 
 <script src="common/assets/DataTables/DataTables-1.10.16/custom/js/datatable-responsive-cdn-version-2-2-5.js"></script>
 
@@ -274,13 +274,6 @@ if ($language == 'english') {
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay',
             },
-            /*    timeFormat: {// for event elements
-             'month': 'h:mm TT A {h:mm TT}', // default
-             'week': 'h:mm TT A {h:mm TT}', // default
-             'day': 'h:mm TT A {h:mm TT}'  // default
-             },
-             
-             */
             timeFormat: 'h(:mm) A',
             eventRender: function(event, element) {
                 element.find('.fc-time').html(element.find('.fc-time').text());
@@ -296,12 +289,9 @@ if ($language == 'english') {
                         data: '',
                         dataType: 'json',
                     }).success(function(response) {
-                        // Populate the form fields with the data returned from server
                         $('#medical_history').html("");
                         $('#medical_history').append(response.view);
                     });
-                    //alert(event.id);
-
                 }
 
                 $('#cmodal').modal('show');
