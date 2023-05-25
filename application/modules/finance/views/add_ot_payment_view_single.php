@@ -6,7 +6,7 @@
                 if (!empty($ot_payment->id)) {
                     echo lang('edit_ot_payment');
                 } else
-                    echo 'Tambah atau Pembayaran';
+                    echo lang('add_new_payment');
                 ?></h1>
         </div>
         <?php
