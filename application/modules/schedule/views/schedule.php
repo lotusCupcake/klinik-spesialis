@@ -1,70 +1,77 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('time_schedule'); ?> 
-                <div class="col-md-4 clearfix pull-right">
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i>  <?php echo lang('add_new'); ?> 
-                            </button>
-                        </div>
-                    </a>  
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1> <?php echo lang('time_schedule'); ?> </h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
-            </header>
+            </div>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
 
-            <div class="panel-body">
-                <div class="adv-table editable-table">
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th> # </th>
-                                <th> <?php echo lang('doctor'); ?></th>
-                                <th> <?php echo lang('weekday'); ?></th>
-                                <th> <?php echo lang('start_time'); ?></th>
-                                <th> <?php echo lang('end_time'); ?></th>
-                                <th> <?php echo lang('duration'); ?></th>
-                                <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                    <th> <?php echo lang('options'); ?></th>
-                                <?php } ?>
-
-                            </tr>
-                        </thead>
-                        <tbody> 
-                            <?php
-                            $i = 0;
-                            foreach ($schedules as $schedule) {
-                                $i = $i + 1;
-                                ?>
-                                <tr class="">
-                                    <td style=""> <?php echo $i; ?></td> 
-                                    <td> <?php echo $this->doctor_model->getDoctorById($schedule->doctor)->name; ?></td>
-                                    <td> <?php echo $schedule->weekday; ?></td> 
-                                    <td><?php echo $schedule->s_time; ?></td>
-                                    <td><?php echo $schedule->e_time; ?></td>
-                                    <td><?php echo $schedule->duration * 5 . ' ' . lang('minitues'); ?></td>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> # </th>
+                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                    <th scope="col"> <?php echo lang('weekday'); ?></th>
+                                    <th scope="col"> <?php echo lang('start_time'); ?></th>
+                                    <th scope="col"> <?php echo lang('end_time'); ?></th>
+                                    <th scope="col"> <?php echo lang('duration'); ?></th>
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                        <td>
-                                            <!--
-                                            <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>   
-                                            -->
-                                            <a class="btn btn-info btn-xs btn_width delete_button" href="schedule/deleteSchedule?id=<?php echo $schedule->id; ?>&doctor=<?php echo $schedule->doctor; ?>&weekday=<?php echo $schedule->weekday; ?>&all=all" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
-                                        </td>
+                                        <th scope="col"> <?php echo lang('options'); ?></th>
                                     <?php } ?>
                                 </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div> 
-            </div> 
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 0;
+                                foreach ($schedules as $schedule) {
+                                    $i = $i + 1;
+                                    ?>
+                                    <tr class="">
+                                        <td style=""> <?php echo $i; ?></td> 
+                                        <td scope="col"> <?php echo $this->doctor_model->getDoctorById($schedule->doctor)->name; ?></td>
+                                        <td scope="col"> <?php echo $schedule->weekday; ?></td> 
+                                        <td scope="col"><?php echo $schedule->s_time; ?></td>
+                                        <td scope="col"><?php echo $schedule->e_time; ?></td>
+                                        <td scope="col"><?php echo $schedule->duration * 5 . ' ' . lang('minitues'); ?></td>
+                                        <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
+                                            <td scope="col">
+                                                <!--
+                                                <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $schedule->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>   
+                                                -->
+                                                <a class="btn btn-danger btn-xs btn_width delete_button" href="schedule/deleteSchedule?id=<?php echo $schedule->id; ?>&doctor=<?php echo $schedule->doctor; ?>&weekday=<?php echo $schedule->weekday; ?>&all=all" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
+                                            </td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
