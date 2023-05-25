@@ -294,7 +294,7 @@
                             </div>
                             <div class="form-group payment pad_bot">
                                 <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
-                                <select name="p_gender" class="form-control pos_select">
+                                <select name="p_gender" class="form-control">
                                     <option value="Male" <?php
                                                             if (!empty($patient->sex)) {
                                                                 if ($patient->sex == 'Male') {
@@ -458,7 +458,7 @@
                             </div>
                             <div class="form-group payment pad_bot">
                                 <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
-                                <select name="p_gender" class="form-control pos_select">
+                                <select name="p_gender" class="form-control">
                                     <option value="Male" <?php
                                                             if (!empty($patient->sex)) {
                                                                 if ($patient->sex == 'Male') {
@@ -650,14 +650,6 @@
 </script>
 
 
-
-
-
-
-
-
-
-
 <script type="text/javascript">
     $(document).ready(function() {
         $("#adoctors").change(function() {
@@ -753,15 +745,6 @@
 
     }
 </script>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -881,97 +864,5 @@
 <script>
     $(document).ready(function() {
         $(".flashmessage").delay(3000).fadeOut(100);
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $("#pos_select").select2({
-            placeholder: '<?php echo lang('select_patient'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'patient/getPatientinfoWithAddNewOption',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
-        $(".patient").select2({
-            placeholder: '<?php echo lang('select_patient'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'patient/getPatientinfo',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
-        $("#adoctors").select2({
-            placeholder: '<?php echo lang('select_doctor'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'doctor/getDoctorInfo',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
-        $("#adoctors1").select2({
-            placeholder: '<?php echo lang('select_doctor'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'doctor/getDoctorInfo',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
     });
 </script>

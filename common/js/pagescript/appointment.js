@@ -404,3 +404,94 @@ $(document).ready(function() {
     });
     table.buttons().container().appendTo('.custom_buttons');
 });
+
+$(document).ready(function() {
+    $("#pos_select").select2({
+        placeholder: 'Cari Nama / ID Pasien',
+        allowClear: true,
+        ajax: {
+            url: 'patient/getPatientinfoWithAddNewOption',
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    searchTerm: params.term // search term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+
+    });
+    $(".patient").select2({
+        placeholder: 'Cari Nama / ID Pasien',
+        allowClear: true,
+        ajax: {
+            url: 'patient/getPatientinfo',
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    searchTerm: params.term // search term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+
+    });
+    $("#adoctors").select2({
+        placeholder: 'Cari Nama / ID Dokter',
+        allowClear: true,
+        ajax: {
+            url: 'doctor/getDoctorInfo',
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    searchTerm: params.term // search term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+
+    });
+    $("#adoctors1").select2({
+        placeholder: 'Cari Nama / ID Dokter',
+        allowClear: true,
+        ajax: {
+            url: 'doctor/getDoctorInfo',
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    searchTerm: params.term // search term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+
+    });
+});
