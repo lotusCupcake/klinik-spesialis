@@ -1167,7 +1167,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
                 $patientname = ' <a type="button" class="history" data-toggle = "modal" data-id="' . $appointment->patient . '"> ' . $patientdetails->name . '</a>';
@@ -1293,7 +1293,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
                 $patientname = ' <a type="button" class="history" data-toggle = "modal" data-id="' . $appointment->patient . '"> ' . $patientdetails->name . '</a>';
@@ -1405,7 +1405,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
 
 
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
@@ -1519,7 +1519,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
                 $patientname = ' <a type="button" class="history" data-toggle = "modal" data-id="' . $appointment->patient . '"> ' . $patientdetails->name . '</a>';
@@ -1642,7 +1642,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
                 $patientname = ' <a type="button" class="history" data-toggle = "modal" data-id="' . $appointment->patient . '"> ' . $patientdetails->name . '</a>';
@@ -1763,7 +1763,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
                 $patientname = ' <a type="button" class="history" data-toggle = "modal" data-id="' . $appointment->patient . '"> ' . $patientdetails->name . '</a>';
@@ -1875,7 +1875,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             $patientdetails = $this->patient_model->getPatientById($appointment->patient);
             if (!empty($patientdetails)) {
                 $patientname = ' <a type="button" class="history" data-toggle = "modal" data-id="' . $appointment->patient . '"> ' . $patientdetails->name . '</a>';
@@ -2008,7 +2008,7 @@ class Appointment extends MX_Controller
 
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
 
-            $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+            $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
             if ($appointment->status == 'Pending Confirmation') {
                 $appointment_status = lang('pending_confirmation');
             } elseif ($appointment->status == 'Confirmed') {
@@ -2154,7 +2154,7 @@ class Appointment extends MX_Controller
             $patient_id = $patient_details->id;
             if ($patient_id == $appointment->patient) {
                 $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"> ' . lang('edit') . '</i></button>';
-                $option2 = '<a class="btn btn-info btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
+                $option2 = '<a class="btn btn-delete btn-xs btn_width delete_button" href="appointment/delete?id=' . $appointment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i></a>';
                 $patientdetails = $this->patient_model->getPatientById($appointment->patient);
                 if (!empty($patientdetails)) {
                     $patientname = ' <a type="button" class="" data-toggle = "modal" data-id="' . $appointment->patient . '"> ' . $patientdetails->name . '</a>';
