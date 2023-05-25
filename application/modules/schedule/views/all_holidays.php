@@ -1,73 +1,81 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('holiday'); ?>
-                <div class="col-md-4 no-print pull-right"> 
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i> <?php echo lang('add_new'); ?>
-                            </button>
-                        </div>
-                    </a>
-                </div>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table">
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th> # </th>
-                                <th> <?php echo lang('doctor'); ?></th>
-                                <th> <?php echo lang('date'); ?></th>
-                                <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                    <th> <?php echo lang('options'); ?></th>
-                                <?php } ?>
-
-                            </tr>
-                        </thead>
-                        <tbody>  
-                        <style>  
-
-                            .img_url{
-                                height:20px;
-                                width:20px;
-                                background-size: contain; 
-                                max-height:20px;
-                                border-radius: 100px;
-                            }
-
-                        </style>
-                        <?php
-                        $i = 0;
-                        foreach ($holidays as $holiday) {
-                            $i = $i + 1;
-                            ?> 
-                            <tr class="">
-                                <td> <?php echo $i; ?></td>
-                                <td> <?php echo $this->doctor_model->getDoctorById($holiday->doctor)->name; ?></td> 
-                                <td> <?php echo date('d-m-Y', $holiday->date); ?></td> 
-                                <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $holiday->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>   
-                                        <a class="btn btn-info btn-xs btn_width delete_button" href="schedule/deleteHoliday?id=<?php echo $holiday->id; ?>&doctor=<?php echo $holiday->doctor; ?>&redirect=schedule/allHolidays" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
-                                    </td>
-                                <?php } ?>
-                            </tr>
-                        <?php } ?>
-                        </tbody>
-                    </table>
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('holiday'); ?></h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> # </th>
+                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                    <th scope="col"> <?php echo lang('date'); ?></th>
+                                    <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
+                                        <th scope="col"> <?php echo lang('options'); ?></th>
+                                    <?php } ?>
+
+                                </tr>
+                            </thead>
+                            <tbody>  
+                            <style>  
+
+                                .img_url{
+                                    height:20px;
+                                    width:20px;
+                                    background-size: contain; 
+                                    max-height:20px;
+                                    border-radius: 100px;
+                                }
+
+                            </style>
+                            <?php
+                            $i = 0;
+                            foreach ($holidays as $holiday) {
+                                $i = $i + 1;
+                                ?> 
+                                <tr class="">
+                                    <td> <?php echo $i; ?></td>
+                                    <td> <?php echo $this->doctor_model->getDoctorById($holiday->doctor)->name; ?></td> 
+                                    <td> <?php echo date('d-m-Y', $holiday->date); ?></td> 
+                                    <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $holiday->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>   
+                                            <a class="btn btn-danger btn-xs btn_width delete_button" href="schedule/deleteHoliday?id=<?php echo $holiday->id; ?>&doctor=<?php echo $holiday->doctor; ?>&redirect=schedule/allHolidays" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
+                                        </td>
+                                    <?php } ?>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -75,40 +83,43 @@
 
 
 <!-- Add Holiday Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> <?php echo lang('add'); ?> <?php echo lang('holiday'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('add'); ?> <?php echo lang('holiday'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form role="form" action="schedule/addHoliday" class="clearfix" method="post" enctype="multipart/form-data">
+            <form action="schedule/addHoliday" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                <select name="doctor" id="doctorchoose" class="form-control select2">
 
-                    <div class=" form-group col-md-6 row"> 
-                        <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label>
-                        <select class="form-control m-bot15" id="doctorchoose" name="doctor" value=''>
-
-                        </select>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date"><?php echo lang('date'); ?></label>
+                                <input type="date" class="form-control" name="date" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value=''>
+                        <input type="hidden" name="redirect" value='schedule/allHolidays'>
                     </div>
-
-                    <div class="form-group col-md-6 pull-right">
-                        <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" name="date" id="exampleInputEmail1" value='' readonly="">
-                    </div>
-
-                    <input type="hidden" name="id" value=''>
-                    <input type="hidden" name="redirect" value='schedule/allHolidays'>
-
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- Add Holiday Modal-->
 
@@ -117,43 +128,43 @@
 
 
 <!-- Edit Holiday Modal-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal2">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('edit'); ?>  <?php echo lang('holiday'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('edit'); ?>  <?php echo lang('holiday'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form role="form" id="editHolidayForm" class="clearfix" action="schedule/addHoliday" method="post" enctype="multipart/form-data">
+            <form action="schedule/addHoliday" id="editHolidayForm" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                <select name="doctor" id="doctorchoose" class="form-control select2">
 
-                    <div class="form-group col-md-6 row">
-                        <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label>
-                        <select class="form-control m-bot15" id="doctorchoose1" name="doctor" value=''>
-
-
-                        </select>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date"><?php echo lang('date'); ?></label>
+                                <input type="date" class="form-control" name="date" value="">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value=''>
+                        <input type="hidden" name="redirect" value='schedule/allHolidays'>
                     </div>
-
-
-                    <div class="form-group col-md-6 pull-right">
-                        <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" name="date" id="exampleInputEmail1" value='' readonly="">
-                    </div>
-
-                    <input type="hidden" name="id" value=''>
-                    <input type="hidden" name="redirect" value='schedule/allHolidays'>
-
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-
-
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- Edit Holiday Modal-->
 
@@ -178,7 +189,7 @@
                                                 var date = new Date(response.holiday.date * 1000);
                                                 $('#editHolidayForm').find('[name="id"]').val(response.holiday.id).end()
                                                 $('.js-example-basic-single.doctor').val(response.holiday.doctor).trigger('change');
-                                                $('#editHolidayForm').find('[name="date"]').val(date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()).end()
+                                                $('#editHolidayForm').find('[name="date"]').val(date.getFullYear() + '-' + ("0"+ (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()).end()
 
 
                                                 var option1 = new Option(response.doctor.name + '-' + response.doctor.id, response.doctor.id, true, true);
