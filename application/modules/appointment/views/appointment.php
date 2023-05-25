@@ -1,75 +1,71 @@
-
-<!--sidebar end-->
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('appointment'); ?>
-                <div class="clearfix no-print col-md-8 pull-right">
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i>  <?php echo lang('add_appointment'); ?> 
-                            </button>
-                        </div>
-                    </a>
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1><?php echo lang('appointment'); ?></h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?>
+        <div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
-            </header>
-
-            <div class="col-md-12">
-                <header class="panel-heading tab-bg-dark-navy-blueee row">
-                    <ul class="nav nav-tabs col-md-8">
-                        <li class="active">
-                            <a data-toggle="tab" href="#all"><?php echo lang('all'); ?></a>
+            </div>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('add_appointment'); ?></button>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item active">
+                            <a class="nav-link active" data-toggle="tab" href="#all"><?php echo lang('all'); ?></a>
                         </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#pending"><?php echo lang('pending_confirmation'); ?></a>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#pending"><?php echo lang('pending_confirmation'); ?></a>
                         </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#confirmed"><?php echo lang('confirmed'); ?></a>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#confirmed"><?php echo lang('confirmed'); ?></a>
                         </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#treated"><?php echo lang('treated'); ?></a>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#treated"><?php echo lang('treated'); ?></a>
                         </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#cancelled"><?php echo lang('cancelled'); ?></a>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#cancelled"><?php echo lang('cancelled'); ?></a>
                         </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#requested"><?php echo lang('requested'); ?></a>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#requested"><?php echo lang('requested'); ?></a>
                         </li>
                     </ul>
-
-                    <div class="pull-right col-md-4"><div class="pull-right custom_buttonss"></div></div>
-
-                </header>
-            </div>
-
-
-            <div class="">
-                <div class="tab-content">
-                    <div id="pending" class="tab-pane">
-                        <div class="">
-                            <div class="panel-body">
-                                <div class="adv-table editable-table ">
-                                    <div class="space15"></div>
-                                    <table class="table table-striped table-hover table-bordered" id="editable-sample1" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th> <?php echo lang('id'); ?></th>
-                                                <th> <?php echo lang('patient'); ?></th>
-                                                <th> <?php echo lang('doctor'); ?></th>
-                                                <th> <?php echo lang('date-time'); ?></th>
-                                                <th> <?php echo lang('remarks'); ?></th>
-                                                <th> <?php echo lang('status'); ?></th>
-                                                <th> <?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <style>
-
+                    <div class="">
+                        <div class="tab-content">
+                            <div id="pending" class="tab-pane">
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <div class="space15"></div>
+                                        <table class="table table-striped table-bordered" id="editable-sample1">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> <?php echo lang('id'); ?></th>
+                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                    <th scope="col"> <?php echo lang('status'); ?></th>
+                                                    <th scope="col"> <?php echo lang('options'); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            <style>
+                
                                             .img_url{
                                                 height:20px;
                                                 width:20px;
@@ -77,38 +73,33 @@
                                                 max-height:20px;
                                                 border-radius: 100px;
                                             }
-
-                                        </style>
-
-
-
-                                        </tbody>
-                                    </table>
+                
+                                            </style>
+                                            </tbody>
+                                        </table>
+                                    </div>   
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="confirmed" class="tab-pane">
-                        <div class="">
-                            <div class="panel-body">
-                                <div class="adv-table editable-table ">
-                                    <div class="space15"></div>
-                                    <table class="table table-striped table-hover table-bordered" id="editable-sample2" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th> <?php echo lang('id'); ?></th>
-                                                <th> <?php echo lang('patient'); ?></th>
-                                                <th> <?php echo lang('doctor'); ?></th>
-                                                <th> <?php echo lang('date-time'); ?></th>
-                                                <th> <?php echo lang('remarks'); ?></th>
-                                                <th> <?php echo lang('status'); ?></th>
-                                                <th> <?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <style>
-
+                            <div id="confirmed" class="tab-pane">
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <div class="space15"></div>
+                                        <table class="table table-striped table-bordered" id="editable-sample2">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> <?php echo lang('id'); ?></th>
+                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                    <th scope="col"> <?php echo lang('status'); ?></th>
+                                                    <th scope="col"> <?php echo lang('options'); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            <style>
+                
                                             .img_url{
                                                 height:20px;
                                                 width:20px;
@@ -116,38 +107,33 @@
                                                 max-height:20px;
                                                 border-radius: 100px;
                                             }
-
-                                        </style>
-
-
-
-                                        </tbody>
-                                    </table>
+                
+                                            </style>
+                                            </tbody>
+                                        </table>
+                                    </div>   
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="treated" class="tab-pane">
-                        <div class="">
-                            <div class="panel-body">
-                                <div class="adv-table editable-table ">
-                                    <div class="space15"></div>
-                                    <table class="table table-striped table-hover table-bordered" id="editable-sample3" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th> <?php echo lang('id'); ?></th>
-                                                <th> <?php echo lang('patient'); ?></th>
-                                                <th> <?php echo lang('doctor'); ?></th>
-                                                <th> <?php echo lang('date-time'); ?></th>
-                                                <th> <?php echo lang('remarks'); ?></th>
-                                                <th> <?php echo lang('status'); ?></th>
-                                                <th> <?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <style>
-
+                            <div id="treated" class="tab-pane">
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <div class="space15"></div>
+                                        <table class="table table-striped table-bordered" id="editable-sample3">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> <?php echo lang('id'); ?></th>
+                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                    <th scope="col"> <?php echo lang('status'); ?></th>
+                                                    <th scope="col"> <?php echo lang('options'); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            <style>
+                
                                             .img_url{
                                                 height:20px;
                                                 width:20px;
@@ -155,39 +141,33 @@
                                                 max-height:20px;
                                                 border-radius: 100px;
                                             }
-
-                                        </style>
-
-
-
-                                        </tbody>
-                                    </table>
+                
+                                            </style>
+                                            </tbody>
+                                        </table>
+                                    </div>   
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div id="cancelled" class="tab-pane">
-                        <div class="">
-                            <div class="panel-body">
-                                <div class="adv-table editable-table ">
-                                    <div class="space15"></div>
-                                    <table class="table table-striped table-hover table-bordered" id="editable-sample4" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th> <?php echo lang('id'); ?></th>
-                                                <th> <?php echo lang('patient'); ?></th>
-                                                <th> <?php echo lang('doctor'); ?></th>
-                                                <th> <?php echo lang('date-time'); ?></th>
-                                                <th> <?php echo lang('remarks'); ?></th>
-                                                <th> <?php echo lang('status'); ?></th>
-                                                <th> <?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <style>
-
+                            <div id="calcelled" class="tab-pane">
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <div class="space15"></div>
+                                        <table class="table table-striped table-bordered" id="editable-sample4">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> <?php echo lang('id'); ?></th>
+                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                    <th scope="col"> <?php echo lang('status'); ?></th>
+                                                    <th scope="col"> <?php echo lang('options'); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            <style>
+                
                                             .img_url{
                                                 height:20px;
                                                 width:20px;
@@ -195,40 +175,33 @@
                                                 max-height:20px;
                                                 border-radius: 100px;
                                             }
-
-                                        </style>
-
-
-                                        </tbody>
-                                    </table>
+                
+                                            </style>
+                                            </tbody>
+                                        </table>
+                                    </div>   
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-
-                    <div id="all" class="tab-pane active">
-                        <div class="">
-                            <div class="panel-body">
-                                <div class="adv-table editable-table ">
-
-                                    <div class="space15"></div>
-                                    <table class="table table-striped table-hover table-bordered" id="editable-sample5" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th> <?php echo lang('id'); ?></th>
-                                                <th> <?php echo lang('patient'); ?></th>
-                                                <th> <?php echo lang('doctor'); ?></th>
-                                                <th> <?php echo lang('date-time'); ?></th>
-                                                <th> <?php echo lang('remarks'); ?></th>
-                                                <th> <?php echo lang('status'); ?></th>
-                                                <th> <?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <style>
-
+                            <div id="all" class="tab-pane active">
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <div class="space15"></div>
+                                        <table class="table table-striped table-bordered" id="editable-sample5">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> <?php echo lang('id'); ?></th>
+                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                    <th scope="col"> <?php echo lang('status'); ?></th>
+                                                    <th scope="col"> <?php echo lang('options'); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            <style>
+                
                                             .img_url{
                                                 height:20px;
                                                 width:20px;
@@ -236,40 +209,33 @@
                                                 max-height:20px;
                                                 border-radius: 100px;
                                             }
-
-                                        </style>
-
-
-
-                                        </tbody>
-                                    </table>
+                
+                                            </style>
+                                            </tbody>
+                                        </table>
+                                    </div>   
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-
-                    <div id="requested" class="tab-pane">
-                        <div class="">
-                            <div class="panel-body">
-                                <div class="adv-table editable-table ">
-                                    <div class="space15"></div>
-                                    <table class="table table-striped table-hover table-bordered" id="editable-sample6" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th> <?php echo lang('id'); ?></th>
-                                                <th> <?php echo lang('patient'); ?></th>
-                                                <th> <?php echo lang('doctor'); ?></th>
-                                                <th> <?php echo lang('date-time'); ?></th>
-                                                <th> <?php echo lang('remarks'); ?></th>
-                                                <th> <?php echo lang('status'); ?></th>
-                                                <th> <?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <style>
-
+                            <div id="requested" class="tab-pane">
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <div class="space15"></div>
+                                        <table class="table table-striped table-bordered" id="editable-sample6">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"> <?php echo lang('id'); ?></th>
+                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                    <th scope="col"> <?php echo lang('status'); ?></th>
+                                                    <th scope="col"> <?php echo lang('options'); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                            <style>
+                
                                             .img_url{
                                                 height:20px;
                                                 width:20px;
@@ -277,139 +243,161 @@
                                                 max-height:20px;
                                                 border-radius: 100px;
                                             }
-
-                                        </style>
-
-
-
-                                        </tbody>
-                                    </table>
+                
+                                            </style>
+                                            </tbody>
+                                        </table>
+                                    </div>   
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
             </div>
-
-
-        </section>
-        <!-- page end-->
+        </div>
     </section>
-</section>
+</div>
+<!--sidebar end-->
+<!--main content start-->
+
 <!--main content end-->
 <!--footer start-->
 
 
-
-
-<!-- Add Appointment Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog ">
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add_appointment'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('add_appointment'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body row">
-                <form role="form" action="appointment/addNew" method="post" class="clearfix" enctype="multipart/form-data">
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label> 
-                        <select class="form-control m-bot15 pos_select" id="pos_select" name="patient" value=''> 
+            <form action="patient/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for=""><?php echo lang('patient'); ?></label>
+                                <select name="patient" id="pos_select" class="form-control pos_select">
 
-
-                        </select>
-                    </div>
-                    <div class="pos_client clearfix col-md-6">
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label> 
-                            <input type="text" class="form-control pay_in" name="p_name" value='' placeholder="">
+                                </select>
+                            </div>
+                            
                         </div>
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
-                            <input type="text" class="form-control pay_in" name="p_email" value='' placeholder="">
-                        </div>
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
-                            <input type="text" class="form-control pay_in" name="p_phone" value='' placeholder="">
-                        </div>
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label> 
-                            <input type="text" class="form-control pay_in" name="p_age" value='' placeholder="">
-                        </div> 
-                        <div class="payment pad_bot"> 
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
-                            <select class="form-control" name="p_gender" value=''>
-
-                                <option value="Male" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Male') {
-                                        echo 'selected';
+                        <div class="pos_client col-md-6 clearfix">
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_name" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_email" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_phone" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_age" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
+                                <select name="p_gender" class="form-control pos_select">
+                                    <option value="Male" <?php
+                                    if (!empty($patient->sex)) {
+                                        if ($patient->sex == 'Male') {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> > Male </option>   
-                                <option value="Female" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Female') {
-                                        echo 'selected';
+                                    ?> > Male </option>   
+                                    <option value="Female" <?php
+                                    if (!empty($patient->sex)) {
+                                        if ($patient->sex == 'Female') {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> > Female </option>
-                                <option value="Others" <?php
-                                if (!empty($patient->sex)) {
-                                    if ($patient->sex == 'Others') {
-                                        echo 'selected';
+                                    ?> > Female </option>
+                                    <option value="Others" <?php
+                                    if (!empty($patient->sex)) {
+                                        if ($patient->sex == 'Others') {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> > Others </option>
-                            </select>
+                                    ?> > Others </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                <select name="doctor" id="adoctors" class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date"><?php echo lang('date'); ?></label>
+                                <input type="date" class="form-control" name="date" id="date" value='' placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="time_slot">Available Slots</label>
+                                <select name="time_slot" id="aslots" class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="status"><?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                                <select name="status" class="form-control m-bot15" value=''>
+                                    <option value="Pending Confirmation" <?php
+                                        ?> > <?php echo lang('pending_confirmation'); ?> </option>
+                                    <option value="Confirmed" <?php
+                                        ?> > <?php echo lang('confirmed'); ?> </option>
+                                    <option value="Treated" <?php
+                                        ?> > <?php echo lang('treated'); ?> </option>
+                                    <option value="Cancelled" <?php
+                                        ?> > <?php echo lang('cancelled'); ?> </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('remarks'); ?></label>
+                                <input type="text" class="form-control" name="remarks" value="" placeholder="">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label> 
-                        <select class="form-control m-bot15" id="adoctors" name="doctor" value=''>  
-
-                        </select>
-                    </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" id="date" readonly="" name="date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1">Available Slots</label>
-                        <select class="form-control m-bot15" name="time_slot" id="aslots" value=''> 
-
-                        </select>
-                    </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label> 
-                        <select class="form-control m-bot15" name="status" value=''> 
-                            <option value="Pending Confirmation" <?php
-                                ?> > <?php echo lang('pending_confirmation'); ?> </option>
-                            <option value="Confirmed" <?php
-                                ?> > <?php echo lang('confirmed'); ?> </option>
-                            <option value="Treated" <?php
-                                ?> > <?php echo lang('treated'); ?> </option>
-                            <option value="Cancelled" <?php
-                                ?> > <?php echo lang('cancelled'); ?> </option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                        <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <!--  <div class="col-md-6 panel">
-                          <label> <?php echo lang('send_sms'); ?>  </label> <br>
-                          <input type="checkbox" name="sms" class="" value="sms">  <?php echo lang('yes'); ?>
-                      </div>-->
-                    <div class="col-md-12 panel">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div id='medical_history'>
+                <div class="col-md-12">
+
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Appointment Modal-->
+
 <!-- Add Appointment Modal-->
 
 <div class="modal fade" tabindex="-1" role="dialog" id="cmodal">
