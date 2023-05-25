@@ -50,7 +50,7 @@
                                 <div class="">
                                     <div class="table-responsive">
                                         <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="editable-sample1">
+                                        <table class="table table-striped table-bordered" id="ap-sample1">
                                             <thead>
                                                 <tr>
                                                     <th scope="col"> <?php echo lang('id'); ?></th>
@@ -79,10 +79,10 @@
                                 </div>
                             </div>
                             <div id="confirmed" class="tab-pane">
-                                <div class="">
+                                <div class="panel-body">
                                     <div class="table-responsive">
                                         <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="editable-sample2">
+                                        <table class="table table-striped table-bordered" id="ap-sample2">
                                             <thead>
                                                 <tr>
                                                     <th scope="col"> <?php echo lang('id'); ?></th>
@@ -111,10 +111,10 @@
                                 </div>
                             </div>
                             <div id="treated" class="tab-pane">
-                                <div class="">
+                                <div class="panel-body">
                                     <div class="table-responsive">
                                         <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="editable-sample3">
+                                        <table class="table table-striped table-bordered" id="ap-sample3">
                                             <thead>
                                                 <tr>
                                                     <th scope="col"> <?php echo lang('id'); ?></th>
@@ -143,10 +143,10 @@
                                 </div>
                             </div>
                             <div id="calcelled" class="tab-pane">
-                                <div class="">
+                                <div class="panel-body">
                                     <div class="table-responsive">
                                         <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="editable-sample4">
+                                        <table class="table table-striped table-bordered" id="ap-sample4">
                                             <thead>
                                                 <tr>
                                                     <th scope="col"> <?php echo lang('id'); ?></th>
@@ -207,10 +207,10 @@
                                 </div>
                             </div>
                             <div id="requested" class="tab-pane">
-                                <div class="">
+                                <div class="panel-body">
                                     <div class="table-responsive">
                                         <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="editable-sample6">
+                                        <table class="table table-striped table-bordered" id="ap-sample6">
                                             <thead>
                                                 <tr>
                                                     <th scope="col"> <?php echo lang('id'); ?></th>
@@ -253,7 +253,7 @@
 <!--main content end-->
 <!--footer start-->
 
-
+<!-- Add Appointment Modal-->
 <div class="modal fade" role="dialog" id="myModal">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -263,7 +263,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="patient/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+            <form action="appointment/addNew" class="clearfix" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -386,7 +386,7 @@
 </div>
 <!-- Add Appointment Modal-->
 
-<!-- Add Appointment Modal-->
+
 
 <div class="modal fade" tabindex="-1" role="dialog" id="cmodal">
     <div class="modal-dialog modal-lg" role="document" style="width: 80%;">
@@ -416,115 +416,126 @@
 
 
 
-
 <!-- Edit Event Modal-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog ">
+
+<div class="modal fade" role="dialog" id="myModal2">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> <?php echo lang('edit_appointment'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('edit_appointment'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body row">
-                <form role="form" id="editAppointmentForm" action="appointment/addNew" class="clearfix" method="post" enctype="multipart/form-data">
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
-                        <select class="form-control m-bot15  pos_select patient" id="pos_select" name="patient" value=''>
+            <form id="editAppointmentForm" action="appointment/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for=""><?php echo lang('patient'); ?></label>
+                                <select name="patient" id="pos_select" class="form-control pos_select">
 
-                        </select>
-                    </div>
-                    <div class="pos_client clearfix col-md-6">
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
-                            <input type="text" class="form-control pay_in" name="p_name" value='' placeholder="">
-                        </div>
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
-                            <input type="text" class="form-control pay_in" name="p_email" value='' placeholder="">
-                        </div>
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
-                            <input type="text" class="form-control pay_in" name="p_phone" value='' placeholder="">
-                        </div>
-                        <div class="payment pad_bot pull-right">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
-                            <input type="text" class="form-control pay_in" name="p_age" value='' placeholder="">
-                        </div>
-                        <div class="payment pad_bot">
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
-                            <select class="form-control" name="p_gender" value=''>
+                                </select>
+                            </div>
 
-                                <option value="Male" <?php
-                                                        if (!empty($patient->sex)) {
-                                                            if ($patient->sex == 'Male') {
-                                                                echo 'selected';
+                        </div>
+                        <div class="pos_client col-md-6 clearfix">
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_name" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_email" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_phone" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot pull-right">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
+                                <input type="text" class="form-control pay_in" name="p_age" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                            <div class="form-group payment pad_bot">
+                                <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
+                                <select name="p_gender" class="form-control pos_select">
+                                    <option value="Male" <?php
+                                                            if (!empty($patient->sex)) {
+                                                                if ($patient->sex == 'Male') {
+                                                                    echo 'selected';
+                                                                }
                                                             }
-                                                        }
-                                                        ?>> Male </option>
-                                <option value="Female" <?php
-                                                        if (!empty($patient->sex)) {
-                                                            if ($patient->sex == 'Female') {
-                                                                echo 'selected';
+                                                            ?>> Male </option>
+                                    <option value="Female" <?php
+                                                            if (!empty($patient->sex)) {
+                                                                if ($patient->sex == 'Female') {
+                                                                    echo 'selected';
+                                                                }
                                                             }
-                                                        }
-                                                        ?>> Female </option>
-                                <option value="Others" <?php
-                                                        if (!empty($patient->sex)) {
-                                                            if ($patient->sex == 'Others') {
-                                                                echo 'selected';
+                                                            ?>> Female </option>
+                                    <option value="Others" <?php
+                                                            if (!empty($patient->sex)) {
+                                                                if ($patient->sex == 'Others') {
+                                                                    echo 'selected';
+                                                                }
                                                             }
-                                                        }
-                                                        ?>> Others </option>
-                            </select>
+                                                            ?>> Others </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                <select name="doctor" id="adoctors1" class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date"><?php echo lang('date'); ?></label>
+                                <input type="date" class="form-control" name="date" id="date1" value='' placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="time_slot">Available Slots</label>
+                                <select name="time_slot" id="aslots1" class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="status"><?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                                <select name="status" class="form-control m-bot15" value=''>
+                                    <option value="Pending Confirmation" <?php
+                                                                            ?>> <?php echo lang('pending_confirmation'); ?> </option>
+                                    <option value="Confirmed" <?php
+                                                                ?>> <?php echo lang('confirmed'); ?> </option>
+                                    <option value="Treated" <?php
+                                                            ?>> <?php echo lang('treated'); ?> </option>
+                                    <option value="Cancelled" <?php
+                                                                ?>> <?php echo lang('cancelled'); ?> </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('remarks'); ?></label>
+                                <input type="text" class="form-control" name="remarks" value="" placeholder="">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('doctor'); ?></label>
-                        <select class="form-control m-bot15 doctor" id="adoctors1" name="doctor" value=''>
-
-                        </select>
-                    </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" id="date1" readonly="" name="date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1">Available Slots</label>
-                        <select class="form-control m-bot15" name="time_slot" id="aslots1" value=''>
-
-                        </select>
-                    </div>
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
-                        <select class="form-control m-bot15" name="status" value=''>
-                            <option value="Pending Confirmation" <?php
-                                                                    ?>> <?php echo lang('pending_confirmation'); ?> </option>
-                            <option value="Confirmed" <?php
-                                                        ?>> <?php echo lang('confirmed'); ?> </option>
-                            <option value="Treated" <?php
-                                                    ?>> <?php echo lang('treated'); ?> </option>
-                            <option value="Cancelled" <?php
-                                                        ?>> <?php echo lang('cancelled'); ?> </option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                        <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <!--    <div class="col-md-6 panel">
-                            <label> <?php echo lang('send_sms'); ?> ? </label> <br>
-                            <input type="checkbox" name="sms" class="" value="sms">  <?php echo lang('yes'); ?>
-                        </div> -->
-                    <input type="hidden" name="id" id="appointment_id" value=''>
-                    <div class="col-md-12 panel">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+                <input type="hidden" name="id" id="appointment_id" value=''>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- Edit Event Modal-->
 
@@ -867,355 +878,6 @@
 </script>
 
 
-
-<script>
-    $(document).ready(function() {
-        var table = $('#editable-sample6').DataTable({
-            responsive: true,
-            //   dom: 'lfrBtip',
-
-            "processing": true,
-            "serverSide": true,
-            "searchable": true,
-            "ajax": {
-                url: "appointment/getRequestedAppointmentList",
-                type: 'POST',
-            },
-            scroller: {
-                loadingIndicator: true
-            },
-            dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-
-            buttons: [{
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-            ],
-            aLengthMenu: [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
-            ],
-            iDisplayLength: 100,
-            "order": [
-                [0, "desc"]
-            ],
-            "language": {
-                "lengthMenu": "_MENU_",
-                search: "_INPUT_",
-                searchPlaceholder: "Search...",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
-            },
-        });
-        table.buttons().container().appendTo('.custom_buttons');
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        var table = $('#editable-sample1').DataTable({
-            responsive: true,
-            //   dom: 'lfrBtip',
-
-            "processing": true,
-            "serverSide": true,
-            "searchable": true,
-            "ajax": {
-                url: "appointment/getPendingAppoinmentList",
-                type: 'POST',
-            },
-            scroller: {
-                loadingIndicator: true
-            },
-            dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-
-            buttons: [{
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-            ],
-            aLengthMenu: [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
-            ],
-            iDisplayLength: 100,
-            "order": [
-                [0, "desc"]
-            ],
-            "language": {
-                "lengthMenu": "_MENU_",
-                search: "_INPUT_",
-                searchPlaceholder: "Search...",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
-            },
-        });
-        table.buttons().container().appendTo('.custom_buttons');
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        var table = $('#editable-sample2').DataTable({
-            responsive: true,
-            //   dom: 'lfrBtip',
-
-            "processing": true,
-            "serverSide": true,
-            "searchable": true,
-            "ajax": {
-                url: "appointment/getConfirmedAppoinmentList",
-                type: 'POST',
-            },
-            scroller: {
-                loadingIndicator: true
-            },
-            dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-
-            buttons: [{
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-            ],
-            aLengthMenu: [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
-            ],
-            iDisplayLength: 100,
-            "order": [
-                [0, "desc"]
-            ],
-            "language": {
-                "lengthMenu": "_MENU_",
-                search: "_INPUT_",
-                searchPlaceholder: "Search...",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
-            },
-        });
-        table.buttons().container().appendTo('.custom_buttons');
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        var table = $('#editable-sample3').DataTable({
-            responsive: true,
-            //   dom: 'lfrBtip',
-
-            "processing": true,
-            "serverSide": true,
-            "searchable": true,
-            "ajax": {
-                url: "appointment/getTreatedAppoinmentList",
-                type: 'POST',
-            },
-            scroller: {
-                loadingIndicator: true
-            },
-            dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-
-            buttons: [{
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-            ],
-            aLengthMenu: [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
-            ],
-            iDisplayLength: 100,
-            "order": [
-                [0, "desc"]
-            ],
-            "language": {
-                "lengthMenu": "_MENU_",
-                search: "_INPUT_",
-                searchPlaceholder: "Search...",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
-            },
-        });
-        table.buttons().container().appendTo('.custom_buttons');
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        var table = $('#editable-sample4').DataTable({
-            responsive: true,
-            //   dom: 'lfrBtip',
-
-            "processing": true,
-            "serverSide": true,
-            "searchable": true,
-            "ajax": {
-                url: "appointment/getCancelledAppoinmentList",
-                type: 'POST',
-            },
-            scroller: {
-                loadingIndicator: true
-            },
-            dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-
-            buttons: [{
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 0, 1, 2, 3, 4, 5, 5],
-                    }
-                },
-            ],
-            aLengthMenu: [
-                [10, 25, 50, 100, -1],
-                [10, 25, 50, 100, "All"]
-            ],
-            iDisplayLength: 100,
-            "order": [
-                [0, "desc"]
-            ],
-            "language": {
-                "lengthMenu": "_MENU_",
-                search: "_INPUT_",
-                searchPlaceholder: "Search...",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
-            },
-        });
-        table.buttons().container().appendTo('.custom_buttons');
-    });
-</script>
 <script>
     $(document).ready(function() {
         $(".flashmessage").delay(3000).fadeOut(100);
