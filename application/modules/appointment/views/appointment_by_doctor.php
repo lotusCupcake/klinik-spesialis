@@ -206,9 +206,14 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string)
+        var idDoc = url.searchParams.get('id')
         $('#calendarview').fullCalendar({
             lang: 'en',
-            events: 'appointment/getAppointmentByJasonByDoctor?id=' + <?php echo $doctor_id; ?>,
+            // events: 'appointment/getAppointmentByJasonByDoctor?id=' + <?php //echo $doctor_id; 
+                                                                            ?>,
+            events: 'appointment/getAppointmentByJasonByDoctor?id=' + idDoc,
             header: {
                 left: 'prev,next today',
                 center: 'title',
