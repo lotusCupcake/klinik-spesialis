@@ -29,7 +29,7 @@
                         <table class="table table-striped table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
-                                    <th scope=" col"><?php echo lang('doctor'); ?> <?php echo lang('id'); ?></th>
+                                    <th scope=" col"><?php echo lang('doctor_id'); ?></th>
                                     <th scope="col"><?php echo lang('name'); ?></th>
                                     <th scope="col"><?php echo lang('email'); ?></th>
                                     <th scope="col"><?php echo lang('phone'); ?></th>
