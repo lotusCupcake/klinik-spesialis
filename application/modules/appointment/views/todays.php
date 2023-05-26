@@ -187,6 +187,11 @@
 
 <div class="modal fade" role="dialog" id="cmodal">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <div class="modal-content">
             <div id='medical_history'>
                 <div class="col-md-12">
@@ -477,7 +482,7 @@
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
                 searchPlaceholder: "Search...",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                "url": "common/assets/DataTables/languages/" + bahasa + ".json"
             },
         });
         table.buttons().container().appendTo('.custom_buttons');
