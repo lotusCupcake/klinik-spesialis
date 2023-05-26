@@ -127,7 +127,7 @@ $(document).ready(function() {
             "lengthMenu": "_MENU_",
             search: "_INPUT_",
             searchPlaceholder: "Search...",
-            "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+            "url": "common/assets/DataTables/languages/" + bahasa + ".json"
         },
     });
     table.buttons().container().appendTo('.custom_buttons');
@@ -135,7 +135,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     var table = $('#ap-sample1').DataTable({
-        responsive: true,
+        "responsive": true,
         //   dom: 'lfrBtip',
 
         "processing": true,
@@ -195,7 +195,7 @@ $(document).ready(function() {
             "lengthMenu": "_MENU_",
             search: "_INPUT_",
             searchPlaceholder: "Search...",
-            "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+            "url": "common/assets/DataTables/languages/" + bahasa + ".json"
         },
     });
     table.buttons().container().appendTo('.custom_buttons');
@@ -203,7 +203,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     var table = $('#ap-sample2').DataTable({
-        responsive: true,
+        "responsive": true,
         //   dom: 'lfrBtip',
 
         "processing": true,
@@ -263,7 +263,7 @@ $(document).ready(function() {
             "lengthMenu": "_MENU_",
             search: "_INPUT_",
             searchPlaceholder: "Search...",
-            "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+            "url": "common/assets/DataTables/languages/" + bahasa + ".json"
         },
     });
     table.buttons().container().appendTo('.custom_buttons');
@@ -331,7 +331,7 @@ $(document).ready(function() {
             "lengthMenu": "_MENU_",
             search: "_INPUT_",
             searchPlaceholder: "Search...",
-            "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+            "url": "common/assets/DataTables/languages/" + bahasa + ".json"
         },
     });
     table.buttons().container().appendTo('.custom_buttons');
@@ -399,7 +399,7 @@ $(document).ready(function() {
             "lengthMenu": "_MENU_",
             search: "_INPUT_",
             searchPlaceholder: "Search...",
-            "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+            "url": "common/assets/DataTables/languages/" + bahasa + ".json"
         },
     });
     table.buttons().container().appendTo('.custom_buttons');

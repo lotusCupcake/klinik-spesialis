@@ -44,198 +44,196 @@
                             <a class="nav-link" data-toggle="tab" href="#requested"><?php echo lang('requested'); ?></a>
                         </li>
                     </ul>
-                    <div class="">
-                        <div class="tab-content">
-                            <div id="pending" class="tab-pane">
-                                <div class="">
-                                    <div class="table-responsive">
-                                        <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="ap-sample1">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"> <?php echo lang('id'); ?></th>
-                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
-                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
-                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
-                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
-                                                    <th scope="col"> <?php echo lang('status'); ?></th>
-                                                    <th scope="col"> <?php echo lang('options'); ?></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                    <div class="tab-content">
+                        <div id="pending" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div class="space15"></div>
+                                    <table class="table table-striped table-bordered" width="100%" id="ap-sample1">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> <?php echo lang('id'); ?></th>
+                                                <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                <th scope="col"> <?php echo lang('status'); ?></th>
+                                                <th scope="col"> <?php echo lang('options'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                                <style>
-                                                    .img_url {
-                                                        height: 20px;
-                                                        width: 20px;
-                                                        background-size: contain;
-                                                        max-height: 20px;
-                                                        border-radius: 100px;
-                                                    }
-                                                </style>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <style>
+                                                .img_url {
+                                                    height: 20px;
+                                                    width: 20px;
+                                                    background-size: contain;
+                                                    max-height: 20px;
+                                                    border-radius: 100px;
+                                                }
+                                            </style>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div id="confirmed" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="ap-sample2">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"> <?php echo lang('id'); ?></th>
-                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
-                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
-                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
-                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
-                                                    <th scope="col"> <?php echo lang('status'); ?></th>
-                                                    <th scope="col"> <?php echo lang('options'); ?></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                        </div>
+                        <div id="confirmed" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div class="space15"></div>
+                                    <table class="table table-striped table-bordered" width="100%" id="ap-sample2">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> <?php echo lang('id'); ?></th>
+                                                <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                <th scope="col"> <?php echo lang('status'); ?></th>
+                                                <th scope="col"> <?php echo lang('options'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                                <style>
-                                                    .img_url {
-                                                        height: 20px;
-                                                        width: 20px;
-                                                        background-size: contain;
-                                                        max-height: 20px;
-                                                        border-radius: 100px;
-                                                    }
-                                                </style>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <style>
+                                                .img_url {
+                                                    height: 20px;
+                                                    width: 20px;
+                                                    background-size: contain;
+                                                    max-height: 20px;
+                                                    border-radius: 100px;
+                                                }
+                                            </style>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div id="treated" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="ap-sample3">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"> <?php echo lang('id'); ?></th>
-                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
-                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
-                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
-                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
-                                                    <th scope="col"> <?php echo lang('status'); ?></th>
-                                                    <th scope="col"> <?php echo lang('options'); ?></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                        </div>
+                        <div id="treated" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div class="space15"></div>
+                                    <table class="table table-striped table-bordered" width="100%" id="ap-sample3">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> <?php echo lang('id'); ?></th>
+                                                <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                <th scope="col"> <?php echo lang('status'); ?></th>
+                                                <th scope="col"> <?php echo lang('options'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                                <style>
-                                                    .img_url {
-                                                        height: 20px;
-                                                        width: 20px;
-                                                        background-size: contain;
-                                                        max-height: 20px;
-                                                        border-radius: 100px;
-                                                    }
-                                                </style>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <style>
+                                                .img_url {
+                                                    height: 20px;
+                                                    width: 20px;
+                                                    background-size: contain;
+                                                    max-height: 20px;
+                                                    border-radius: 100px;
+                                                }
+                                            </style>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div id="calcelled" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="ap-sample4">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"> <?php echo lang('id'); ?></th>
-                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
-                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
-                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
-                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
-                                                    <th scope="col"> <?php echo lang('status'); ?></th>
-                                                    <th scope="col"> <?php echo lang('options'); ?></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                        </div>
+                        <div id="calcelled" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div class="space15"></div>
+                                    <table class="table table-striped table-bordered" width="100%" id="ap-sample4">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> <?php echo lang('id'); ?></th>
+                                                <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                <th scope="col"> <?php echo lang('status'); ?></th>
+                                                <th scope="col"> <?php echo lang('options'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                                <style>
-                                                    .img_url {
-                                                        height: 20px;
-                                                        width: 20px;
-                                                        background-size: contain;
-                                                        max-height: 20px;
-                                                        border-radius: 100px;
-                                                    }
-                                                </style>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <style>
+                                                .img_url {
+                                                    height: 20px;
+                                                    width: 20px;
+                                                    background-size: contain;
+                                                    max-height: 20px;
+                                                    border-radius: 100px;
+                                                }
+                                            </style>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div id="all" class="tab-pane active">
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="ap-sample5">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"> <?php echo lang('id'); ?></th>
-                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
-                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
-                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
-                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
-                                                    <th scope="col"> <?php echo lang('status'); ?></th>
-                                                    <th scope="col"> <?php echo lang('options'); ?></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                        </div>
+                        <div id="all" class="tab-pane active">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div class="space15"></div>
+                                    <table class="table table-striped table-bordered" id="ap-sample5">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> <?php echo lang('id'); ?></th>
+                                                <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                <th scope="col"> <?php echo lang('status'); ?></th>
+                                                <th scope="col"> <?php echo lang('options'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                                <style>
-                                                    .img_url {
-                                                        height: 20px;
-                                                        width: 20px;
-                                                        background-size: contain;
-                                                        max-height: 20px;
-                                                        border-radius: 100px;
-                                                    }
-                                                </style>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <style>
+                                                .img_url {
+                                                    height: 20px;
+                                                    width: 20px;
+                                                    background-size: contain;
+                                                    max-height: 20px;
+                                                    border-radius: 100px;
+                                                }
+                                            </style>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div id="requested" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="ap-sample6">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"> <?php echo lang('id'); ?></th>
-                                                    <th scope="col"> <?php echo lang('patient'); ?></th>
-                                                    <th scope="col"> <?php echo lang('doctor'); ?></th>
-                                                    <th scope="col"> <?php echo lang('date-time'); ?></th>
-                                                    <th scope="col"> <?php echo lang('remarks'); ?></th>
-                                                    <th scope="col"> <?php echo lang('status'); ?></th>
-                                                    <th scope="col"> <?php echo lang('options'); ?></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                        </div>
+                        <div id="requested" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div class="space15"></div>
+                                    <table class="table table-striped table-bordered" width="100%" id="ap-sample6">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> <?php echo lang('id'); ?></th>
+                                                <th scope="col"> <?php echo lang('patient'); ?></th>
+                                                <th scope="col"> <?php echo lang('doctor'); ?></th>
+                                                <th scope="col"> <?php echo lang('date-time'); ?></th>
+                                                <th scope="col"> <?php echo lang('remarks'); ?></th>
+                                                <th scope="col"> <?php echo lang('status'); ?></th>
+                                                <th scope="col"> <?php echo lang('options'); ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                                <style>
-                                                    .img_url {
-                                                        height: 20px;
-                                                        width: 20px;
-                                                        background-size: contain;
-                                                        max-height: 20px;
-                                                        border-radius: 100px;
-                                                    }
-                                                </style>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <style>
+                                                .img_url {
+                                                    height: 20px;
+                                                    width: 20px;
+                                                    background-size: contain;
+                                                    max-height: 20px;
+                                                    border-radius: 100px;
+                                                }
+                                            </style>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

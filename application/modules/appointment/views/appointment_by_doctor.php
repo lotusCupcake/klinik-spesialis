@@ -46,7 +46,7 @@
                                 <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
                                     <div class="table-responsive">
                                         <div class="space15"></div>
-                                        <table class="table table-striped table-bordered" id="editable-sample">
+                                        <table class="table table-striped table-bordered" width="100%" id="editable-sample">
                                             <thead>
                                                 <tr>
                                                     <th> <?php echo lang('id'); ?></th>
