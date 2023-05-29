@@ -280,7 +280,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><?php echo lang('blood_group'); ?></label>
+                                <label><?php echo lang('blood_group') . $patient->bloodgroup; ?></label>
                                 <select class="form-control select2" name="bloodgroup">
                                     <?php foreach ($groups as $group) { ?>
                                         <option value="<?php echo $group->group; ?>" <?php
@@ -457,15 +457,16 @@
             data: '',
             dataType: 'json',
         }).success(function(response) {
+            console.log(response.patient.bloodgroup);
             $('#editPatientForm').find('[name="id"]').val(response.patient.id).end()
             $('#editPatientForm').find('[name="name"]').val(response.patient.name).end()
             $('#editPatientForm').find('[name="password"]').val(response.patient.password).end()
             $('#editPatientForm').find('[name="email"]').val(response.patient.email).end()
             $('#editPatientForm').find('[name="address"]').val(response.patient.address).end()
             $('#editPatientForm').find('[name="phone"]').val(response.patient.phone).end()
-            $('#editPatientForm').find('[name="sex"]').val(response.patient.sex).end()
+            $('#editPatientForm').find('[name="sex"]').val(response.patient.sex).change()
             reformat(response.patient.birthdate)
-            $('#editPatientForm').find('[name="bloodgroup"]').val(response.patient.bloodgroup).end()
+            $('#editPatientForm').find('[name="bloodgroup"]').val(response.patient.bloodgroup).change()
             $('#editPatientForm').find('[name="p_id"]').val(response.patient.patient_id).end()
             if (typeof response.patient.img_url !== 'undefined' && response.patient.img_url != '' && response.patient.img_url != null) {
                 $("#img").attr("src", response.patient.img_url);

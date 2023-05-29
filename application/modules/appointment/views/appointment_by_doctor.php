@@ -225,7 +225,6 @@
                 element.find('.fc-title').html(element.find('.fc-title').text());
             },
             eventClick: function(event) {
-                console.log('disini');
                 $('#medical_history').html("");
                 if (event.id) {
                     $.ajax({

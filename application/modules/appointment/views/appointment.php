@@ -333,7 +333,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="time_slot">Available Slots</label>
+                                <label for="time_slot"><?php echo lang('available_slots'); ?></label>
                                 <select name="time_slot" id="aslots" class="form-control">
 
                                 </select>
@@ -497,7 +497,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="time_slot">Available Slots</label>
+                                <label for="time_slot"><?php echo lang('available_slots'); ?></label>
                                 <select name="time_slot" id="aslots1" class="form-control">
 
                                 </select>

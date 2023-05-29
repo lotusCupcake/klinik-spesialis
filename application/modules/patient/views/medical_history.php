@@ -1,1012 +1,879 @@
-<!--sidebar end-->
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="col-md-3">
-            <header class="panel-heading clearfix">
-                <div class="">
-                    <?php echo lang('patient'); ?> <?php echo lang('info'); ?> 
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1><?php echo lang('history'); ?> <?php echo lang('patient'); ?></h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
-
-            </header> 
-
-
-
-
-            <aside class="profile-nav">
-                <section class="">
-                    <div class="user-heading round">
-                        <?php if (!empty($patient->img_url)) { ?>
-                            <a href="#">
-                                <img src="<?php echo $patient->img_url; ?>" alt="">
-                            </a>
-                        <?php } ?>
-                        <h1> <?php echo $patient->name; ?> </h1>
-                        <p> <?php echo $patient->email; ?> </p>
-                        <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
-                            <button type="button" class="btn btn-info btn-xs btn_width editPatient" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $patient->id; ?>"><i class="fa fa-edit"> </i> <?php echo lang('edit'); ?></button>  
-                        <?php } ?>
+            </div>
+        <?php } ?>
+        <div class="section-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="user-item">
+                                <img alt="image" src="<?= ((!empty($patient->img_url)) ? $patient->img_url : base_url() . '/template/assets/img/avatar/avatar-1.png') ?>" width="50%">
+                                <div class="user-details">
+                                    <div class="user-name"><?php echo $patient->name; ?></div>
+                                    <div class="text-job text-muted"><?php echo $patient->email; ?></div>
+                                    <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
+                                        <div class="user-cta">
+                                            <button class="btn btn-primary btn_width editPatient" data-id="<?php echo $patient->id; ?>"><?php echo lang('edit'); ?></button>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label for=""><?php echo lang('patient_id'); ?></label>
+                                <input type="text" class="form-control" value="<?php echo $patient->id; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><?php echo lang('gender'); ?></label>
+                                <input type="text" class="form-control" value="<?php echo $patient->sex; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><?php echo lang('gender'); ?></label>
+                                <input type="text" class="form-control" value="<?php echo $patient->sex; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><?php echo lang('birth_date'); ?></label>
+                                <input type="text" class="form-control" value="<?php echo $patient->birthdate; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><?php echo lang('phone'); ?></label>
+                                <input type="text" class="form-control" value="<?php echo $patient->phone; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><?php echo lang('email'); ?></label>
+                                <input type="text" class="form-control" value="<?php echo $patient->email; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for=""><?php echo lang('address'); ?></label>
+                                <input type="text" class="form-control" value="<?php echo $patient->address; ?>" readonly>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="appointments-tab" data-toggle="tab" href="#appointments" role="tab" aria-controls="appointments" aria-selected="true"><?php echo lang('appointments'); ?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false"><?php echo lang('case_history'); ?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false"><?php echo lang('prescription'); ?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="lab-tab" data-toggle="tab" href="#lab" role="tab" aria-controls="lab" aria-selected="false"><?php echo lang('lab'); ?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><?php echo lang('documents'); ?></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false"><?php echo lang('timeline'); ?></a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#addAppointmentModal"><i class="fas fa-plus"></i><?= (!$this->ion_auth->in_group('Patient') ? lang('add_new') : lang('request_a_appointment')); ?></button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="space15"></div>
+                                                <table class="table table-striped table-bordered" id="editable-sample">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><?php echo lang('date'); ?></th>
+                                                            <th><?php echo lang('time_slot'); ?></th>
+                                                            <th><?php echo lang('doctor'); ?></th>
+                                                            <th><?php echo lang('status'); ?></th>
+                                                            <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                                                <th class="no-print"><?php echo lang('options'); ?></th>
+                                                            <?php } ?>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($appointments as $appointment) { ?>
+                                                            <tr class="">
 
-                    <ul class="nav nav-pills nav-stacked">
-                      <!--  <li class="active"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?><span class="label pull-right r-activity"><?php echo $patient->name; ?></span></li> -->
-                        <li>  <?php echo lang('patient_id'); ?> <span class="label pull-right r-activity"><?php echo $patient->id; ?></span></li>
-                        <li>  <?php echo lang('gender'); ?><span class="label pull-right r-activity"><?php echo $patient->sex; ?></span></li>
-                        <li>  <?php echo lang('birth_date'); ?><span class="label pull-right r-activity"><?php echo $patient->birthdate; ?></span></li>
-                        <li>  <?php echo lang('phone'); ?><span class="label pull-right r-activity"><?php echo $patient->phone; ?></span></li>
-                        <li>  <?php echo lang('email'); ?><span class="label pull-right r-activity"><?php echo $patient->email; ?></span></li>
-                        <li style="height: 200px;">  <?php echo lang('address'); ?><span class="pull-right" style="height: 200px;"><?php echo $patient->address; ?></span></li>
-
-                    </ul>
-
-                </section>
-            </aside>
-
-
-        </section>
-
-
-
-
-
-        <section class="col-md-9">
-            <header class="panel-heading clearfix">
-                <div class="col-md-7">
-                    <?php echo lang('history'); ?> | <?php echo $patient->name; ?>
-                </div>               
-            </header>
-
-            <section class="panel-body">   
-                <header class="panel-heading tab-bg-dark-navy-blueee">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a data-toggle="tab" href="#appointments"><?php echo lang('appointments'); ?></a>
-                        </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#home"><?php echo lang('case_history'); ?></a>
-                        </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#about"><?php echo lang('prescription'); ?></a>
-                        </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#lab"><?php echo lang('lab'); ?></a>
-                        </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#profile"><?php echo lang('documents'); ?></a>
-                        </li>
-                        
-                        <li class="">
-                            <a data-toggle="tab" href="#timeline"><?php echo lang('timeline'); ?></a> 
-                        </li>
-                    </ul>
-                </header>
-                <div class="panel">
-                    <div class="tab-content">
-                        <div id="appointments" class="tab-pane active">
-                            <div class="">
-                                <?php if (!$this->ion_auth->in_group('Patient')) { ?>
-                                    <div class=" no-print">
-                                        <a class="btn btn-info btn_width btn-xs" data-toggle="modal" href="#addAppointmentModal">
-                                            <i class="fa fa-plus-circle"> </i> <?php echo lang('add_new'); ?> 
-                                        </a>
-                                    </div>
-                                <?php } else { ?>
-                                    <div class=" no-print">
-                                        <a class="btn btn-info btn_width btn-xs" data-toggle="modal" href="#addAppointmentModal">
-                                            <i class="fa fa-plus-circle"> </i> <?php echo lang('request_a_appointment'); ?> 
-                                        </a>
-                                    </div>
-                                <?php } ?>
-                                <div class="adv-table editable-table ">
-                                    <table class="table table-striped table-hover table-bordered" id="">
-                                        <thead>
-                                            <tr>
-                                                <th><?php echo lang('date'); ?></th>
-                                                <th><?php echo lang('time_slot'); ?></th>
-                                                <th><?php echo lang('doctor'); ?></th>
-                                                <th><?php echo lang('status'); ?></th>
-                                                <?php if (!$this->ion_auth->in_group('Patient')) { ?>
-                                                    <th class="no-print"><?php echo lang('options'); ?></th>
-                                                <?php } ?>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($appointments as $appointment) { ?>
-                                                <tr class="">
-
-                                                    <td><?php echo date('d-m-Y', $appointment->date); ?></td>
-                                                    <td><?php echo $appointment->time_slot; ?></td>
-                                                    <td>
-                                                        <?php
-                                                        $doctor_details = $this->doctor_model->getDoctorById($appointment->doctor);
-                                                        if (!empty($doctor_details)) {
-                                                            $appointment_doctor = $doctor_details->name;
-                                                        } else {
-                                                            $appointment_doctor = '';
-                                                        }
-                                                        echo $appointment_doctor;
-                                                        ?>
-                                                    </td>
-                                                    <td><?php
-                                                        if ($appointment->status == 'Pending Confirmation') {
-                                                            $appointment_status = lang('pending_confirmation');
-                                                        } elseif ($appointment->status == 'Confirmed') {
-                                                            $appointment_status = lang('confirmed');
-                                                        } elseif ($appointment->status == 'Treated') {
-                                                            $appointment_status = lang('treated');
-                                                        } elseif ($appointment->status == 'Cancelled') {
-                                                            $appointment_status = lang('cancelled');
-                                                        } elseif ($appointment->status == 'Requested') {
-                                                            $appointment_status = lang('requested');
-                                                        }
-                                                        echo $appointment_status;
-                                                        ?></td>
-    <?php if (!$this->ion_auth->in_group('Patient')) { ?>
-                                                        <td class="no-print">
-                                                            <button type="button" class="btn btn-info btn-xs btn_width editAppointmentButton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $appointment->id; ?>"><i class="fa fa-edit"></i> </button>   
-                                                            <a class="btn btn-info btn-xs btn_width delete_button" title="<?php echo lang('delete'); ?>" href="appointment/delete?id=<?php echo $appointment->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i> </a>
-                                                        </td>
-                                                <?php } ?>
-                                                </tr>
-<?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="home" class="tab-pane">
-                            <div class="">
-
-<?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
-                                    <div class=" no-print">
-                                        <a class="btn btn-info btn_width btn-xs" data-toggle="modal" href="#myModal">
-                                            <i class="fa fa-plus-circle"> </i> <?php echo lang('add_new'); ?> 
-                                        </a>
-                                    </div>
-<?php } ?>
-
-                                <div class="adv-table editable-table ">
-
-
-                                    <table class="table table-striped table-hover table-bordered" id="">
-                                        <thead>
-                                            <tr>
-                                                <th><?php echo lang('date'); ?></th>
-                                                <th><?php echo lang('title'); ?></th>
-                                                <th><?php echo lang('description'); ?></th>
-                                                <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
-                                                    <th class="no-print"><?php echo lang('options'); ?></th>
-<?php } ?>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-<?php foreach ($medical_histories as $medical_history) { ?>
-                                                <tr class="">
-
-                                                    <td><?php echo date('d-m-Y', $medical_history->date); ?></td>
-                                                    <td><?php echo $medical_history->title; ?></td>
-                                                    <td><?php echo $medical_history->description; ?></td>
-    <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
-                                                        <td class="no-print">
-                                                            <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $medical_history->id; ?>"><i class="fa fa-edit"></i> </button>   
-                                                            <a class="btn btn-info btn-xs btn_width delete_button" title="<?php echo lang('delete'); ?>" href="patient/deleteCaseHistory?id=<?php echo $medical_history->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i> </a>
-                                                        </td>
-                                                <?php } ?>
-                                                </tr>
-<?php } ?>
-                                        </tbody>
-                                    </table>
-
-
-
-
-                                    <!--
-                                                                        <form role="form" action="patient/addMedicalHistory" class="clearfix" method="post" enctype="multipart/form-data">
-                                                                            <div class="form-group col-md-12">
-                                                                                <label class=""> <?php echo lang('case'); ?> <?php echo lang('history'); ?></label>
-                                                                                <div class="">
-                                                                                    <textarea class="ckeditor form-control" name="description" id="description" value="" rows="100" cols="50">      
-                                    <?php foreach ($medical_histories as $medical_history) { ?>         
-                                                                                                                                                                                                            <td><?php echo $medical_history->description; ?></td>
-<?php } ?>
-                                                                                    </textarea>
-                                                                                </div>
-                                                                            </div>
-                                    
-                                                                            <input type="hidden" name="patient_id" value='<?php echo $patient->id; ?>'>
-                                                                            <input type="hidden" name="id" value='<?php echo $medical_history->id ?>'>
-                                                                            <div class="form-group col-md-12">
-                                                                                <button type="submit" name="submit" class="btn btn-info submit_button pull-right"><?php echo lang('save'); ?></button>
-                                                                            </div>
-                                                                        </form>
-                                    
-                                    -->
-
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div id="about" class="tab-pane"> <div class="">
-<?php if ($this->ion_auth->in_group(array('Doctor'))) { ?>
-                                    <div class=" no-print">
-                                        <a class="btn btn-info btn_width btn-xs" href="prescription/addPrescriptionView">
-                                            <i class="fa fa-plus-circle"> </i> <?php echo lang('add_new'); ?> 
-                                        </a>
-                                    </div>
-<?php } ?>
-                                <div class="adv-table editable-table ">
-                                    <table class="table table-striped table-hover table-bordered" id="">
-                                        <thead>
-                                            <tr>
-
-                                                <th><?php echo lang('date'); ?></th>
-                                                <th><?php echo lang('doctor'); ?></th>
-                                                <th><?php echo lang('medicine'); ?></th>
-                                                <th class="no-print"><?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-<?php foreach ($prescriptions as $prescription) { ?>
-                                                <tr class="">
-                                                    <td><?php echo date('m/d/Y', $prescription->date); ?></td>
-                                                    <td>
-                                                        <?php
-                                                        $doctor_details = $this->doctor_model->getDoctorById($prescription->doctor);
-                                                        if (!empty($doctor_details)) {
-                                                            $prescription_doctor = $doctor_details->name;
-                                                        } else {
-                                                            $prescription_doctor = '';
-                                                        }
-                                                        echo $prescription_doctor;
-                                                        ?>
-
-                                                    </td>
-                                                    <td>
-
-                                                        <?php
-                                                        if (!empty($prescription->medicine)) {
-                                                            $medicine = explode('###', $prescription->medicine);
-
-                                                            foreach ($medicine as $key => $value) {
-                                                                $medicine_id = explode('***', $value);
-                                                                $medicine_details = $this->medicine_model->getMedicineById($medicine_id[0]);
-                                                                if (!empty($medicine_details)) {
-                                                                    $medicine_name_with_dosage = $medicine_details->name . ' -' . $medicine_id[1];
-                                                                    $medicine_name_with_dosage = $medicine_name_with_dosage . ' | ' . $medicine_id[3] . '<br>';
-                                                                    rtrim($medicine_name_with_dosage, ',');
-                                                                    echo '<p>' . $medicine_name_with_dosage . '</p>';
-                                                                }
-                                                            }
-                                                        }
-                                                        ?>
-
-
-                                                    </td>
-                                                    <td class="no-print">
-                                                        <a class="btn-xs green" href="prescription/viewPrescription?id=<?php echo $prescription->id; ?>"><i class="fa fa-eye"> <?php echo lang('view'); ?> </i></a> 
-                                                        <?php
-                                                        if ($this->ion_auth->in_group('Doctor')) {
-                                                            $current_user = $this->ion_auth->get_user_id();
-                                                            $doctor_table_id = $this->doctor_model->getDoctorByIonUserId($current_user)->id;
-                                                            if ($prescription->doctor == $doctor_table_id) {
-                                                                ?>
-                                                                <a type="button" class="btn-info btn-xs btn_width" data-toggle="modal" href="prescription/editPrescription?id=<?php echo $prescription->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></a>   
-                                                                <a class="btn-info btn-xs btn_width delete_button" href="prescription/delete?id=<?php echo $prescription->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i> <?php echo lang('delete'); ?></a>
-                                                                <?php
-                                                            }
-                                                        }
-                                                        ?>
-                                                        <a class="btn-xs invoicebutton" title="<?php echo lang('print'); ?>" style="color: #fff;" href="prescription/viewPrescriptionPrint?id=<?php echo $prescription->id; ?>"target="_blank"> <i class="fa fa-print"></i> <?php echo lang('print'); ?></a>
-                                                    </td>
-                                                </tr>
-<?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="lab" class="tab-pane"> <div class="">
-                                <div class="adv-table editable-table ">
-                                    <table class="table table-striped table-hover table-bordered" id="">
-                                        <thead>
-                                            <tr>
-                                                <th><?php echo lang('id'); ?></th>
-                                                <th><?php echo lang('date'); ?></th>
-                                                <th><?php echo lang('doctor'); ?></th>
-                                                <th class="no-print"><?php echo lang('options'); ?></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-<?php foreach ($labs as $lab) { ?>
-                                                <tr class="">
-                                                    <td><?php echo $lab->id; ?></td>
-                                                    <td><?php echo date('m/d/Y', $lab->date); ?></td>
-                                                    <td>
-                                                        <?php
-                                                        $doctor_details = $this->doctor_model->getDoctorById($lab->doctor);
-                                                        if (!empty($doctor_details)) {
-                                                            $lab_doctor = $doctor_details->name;
-                                                        } else {
-                                                            $lab_doctor = '';
-                                                        }
-                                                        echo $lab_doctor;
-                                                        ?>
-                                                    </td>
-                                                    <td class="no-print">
-                                                        <a class="btn btn-info btn-xs btn_width" href="lab/invoice?id=<?php echo $lab->id; ?>"><i class="fa fa-eye"> <?php echo lang('report'); ?> </i></a>   
-                                                    </td>
-                                                </tr>
-<?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div id="profile" class="tab-pane"> <div class="">
-                                <div class=" no-print">
-                                    <a class="btn btn-info btn_width btn-xs" data-toggle="modal" href="#myModal1">
-                                        <i class="fa fa-plus-circle"> </i> <?php echo lang('add_new'); ?> 
-                                    </a>
-                                </div>
-                                <div class="adv-table editable-table ">
-                                    <div class="">
-<?php foreach ($patient_materials as $patient_material) { ?>
-                                            <div class="panel col-md-3"  style="height: 200px; margin-right: 10px; margin-bottom: 36px; background: #f1f1f1; padding: 34px;">
-
-                                                <div>
-                                                    <?php
-                                                    $extension_url = explode(".", $patient_material->url);
-
-                                                    $length = count($extension_url);
-                                                    $extension = $extension_url[$length - 1];
-
-                                                    if (strtolower($extension) == 'pdf') {
-                                                        ?>
-                                                        <a class="example-image-link" href="<?php echo $patient_material->url; ?>" target="_blank">
-                                                            <img class="example-image" src="uploads/image/pdf.png" height="100" width="100"/></a>
-                                                        <?php
-                                                    } elseif (strtolower($extension) == 'docx') {
-                                                        ?>
-
-                                                        <a class="example-image-link" href="<?php echo $patient_material->url; ?>" target="_blank">
-                                                            <img class="example-image" src="uploads/image/docx.png" height="100" width="100"/></a>
-                                                    <?php
-                                                    } elseif (strtolower($extension) == 'doc') {
-                                                        ?>
-
-                                                        <a class="example-image-link" href="<?php echo $patient_material->url; ?>" target="_blank">
-                                                            <img class="example-image" src="uploads/image/doc.png" height="100" width="100"/></a>
-                                                    <?php
-                                                    } elseif (strtolower($extension) == 'odt') {
-                                                        ?>
-
-                                                        <a class="example-image-link" href="<?php echo $patient_material->url; ?>" target="_blank">
-                                                            <img class="example-image" src="uploads/image/odt.png" height="100" width="100"/></a>
-                                                    <?php } else {
-                                                        ?>
-                                                        <a class="example-image-link" href="<?php echo $patient_material->url; ?>" data-lightbox="example-1">
-                                                            <img class="example-image" src="<?php echo $patient_material->url; ?>" alt="image-1" height="100" width="100"/></a>
-                                                    <?php }
-                                                    ?>
-
-            <!--  <img src="<?php echo $patient_material->url; ?>" height="100" width="100">-->
-                                                </div>
-                                                <div class="post-info" style="text-align:center !important;">
-                                                    <?php
-                                                    if (!empty($patient_material->title)) {
-                                                        echo $patient_material->title;
-                                                    }
-                                                    ?>
-
-                                                </div>
-                                                <p></p>
-                                                <div class="post-info" style="font-family: sans-serif !important ;">
-                                                    <div style="display:inline-block !important;">  
-                                                        <a   class="btn btn-info btn-xs btn_width" href="<?php echo $patient_material->url; ?>" download> <?php echo lang('download'); ?> </a>
-                                                    </div>
-                                                    <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
-                                                        <div  style="display:inline-block !important;" >    
-                                                            <a class="btn btn-info btn-xs btn_width" title="<?php echo lang('delete'); ?>" href="patient/deletePatientMaterial?id=<?php echo $patient_material->id; ?>"onclick="return confirm('Are you sure you want to delete this item?');"> X </a>
-                                                        </div>
-                                                    <?php } ?>
-
-                                                </div>
-
-                                                <hr>
-
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <div id="timeline" class="tab-pane"> 
-                            <div class="">
-                                <div class="">
-                                    <section class="panel ">
-                                        <header class="panel-heading">
-                                            Timeline
-                                        </header>
-                                        <!--
-                                        <div class=" profile-activity" >
-                                            <h5 class="pull-right">12 August 2013</h5>
-                                            <div class="activity terques">
-                                                <span>
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </span>
-                                                <div class="activity-desk">
-                                                    <div class="panel">
-                                                        <div class="">
-                                                            <div class="arrow"></div>
-                                                            <i class=" fa fa-clock-o"></i>
-                                                            <h4>10:45 AM</h4>
-                                                            <p>Purchased new equipments for zonal office setup and stationaries.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                                <td><?php echo date('d-m-Y', $appointment->date); ?></td>
+                                                                <td><?php echo $appointment->time_slot; ?></td>
+                                                                <td>
+                                                                    <?php
+                                                                    $doctor_details = $this->doctor_model->getDoctorById($appointment->doctor);
+                                                                    if (!empty($doctor_details)) {
+                                                                        $appointment_doctor = $doctor_details->name;
+                                                                    } else {
+                                                                        $appointment_doctor = '';
+                                                                    }
+                                                                    echo $appointment_doctor;
+                                                                    ?>
+                                                                </td>
+                                                                <td><?php
+                                                                    if ($appointment->status == 'Pending Confirmation') {
+                                                                        $appointment_status = lang('pending_confirmation');
+                                                                    } elseif ($appointment->status == 'Confirmed') {
+                                                                        $appointment_status = lang('confirmed');
+                                                                    } elseif ($appointment->status == 'Treated') {
+                                                                        $appointment_status = lang('treated');
+                                                                    } elseif ($appointment->status == 'Cancelled') {
+                                                                        $appointment_status = lang('cancelled');
+                                                                    } elseif ($appointment->status == 'Requested') {
+                                                                        $appointment_status = lang('requested');
+                                                                    }
+                                                                    echo $appointment_status;
+                                                                    ?></td>
+                                                                <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                                                    <td class="no-print">
+                                                                        <button type="button" class="btn btn-info btn-xs btn_width editAppointmentButton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $appointment->id; ?>"><i class="fa fa-edit"></i> </button>
+                                                                        <a title="<?php echo lang('delete'); ?>" href="appointment/delete?id=<?php echo $appointment->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-icon icon-left btn-danger btn_width delete_button"><i class="fa fa-trash"></i></button></a>
+                                                                    </td>
+                                                                <?php } ?>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                        -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <button class="btn btn-icon icon-left btn-primary btn_width" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i><?= lang('add_new'); ?></button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="space15"></div>
+                                                <table class="table table-striped table-bordered" id="editable-sample">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><?php echo lang('date'); ?></th>
+                                                            <th><?php echo lang('title'); ?></th>
+                                                            <th><?php echo lang('description'); ?></th>
+                                                            <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
+                                                                <th class="no-print" width="15%"><?php echo lang('options'); ?></th>
+                                                            <?php } ?>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($medical_histories as $medical_history) { ?>
+                                                            <tr class="">
 
-                                        <?php
-                                        if (!empty($timeline)) {
-                                            krsort($timeline);
-                                            foreach ($timeline as $key => $value) {
-                                                echo $value;
-                                            }
-                                        }
-                                        ?>
+                                                                <td><?php echo date('d-m-Y', $medical_history->date); ?></td>
+                                                                <td><?php echo $medical_history->title; ?></td>
+                                                                <td><?php echo $medical_history->description; ?></td>
+                                                                <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
+                                                                    <td class="no-print">
+                                                                        <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $medical_history->id; ?>"><i class="fa fa-edit"></i> </button>
+                                                                        <a title="<?php echo lang('delete'); ?>" href="patient/deleteCaseHistory?id=<?php echo $medical_history->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-icon icon-left btn-danger btn_width delete_button"><i class="fa fa-trash"></i></button></a>
+                                                                    </td>
+                                                                <?php } ?>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="prescription/addPrescriptionView"><button class="btn btn-icon icon-left btn-primary btn_width btn-xs"><i class="fas fa-plus"></i><?= lang('add_new'); ?></button></a>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="space15"></div>
+                                                <table class="table table-striped table-bordered" id="editable-sample">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><?php echo lang('date'); ?></th>
+                                                            <th><?php echo lang('doctor'); ?></th>
+                                                            <th><?php echo lang('medicine'); ?></th>
+                                                            <th class="no-print"><?php echo lang('options'); ?></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($prescriptions as $prescription) { ?>
+                                                            <tr class="">
+                                                                <td><?php echo date('m/d/Y', $prescription->date); ?></td>
+                                                                <td>
+                                                                    <?php
+                                                                    $doctor_details = $this->doctor_model->getDoctorById($prescription->doctor);
+                                                                    if (!empty($doctor_details)) {
+                                                                        $prescription_doctor = $doctor_details->name;
+                                                                    } else {
+                                                                        $prescription_doctor = '';
+                                                                    }
+                                                                    echo $prescription_doctor;
+                                                                    ?>
 
-                                    </section>
+                                                                </td>
+                                                                <td>
+
+                                                                    <?php
+                                                                    if (!empty($prescription->medicine)) {
+                                                                        $medicine = explode('###', $prescription->medicine);
+
+                                                                        foreach ($medicine as $key => $value) {
+                                                                            $medicine_id = explode('***', $value);
+                                                                            $medicine_details = $this->medicine_model->getMedicineById($medicine_id[0]);
+                                                                            if (!empty($medicine_details)) {
+                                                                                $medicine_name_with_dosage = $medicine_details->name . ' -' . $medicine_id[1];
+                                                                                $medicine_name_with_dosage = $medicine_name_with_dosage . ' | ' . $medicine_id[3] . '<br>';
+                                                                                rtrim($medicine_name_with_dosage, ',');
+                                                                                echo '<p>' . $medicine_name_with_dosage . '</p>';
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    ?>
+                                                                </td>
+                                                                <td class="no-print">
+                                                                    <a href="prescription/viewPrescription?id=<?php echo $prescription->id; ?>"><button class="btn btn-icon icon-left btn-info btn_width"><i class="fas fa-eye"></i><?= lang('view'); ?></button></a>
+                                                                    <?php
+                                                                    if ($this->ion_auth->in_group('Doctor')) {
+                                                                        $current_user = $this->ion_auth->get_user_id();
+                                                                        $doctor_table_id = $this->doctor_model->getDoctorByIonUserId($current_user)->id;
+                                                                        if ($prescription->doctor == $doctor_table_id) {
+                                                                    ?>
+                                                                            <a href="prescription/editPrescription?id=<?php echo $prescription->id; ?>"><button class="btn btn-icon icon-left btn-light btn_width"><i class="fas fa-edit"></i><?= lang('edit'); ?></button></a>
+                                                                            <a title="<?php echo lang('delete'); ?>" href="prescription/delete?id=<?php echo $prescription->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-icon icon-left btn-danger btn_width delete_button"><i class="fa fa-trash"></i> <?php echo lang('delete'); ?></button></a>
+                                                                    <?php
+                                                                        }
+                                                                    }
+                                                                    ?>
+                                                                    <a href="prescription/viewPrescriptionPrint?id=<?php echo $prescription->id; ?>" target="_blank"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-print"></i><?= lang('print'); ?></button></a>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="lab" role="tabpanel" aria-labelledby="lab-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="space15"></div>
+                                                <table class="table table-striped table-bordered" id="editable-sample">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><?php echo lang('id'); ?></th>
+                                                            <th><?php echo lang('date'); ?></th>
+                                                            <th><?php echo lang('doctor'); ?></th>
+                                                            <th class="no-print"><?php echo lang('options'); ?></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($labs as $lab) { ?>
+                                                            <tr class="">
+                                                                <td><?php echo $lab->id; ?></td>
+                                                                <td><?php echo date('m/d/Y', $lab->date); ?></td>
+                                                                <td>
+                                                                    <?php
+                                                                    $doctor_details = $this->doctor_model->getDoctorById($lab->doctor);
+                                                                    if (!empty($doctor_details)) {
+                                                                        $lab_doctor = $doctor_details->name;
+                                                                    } else {
+                                                                        $lab_doctor = '';
+                                                                    }
+                                                                    echo $lab_doctor;
+                                                                    ?>
+                                                                </td>
+                                                                <td class="no-print">
+                                                                    <a href="lab/invoice?id=<?php echo $lab->id; ?>"><button class="btn btn-icon icon-left btn-info btn_width"><i class="fas fa-eye"></i><?= lang('report'); ?></button></a>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <?php foreach ($patient_materials as $patient_material) { ?>
+                                                    <div class="col-md-2">
+                                                        <article class="article">
+                                                            <div class="article-header">
+                                                                <a href="<?php echo $patient_material->url; ?>" target="_blank">
+                                                                    <?php
+                                                                    $extension_url = explode(".", $patient_material->url);
+
+                                                                    $length = count($extension_url);
+                                                                    $extension = $extension_url[$length - 1];
+
+                                                                    if (strtolower($extension) == 'pdf') {
+                                                                    ?>
+                                                                        <div class="article-image" data-background="uploads/image/pdf.png">
+                                                                        <?php
+                                                                    } elseif (strtolower($extension) == 'docx') {
+                                                                        ?>
+                                                                            <div class="article-image" data-background="uploads/image/docx.png">
+                                                                            <?php
+                                                                        } elseif (strtolower($extension) == 'doc') {
+                                                                            ?>
+                                                                                <div class="article-image" data-background="uploads/image/doc.png">
+                                                                                <?php
+                                                                            } elseif (strtolower($extension) == 'odt') {
+                                                                                ?>
+                                                                                    <div class="article-image" data-background="uploads/image/odt.png">
+                                                                                    <?php } else {
+                                                                                    ?>
+                                                                                        <div class="article-image" data-background="<?php echo $patient_material->url; ?>">
+                                                                                        <?php }
+                                                                                        ?>
+                                                                                        </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="article-details">
+                                                                <p> <?php
+                                                                    if (!empty($patient_material->title)) {
+                                                                        echo $patient_material->title;
+                                                                    }
+                                                                    ?></p>
+                                                                <div class="article-cta">
+                                                                    <a href="<?php echo $patient_material->url; ?>" download class="btn btn-success"><i class="fas fa-file"></i></a>
+                                                                    <?php if (!$this->ion_auth->in_group(array('Patient'))) { ?>
+                                                                        <a href="patient/deletePatientMaterial?id=<?php echo $patient_material->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                                    <?php } ?>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="activities">
+                                                <?php
+                                                if (!empty($timeline)) {
+                                                    krsort($timeline);
+                                                    foreach ($timeline as $key => $value) {
+                                                        echo $value;
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
-        </section>
-
-
-
+            </div>
+        </div>
     </section>
-    <!-- page end-->
-</section>
-</section>
-<!--main content end-->
-<!--footer start-->
-
-
-
-
-<!-- Add Patient Material Modal-->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">   <?php echo lang('add'); ?> <?php echo lang('files'); ?></h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" action="patient/addPatientMaterial" class="clearfix row" method="post" enctype="multipart/form-data">
-
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"> <?php echo lang('title'); ?></label>
-                        <input type="text" class="form-control" name="title" id="exampleInputEmail1" placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"> <?php echo lang('file'); ?></label>
-                        <input type="file" name="img_url">
-                    </div>
-
-                    <input type="hidden" name="patient" value='<?php echo $patient->id; ?>'>
-
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
 </div>
-<!-- Add Patient Modal-->
 
-
-<!-- Add Medical History Modal-->
-<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="infoModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add_case'); ?></h4>
-            </div> 
-            <div class="modal-body">
-                <form role="form" action="patient/addMedicalHistory" class="clearfix row" method="post" enctype="multipart/form-data">
-                    <div class="form-group col-md-12">
-                        <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control form-control-inline input-medium default-date-picker" name="date" id="exampleInputEmail1" value='' placeholder="" readonly="">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label for="exampleInputEmail1"><?php echo lang('title'); ?></label>
-                        <input type="text" class="form-control form-control-inline input-medium" name="title" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label class=""><?php echo lang('description'); ?></label>
-                        <div class="">
-                            <textarea class="ckeditor form-control" name="description" value="" rows="10"></textarea>
+                <h5 class="modal-title"><?php echo lang('edit_patient'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="patient/addNew" id="editPatientForm" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
+                                <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
+                                <input type="text" class="form-control" name="email" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
                         </div>
                     </div>
-
-                    <input type="hidden" name="patient_id" value='<?php echo $patient->id; ?>'>
-                    <input type="hidden" name="id" value=''>
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info submit_button pull-right">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-
-<!-- Add Medical History Modal-->
-
-<!-- Edit Medical History Modal-->
-<div class="modal fade" id="myModal2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('edit_case'); ?></h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" id="medical_historyEditForm" class="clearfix row" action="patient/addMedicalHistory" method="post" enctype="multipart/form-data">
-                    <div class="form-group col-md-12">
-                        <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control form-control-inline input-medium default-date-picker" name="date" id="exampleInputEmail1" value='' placeholder="" readonly="">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label for="exampleInputEmail1"><?php echo lang('title'); ?></label>
-                        <input type="text" class="form-control form-control-inline input-medium" name="title" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label class=""><?php echo lang('description'); ?></label>
-                        <div class="">
-                            <textarea class="ckeditor form-control editor" id="editor" name="description" value="" rows="10"></textarea>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo lang('change'); ?> <?php echo lang('password'); ?></label>
+                                <input type="password" class="form-control" name="password" id="exampleInputEmail1" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
+                                <input type="text" class="form-control" name="address" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
                         </div>
                     </div>
-                    <input type="hidden" name="patient_id" value='<?php echo $patient->id; ?>'>
-                    <input type="hidden" name="id" value=''>
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info submit_button pull-right">Submit</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
+                                <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='' placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('sex'); ?></label>
+                                <select class="form-control select2" name="sex">
+                                    <option value="Male" <?php
+                                                            if (!empty($patient->sex)) {
+                                                                if ($patient->sex == 'Male') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }
+                                                            ?>> Male </option>
+                                    <option value="Female" <?php
+                                                            if (!empty($patient->sex)) {
+                                                                if ($patient->sex == 'Female') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }
+                                                            ?>> Female </option>
+                                    <option value="Others" <?php
+                                                            if (!empty($patient->sex)) {
+                                                                if ($patient->sex == 'Others') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }
+                                                            ?>> Others </option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-
-<?php
-$current_user = $this->ion_auth->get_user_id();
-if ($this->ion_auth->in_group('Doctor')) {
-    $doctor_id = $this->db->get_where('doctor', array('ion_user_id' => $current_user))->row()->id;
-}
-?>
-
-
-<!-- Add Appointment Modal-->
-<div class="modal fade" id="addAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg"">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">   <?php echo lang('add_appointment'); ?></h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" action="appointment/addNew" class="clearfix row" method="post" enctype="multipart/form-data">
-                    <div class="col-md-4 panel">
-                        <label for="exampleInputEmail1">  <?php echo lang('patient'); ?></label>
-                        <select class="form-control m-bot15 js-example-basic-single pos_select" id="pos_select" name="patient" value=''> 
-                            <option value="">Select .....</option>
-                            <option value="<?php echo $patient->id; ?>"><?php echo $patient->name; ?> </option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('birth_date'); ?></label>
+                                <input type="date" class="form-control" name="birthdate" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('blood_group'); ?></label>
+                                <select class="form-control select2" name="bloodgroup">
+                                    <?php foreach ($groups as $group) { ?>
+                                        <option value="<?php echo $group->group; ?>" <?php
+                                                                                        if (!empty($patient->bloodgroup)) {
+                                                                                            if ($group->group == $patient->bloodgroup) {
+                                                                                                echo 'selected';
+                                                                                            }
+                                                                                        }
+                                                                                        ?>> <?php echo $group->group; ?> </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4 panel">
-                        <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label>
-                        <select class="form-control m-bot15" id="adoctors" name="doctor" value=''>  
-
-                        </select>
-                    </div>
-
-
-                    <div class="col-md-4 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" id="date" readonly="" name="date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-
-                    <div class="col-md-6 panel">
-                        <label class=""><?php echo lang('available_slots'); ?></label> 
-                        <select class="form-control m-bot15" name="time_slot" id="aslots" value=''> 
-
-                        </select>
-                    </div>
-
-                    <div class="col-md-6 panel"> 
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
-                        <select class="form-control m-bot15" name="status" value=''>
-
-                            <?php if (!$this->ion_auth->in_group('Patient')) { ?>
-                                <option value="Pending Confirmation" <?php ?> > <?php echo lang('pending_confirmation'); ?> </option>
-                                <option value="Confirmed" <?php
-                                ?> > <?php echo lang('confirmed'); ?> </option>
-                                <option value="Treated" <?php
-                                ?> > <?php echo lang('treated'); ?> </option>
-                                <option value="Cancelled" <?php ?> > <?php echo lang('cancelled'); ?> </option>
-                            <?php } else { ?>
-                                <option value="Requested" <?php ?> > <?php echo lang('requested'); ?> </option> 
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <div class="col-md-8 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                        <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-
-
-
-
-                    <div class="col-md-5 panel">
-                        <input type="checkbox" name="sms" value="sms"> <?php echo lang('send_sms') ?><br>
-                    </div>
-
-                    <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>
-
-                    <input type="hidden" name="request" value='<?php
-                    if ($this->ion_auth->in_group(array('Patient'))) {
-                        echo 'Yes';
-                    }
-                    ?>'>
-
-                    <div class="col-md-12 panel">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-<!-- Add Appointment Modal-->
-
-
-
-
-
-
-
-<!-- Edit Event Modal-->
-<div class="modal fade" id="editAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg"">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">   <?php echo lang('edit_appointment'); ?></h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" id="editAppointmentForm" class="clearfix row" action="appointment/addNew" method="post" enctype="multipart/form-data">
-                    <div class="col-md-4 panel"> 
-                        <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
-                        <select class="form-control m-bot15 js-example-basic-single pos_select patient" id="pos_select" name="patient" value=''> 
-                            <option value="">Select .....</option>
-                            <option value="<?php echo $patient->id; ?>"><?php echo $patient->name; ?> </option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4 panel">
-                        <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label> 
-                        <select class="form-control m-bot15 doctor" id="adoctors1" name="doctor" value=''>  
-
-                        </select>
-                    </div>
-
-
-                    <div class="col-md-4 panel"> 
-                        <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" readonly="" id="date1" name="date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-
-                    <div class="col-md-6 panel">
-                        <label class=""><?php echo lang('available_slots'); ?></label> 
-                        <select class="form-control m-bot15" name="time_slot" id="aslots1" value=''> 
-
-                        </select>
-                    </div>
-
-                    <div class="col-md-6 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
-                        <select class="form-control m-bot15" name="status" value=''>
-                            <?php if (!$this->ion_auth->in_group('Patient')) { ?>
-                                <option value="Pending Confirmation" <?php ?> > <?php echo lang('pending_confirmation'); ?> </option>
-                                <option value="Confirmed" <?php
-                                ?> > <?php echo lang('confirmed'); ?> </option>
-                                <option value="Treated" <?php
-                                ?> > <?php echo lang('treated'); ?> </option>
-                                <option value="Cancelled" <?php ?> > <?php echo lang('cancelled'); ?> </option>
-                            <?php } else { ?>
-                                <option value="Requested" <?php ?> > <?php echo lang('requested'); ?> </option> 
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <div class="col-md-8 panel">
-                        <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                        <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-
-
-
-
-                    <div class="col-md-6 panel">
-                        <input type="checkbox" name="sms" value="sms"> <?php echo lang('send_sms') ?><br>
-                    </div>
-
-
-
-                    <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>>
-                    <input type="hidden" name="id" id="appointment_id" value=''>
-
-                    <div class="col-md-12 panel">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-<!-- Edit Event Modal-->
-
-
-
-
-<!-- Edit Patient Modal-->
-<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('edit_patient'); ?></h4>
-            </div>
-            <div class="modal-body row">
-                <form role="form" id="editPatientForm" action="patient/addNew" class="clearfix" method="post" enctype="multipart/form-data">
-
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
-                        <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
-                        <input type="text" class="form-control" name="email" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('change'); ?><?php echo lang('password'); ?></label>
-                        <input type="password" class="form-control" name="password" id="exampleInputEmail1" placeholder="">
-                    </div>
-
-
-
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
-                        <input type="text" class="form-control" name="address" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
-                        <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('sex'); ?></label>
-                        <select class="form-control m-bot15" name="sex" value=''>
-
-                            <option value="Male" <?php
-                            if (!empty($patient->sex)) {
-                                if ($patient->sex == 'Male') {
-                                    echo 'selected';
-                                }
-                            }
-                            ?> > Male </option>
-                            <option value="Female" <?php
-                            if (!empty($patient->sex)) {
-                                if ($patient->sex == 'Female') {
-                                    echo 'selected';
-                                }
-                            }
-                            ?> > Female </option>
-                            <option value="Others" <?php
-                            if (!empty($patient->sex)) {
-                                if ($patient->sex == 'Others') {
-                                    echo 'selected';
-                                }
-                            }
-                            ?> > Others </option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label><?php echo lang('birth_date'); ?></label>
-                        <input class="form-control form-control-inline input-medium default-date-picker" type="text" name="birthdate" value="" placeholder="" readonly="">      
-                    </div>
-
-
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('blood_group'); ?></label>
-                        <select class="form-control m-bot15" name="bloodgroup" value=''>
-                            <?php foreach ($groups as $group) { ?>
-                                <option value="<?php echo $group->group; ?>" <?php
-                                if (!empty($patient->bloodgroup)) {
-                                    if ($group->group == $patient->bloodgroup) {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > <?php echo $group->group; ?> </option>
-                                    <?php } ?> 
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-6">    
-                        <label for="exampleInputEmail1"><?php echo lang('doctor'); ?></label>
-                        <select class="form-control js-example-basic-single doctor"  name="doctor" value=''> 
-                            <option value=""> </option>
-                            <?php foreach ($doctors as $doctor) { ?>                                        
-                                <option value="<?php echo $doctor->id; ?>"><?php echo $doctor->name; ?> </option>
-                            <?php } ?> 
-                        </select>
-                    </div>
-
-
-
-                    <div class="form-group last col-md-6">
-                        <label class="control-label">Image Upload</label>
-                        <div class="">
-                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                    <img src="//www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" id="img" alt="" />
-                                </div>
-                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                <div>
-                                    <span class="btn btn-white btn-file">
-                                        <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
-                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                        <input type="file" class="default" name="img_url"/>
-                                    </span>
-                                    <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctorchoose"><?php echo lang('doctor'); ?></label>
+                                <select class="form-control" id="doctorchoose" name="doctor" value=''></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Image Upload</label>
+                                <div class="">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="<?= base_url() . '/template/assets/img/news/img01.jpg' ?>" id="img" alt="" />
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-white btn-file">
+                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
+                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                <input type="file" class="default" name="img_url" />
+                                            </span>
+                                            <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
-                    <!--
-                    
-                    <div class="form-group last col-md-6">
-                        <div style="text-align:center;">
-                            <video id="video" width="200" height="200" autoplay></video>
-                            <div class="snap" id="snap">Capture Photo</div>
-                            <canvas id="canvas" width="200" height="200"></canvas>
-                            Right click on the captured image and save. Then select the saved image from the left side's Select Image button.
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="sms" value="sms">
+                                <label class="form-check-label">
+                                    <?php echo lang('send_sms') ?>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    
-                    -->
-
-
-
-
-
-
-
-
-                    <div class="form-group col-md-6">
-                        <input type="checkbox" name="sms" value="sms"> <?php echo lang('send_sms') ?><br>
-                    </div>
-
-                    <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>>
-
                     <input type="hidden" name="id" value=''>
                     <input type="hidden" name="p_id" value='<?php
-                    if (!empty($patient->patient_id)) {
-                        echo $patient->patient_id;
-                    }
-                    ?>'>
-
-
-
-
-
-
-
-                    <section class="col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"><?php echo lang('submit'); ?></button>
-                    </section>
-
-                </form>
-
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+                                                            if (!empty($patient->patient_id)) {
+                                                                echo $patient->patient_id;
+                                                            }
+                                                            ?>'>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-<!-- Edit Patient Modal-->
 
+<div class=" modal fade" role="dialog" id="addAppointmentModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo lang('add_appointment'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="appointment/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for=""><?php echo lang('patient'); ?></label>
+                                <select name="patient" id="pos_select" class="form-control pos_select select2">
+                                    <option value="">Select .....</option>
+                                    <option value="<?php echo $patient->id; ?>"><?php echo $patient->name; ?> </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                <select name="doctor" id="adoctors" class="form-control select2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date"><?php echo lang('date'); ?></label>
+                                <input type="date" class="form-control" name="date" id="date" value='' placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="time_slot"><?php echo lang('available_slots'); ?></label>
+                                <select name="time_slot" id="aslots" class="form-control select2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="status"><?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                                <select name="status" class="form-control m-bot15 select2" value=''>
+                                    <option value="Pending Confirmation"><?php echo lang('pending_confirmation'); ?></option>
+                                    <option value="Confirmed"><?php echo lang('confirmed'); ?></option>
+                                    <option value="Treated"><?php echo lang('treated'); ?></option>
+                                    <option value="Cancelled"><?php echo lang('cancelled'); ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('remarks'); ?></label>
+                                <input type="text" class="form-control" name="remarks" value="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="sms" value="sms">
+                                <label class="form-check-label">
+                                    <?php echo lang('send_sms') ?>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>
 
-<style>
+                        <input type="hidden" name="request" value='<?php
+                                                                    if ($this->ion_auth->in_group(array('Patient'))) {
+                                                                        echo 'Yes';
+                                                                    }
+                                                                    ?>'>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" role="dialog" id="editAppointmentModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo lang('edit_appointment'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="appointment/addNew" id="editAppointmentForm" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for=""><?php echo lang('patient'); ?></label>
+                                <select name="patient" id="pos_select" class="form-control js-example-basic-single patient pos_select select2">
+                                    <option value="">Select .....</option>
+                                    <option value="<?php echo $patient->id; ?>"><?php echo $patient->name; ?> </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                <select name="doctor" id="adoctors1" class="form-control select2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date"><?php echo lang('date'); ?></label>
+                                <input type="date" class="form-control" name="date" id="date1" value='' placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="time_slot"><?php echo lang('available_slots'); ?></label>
+                                <select name="time_slot" id="aslots1" class="form-control select2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="status"><?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                                <select name="status" class="form-control m-bot15 select2" value=''>
+                                    <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                        <option value="Pending Confirmation" <?php ?>> <?php echo lang('pending_confirmation'); ?> </option>
+                                        <option value="Confirmed" <?php
+                                                                    ?>> <?php echo lang('confirmed'); ?> </option>
+                                        <option value="Treated" <?php
+                                                                ?>> <?php echo lang('treated'); ?> </option>
+                                        <option value="Cancelled" <?php ?>> <?php echo lang('cancelled'); ?> </option>
+                                    <?php } else { ?>
+                                        <option value="Requested" <?php ?>> <?php echo lang('requested'); ?> </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('remarks'); ?></label>
+                                <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="sms" value="sms">
+                                <label class="form-check-label">
+                                    <?php echo lang('send_sms') ?>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>>
+                        <input type="hidden" name="id" id="appointment_id" value=''>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    thead {
-        background: #f1f1f1; 
-        border-bottom: 1px solid #ddd; 
-    }
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo lang('add_case'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="patient/addMedicalHistory" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
+                            <input type="date" class="form-control" name="date" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1"><?php echo lang('title'); ?></label>
+                            <input type="text" class="form-control" name="title" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=""><?php echo lang('case'); ?></label>
+                        <textarea class="form-control ckeditor" name="description" value="" rows="70" cols="70"></textarea>
+                    </div>
+                    <input type="hidden" name="patient_id" value='<?php echo $patient->id; ?>'>
+                    <input type="hidden" name="id" value=''>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    .btn_width{
-        margin-bottom: 20px;
-    }
-
-    .tab-content{
-        padding: 20px 0px;
-    }
-
-    .cke_editable {
-        min-height: 1000px;
-    }
-
-
-
-
-</style>
-
+<div class="modal fade" role="dialog" id="myModal2">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo lang('add_case'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="patient/addMedicalHistory" id="medical_historyEditForm" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
+                            <input type="date" class="form-control" name="date" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputEmail1"><?php echo lang('title'); ?></label>
+                            <input type="text" class="form-control" name="title" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=""><?php echo lang('case'); ?></label>
+                        <textarea class="form-control ckeditor" name="description" id="editor" value="" rows="70" cols="70"></textarea>
+                    </div>
+                    <input type="hidden" name="patient_id" value='<?php echo $patient->id; ?>'>
+                    <input type="hidden" name="id" value=''>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="common/js/codearistos.min.js"></script>
-<script type="text/javascript">
-                                                        $(document).ready(function () {
-                                                            $(".editbutton").click(function (e) {
-                                                                e.preventDefault(e);
-                                                                // Get the record's ID via attribute  
-                                                                var iid = $(this).attr('data-id');
-                                                                $('#myModal2').modal('show');
-                                                                $.ajax({
-                                                                    url: 'patient/editMedicalHistoryByJason?id=' + iid,
-                                                                    method: 'GET',
-                                                                    data: '',
-                                                                    dataType: 'json',
-                                                                }).success(function (response) {
-                                                                    // Populate the form fields with the data returned from server
-                                                                    var date = new Date(response.medical_history.date * 1000);
-                                                                    var de = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
 
-                                                                    $('#medical_historyEditForm').find('[name="id"]').val(response.medical_history.id).end()
-                                                                    $('#medical_historyEditForm').find('[name="date"]').val(de).end()
-                                                                    $('#medical_historyEditForm').find('[name="title"]').val(response.medical_history.title).end()
-                                                                    CKEDITOR.instances['editor'].setData(response.medical_history.description)
-                                                                });
-                                                            });
-                                                        });
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".editPatient").click(function() {
+            //    e.preventDefault(e);
+            // Get the record's ID via attribute  
+            var iid = $(this).attr('data-id');
+            $('#editPatientForm').trigger("reset");
+            $("#img").attr("src", "template/assets/img/news/img01.jpg");
+            $.ajax({
+                url: 'patient/editPatientByJason?id=' + iid,
+                method: 'GET',
+                data: '',
+                dataType: 'json',
+            }).success(function(response) {
+                // Populate the form fields with the data returned from server
+
+                $('#editPatientForm').find('[name="id"]').val(response.patient.id).end()
+                $('#editPatientForm').find('[name="name"]').val(response.patient.name).end()
+                $('#editPatientForm').find('[name="password"]').val(response.patient.password).end()
+                $('#editPatientForm').find('[name="email"]').val(response.patient.email).end()
+                $('#editPatientForm').find('[name="address"]').val(response.patient.address).end()
+                $('#editPatientForm').find('[name="phone"]').val(response.patient.phone).end()
+                $('#editPatientForm').find('[name="sex"]').val(response.patient.sex).change()
+                reformat(response.patient.birthdate)
+                $('#editPatientForm').find('[name="bloodgroup"]').val(response.patient.bloodgroup).change()
+                $('#editPatientForm').find('[name="p_id"]').val(response.patient.patient_id).end()
+
+                if (typeof response.patient.img_url !== 'undefined' && response.patient.img_url != '' && response.patient.img_url != null) {
+                    $("#img").attr("src", response.patient.img_url);
+                }
+                $('.js-example-basic-single.doctor').val(response.patient.doctor).trigger('change');
+                $('#infoModal').modal('show');
+            });
+        });
+    });
+
+    function reformat(date) {
+        var tanggal = date;
+        var parts = tanggal.split('-');
+        var newDate = new Date(parts[2], parts[1] - 1, parts[0]);
+        var tahun = newDate.getFullYear();
+        var bulan = ("0" + (newDate.getMonth() + 1)).slice(-2);
+        var hari = ("0" + newDate.getDate()).slice(-2);
+        var tanggalBaru = tahun + "-" + bulan + "-" + hari;
+        console.log(tanggalBaru);
+        $('#editPatientForm').find('[name="birthdate"]').empty()
+        $('#editPatientForm').find('[name="birthdate"]').val(tanggalBaru)
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".editbutton").click(function(e) {
+            e.preventDefault(e);
+            // Get the record's ID via attribute  
+            var iid = $(this).attr('data-id');
+            $('#myModal2').modal('show');
+            $.ajax({
+                url: 'patient/editMedicalHistoryByJason?id=' + iid,
+                method: 'GET',
+                data: '',
+                dataType: 'json',
+            }).success(function(response) {
+                // Populate the form fields with the data returned from server
+                var date = new Date(response.medical_history.date * 1000);
+                var de = date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate();
+
+                $('#medical_historyEditForm').find('[name="id"]').val(response.medical_history.id).end()
+                $('#medical_historyEditForm').find('[name="date"]').val(de).end()
+                $('#medical_historyEditForm').find('[name="title"]').val(response.medical_history.title).end()
+                CKEDITOR.instances['editor'].setData(response.medical_history.description)
+            });
+        });
+    });
 </script>
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".editPrescription").click(function (e) {
+    $(document).ready(function() {
+        $(".editPrescription").click(function(e) {
             e.preventDefault(e);
             // Get the record's ID via attribute  
             var iid = $(this).attr('data-id');
@@ -1016,7 +883,7 @@ if ($this->ion_auth->in_group('Doctor')) {
                 method: 'GET',
                 data: '',
                 dataType: 'json',
-            }).success(function (response) {
+            }).success(function(response) {
                 // Populate the form fields with the data returned from server
                 $('#prescriptionEditForm').find('[name="id"]').val(response.prescription.id).end()
                 $('#prescriptionEditForm').find('[name="patient"]').val(response.prescription.patient).end()
@@ -1032,8 +899,8 @@ if ($this->ion_auth->in_group('Doctor')) {
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".editAppointmentButton").click(function (e) {
+    $(document).ready(function() {
+        $(".editAppointmentButton").click(function(e) {
             e.preventDefault(e);
             // Get the record's ID via attribute  
             var iid = $(this).attr('data-id');
@@ -1046,10 +913,11 @@ if ($this->ion_auth->in_group('Doctor')) {
                 method: 'GET',
                 data: '',
                 dataType: 'json',
-            }).success(function (response) {
+            }).success(function(response) {
                 var de = response.appointment.date * 1000;
                 var d = new Date(de);
-                var da = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+                var da = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + d.getDate();
+                console.log(da);
                 // Populate the form fields with the data returned from server
                 $('#editAppointmentForm').find('[name="id"]').val(response.appointment.id).end()
                 $('#editAppointmentForm').find('[name="patient"]').val(response.appointment.patient).end()
@@ -1074,18 +942,18 @@ if ($this->ion_auth->in_group('Doctor')) {
                     method: 'GET',
                     data: '',
                     dataType: 'json',
-                }).success(function (response) {
+                }).success(function(response) {
                     $('#aslots1').find('option').remove();
                     var slots = response.aslots;
-                    $.each(slots, function (key, value) {
+                    $.each(slots, function(key, value) {
                         $('#aslots1').append($('<option>').text(value).val(value)).end();
                     });
 
                     $("#aslots1").val(response.current_value)
-                            .find("option[value=" + response.current_value + "]").attr('selected', true);
+                        .find("option[value=" + response.current_value + "]").attr('selected', true);
                     //  $('#aslots1 option[value=' + response.current_value + ']').attr("selected", "selected");
                     //   $("#default-step-1 .button-next").trigger("click");
-                    if ($('#aslots1').has('option').length == 0) {                    //if it is blank. 
+                    if ($('#aslots1').has('option').length == 0) { //if it is blank. 
                         $('#aslots1').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
                     }
                     // Populate the form fields with the data returned from server
@@ -1108,8 +976,8 @@ if ($this->ion_auth->in_group('Doctor')) {
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#adoctors").change(function () {
+    $(document).ready(function() {
+        $("#adoctors").change(function() {
             // Get the record's ID via attribute  
             var iid = $('#date').val();
             var doctorr = $('#adoctors').val();
@@ -1120,13 +988,13 @@ if ($this->ion_auth->in_group('Doctor')) {
                 method: 'GET',
                 data: '',
                 dataType: 'json',
-            }).success(function (response) {
+            }).success(function(response) {
                 var slots = response.aslots;
-                $.each(slots, function (key, value) {
+                $.each(slots, function(key, value) {
                     $('#aslots').append($('<option>').text(value).val(value)).end();
                 });
                 //   $("#default-step-1 .button-next").trigger("click");
-                if ($('#aslots').has('option').length == 0) {                    //if it is blank. 
+                if ($('#aslots').has('option').length == 0) { //if it is blank. 
                     $('#aslots').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
                 }
                 // Populate the form fields with the data returned from server
@@ -1136,7 +1004,7 @@ if ($this->ion_auth->in_group('Doctor')) {
 
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         var iid = $('#date').val();
         var doctorr = $('#adoctors').val();
         $('#aslots').find('option').remove();
@@ -1146,13 +1014,13 @@ if ($this->ion_auth->in_group('Doctor')) {
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (response) {
+        }).success(function(response) {
             var slots = response.aslots;
-            $.each(slots, function (key, value) {
+            $.each(slots, function(key, value) {
                 $('#aslots').append($('<option>').text(value).val(value)).end();
             });
             //   $("#default-step-1 .button-next").trigger("click");
-            if ($('#aslots').has('option').length == 0) {                    //if it is blank. 
+            if ($('#aslots').has('option').length == 0) { //if it is blank. 
                 $('#aslots').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
             }
             // Populate the form fields with the data returned from server
@@ -1164,14 +1032,14 @@ if ($this->ion_auth->in_group('Doctor')) {
 
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#date').datepicker({
-            format: "dd-mm-yyyy",
-            autoclose: true,
-        })
-                //Listen for the change even on the input
-                .change(dateChanged)
-                .on('changeDate', dateChanged);
+                format: "dd-mm-yyyy",
+                autoclose: true,
+            })
+            //Listen for the change even on the input
+            .change(dateChanged)
+            .on('changeDate', dateChanged);
     });
 
     function dateChanged() {
@@ -1185,13 +1053,13 @@ if ($this->ion_auth->in_group('Doctor')) {
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (response) {
+        }).success(function(response) {
             var slots = response.aslots;
-            $.each(slots, function (key, value) {
+            $.each(slots, function(key, value) {
                 $('#aslots').append($('<option>').text(value).val(value)).end();
             });
             //   $("#default-step-1 .button-next").trigger("click");
-            if ($('#aslots').has('option').length == 0) {                    //if it is blank. 
+            if ($('#aslots').has('option').length == 0) { //if it is blank. 
                 $('#aslots').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
             }
 
@@ -1201,10 +1069,6 @@ if ($this->ion_auth->in_group('Doctor')) {
         });
 
     }
-
-
-
-
 </script>
 
 
@@ -1219,8 +1083,8 @@ if ($this->ion_auth->in_group('Doctor')) {
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#adoctors1").change(function () {
+    $(document).ready(function() {
+        $("#adoctors1").change(function() {
             // Get the record's ID via attribute 
             var id = $('#appointment_id').val();
             var date = $('#date1').val();
@@ -1232,13 +1096,13 @@ if ($this->ion_auth->in_group('Doctor')) {
                 method: 'GET',
                 data: '',
                 dataType: 'json',
-            }).success(function (response) {
+            }).success(function(response) {
                 var slots = response.aslots;
-                $.each(slots, function (key, value) {
+                $.each(slots, function(key, value) {
                     $('#aslots1').append($('<option>').text(value).val(value)).end();
                 });
                 //   $("#default-step-1 .button-next").trigger("click");
-                if ($('#aslots1').has('option').length == 0) {                    //if it is blank. 
+                if ($('#aslots1').has('option').length == 0) { //if it is blank. 
                     $('#aslots1').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
                 }
                 // Populate the form fields with the data returned from server
@@ -1247,7 +1111,7 @@ if ($this->ion_auth->in_group('Doctor')) {
         });
     });
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         var id = $('#appointment_id').val();
         var date = $('#date1').val();
         var doctorr = $('#adoctors1').val();
@@ -1258,13 +1122,13 @@ if ($this->ion_auth->in_group('Doctor')) {
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (response) {
+        }).success(function(response) {
             var slots = response.aslots;
-            $.each(slots, function (key, value) {
+            $.each(slots, function(key, value) {
                 $('#aslots1').append($('<option>').text(value).val(value)).end();
             });
             //   $("#default-step-1 .button-next").trigger("click");
-            if ($('#aslots1').has('option').length == 0) {                    //if it is blank. 
+            if ($('#aslots1').has('option').length == 0) { //if it is blank. 
                 $('#aslots1').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
             }
             // Populate the form fields with the data returned from server
@@ -1276,14 +1140,14 @@ if ($this->ion_auth->in_group('Doctor')) {
 
 
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#date1').datepicker({
-            format: "dd-mm-yyyy",
-            autoclose: true,
-        })
-                //Listen for the change even on the input
-                .change(dateChanged1)
-                .on('changeDate', dateChanged1);
+                format: "dd-mm-yyyy",
+                autoclose: true,
+            })
+            //Listen for the change even on the input
+            .change(dateChanged1)
+            .on('changeDate', dateChanged1);
     });
 
     function dateChanged1() {
@@ -1298,13 +1162,13 @@ if ($this->ion_auth->in_group('Doctor')) {
             method: 'GET',
             data: '',
             dataType: 'json',
-        }).success(function (response) {
+        }).success(function(response) {
             var slots = response.aslots;
-            $.each(slots, function (key, value) {
+            $.each(slots, function(key, value) {
                 $('#aslots1').append($('<option>').text(value).val(value)).end();
             });
             //   $("#default-step-1 .button-next").trigger("click");
-            if ($('#aslots1').has('option').length == 0) {                    //if it is blank. 
+            if ($('#aslots1').has('option').length == 0) { //if it is blank. 
                 $('#aslots1').append($('<option>').text('No Further Time Slots').val('Not Selected')).end();
             }
 
@@ -1314,33 +1178,55 @@ if ($this->ion_auth->in_group('Doctor')) {
         });
 
     }
-
-
-
-
 </script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#editable-sample').DataTable({
             responsive: true,
             dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 
-            buttons: [
-                {extend: 'copyHtml5', exportOptions: {columns: [0, 1], }},
-                {extend: 'excelHtml5', exportOptions: {columns: [0, 1], }},
-                {extend: 'csvHtml5', exportOptions: {columns: [0, 1], }},
-                {extend: 'pdfHtml5', exportOptions: {columns: [0, 1], }},
-                {extend: 'print', exportOptions: {columns: [0, 1], }},
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [0, 1],
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1],
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: [0, 1],
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [0, 1],
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1],
+                    }
+                },
             ],
             aLengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
             iDisplayLength: -1,
-            "order": [[0, "desc"]],
+            "order": [
+                [0, "desc"]
+            ],
             "language": {
                 "lengthMenu": "_MENU_ records per page",
             }
@@ -1350,106 +1236,8 @@ if ($this->ion_auth->in_group('Doctor')) {
     });
 </script>
 
-
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $(".editPatient").click(function () {
-            //    e.preventDefault(e);
-            // Get the record's ID via attribute  
-            var iid = $(this).attr('data-id');
-            $('#editPatientForm').trigger("reset");
-            $.ajax({
-                url: 'patient/editPatientByJason?id=' + iid,
-                method: 'GET',
-                data: '',
-                dataType: 'json',
-            }).success(function (response) {
-                // Populate the form fields with the data returned from server
-
-                $('#editPatientForm').find('[name="id"]').val(response.patient.id).end()
-                $('#editPatientForm').find('[name="name"]').val(response.patient.name).end()
-                $('#editPatientForm').find('[name="password"]').val(response.patient.password).end()
-                $('#editPatientForm').find('[name="email"]').val(response.patient.email).end()
-                $('#editPatientForm').find('[name="address"]').val(response.patient.address).end()
-                $('#editPatientForm').find('[name="phone"]').val(response.patient.phone).end()
-                $('#editPatientForm').find('[name="sex"]').val(response.patient.sex).end()
-                $('#editPatientForm').find('[name="birthdate"]').val(response.patient.birthdate).end()
-                $('#editPatientForm').find('[name="bloodgroup"]').val(response.patient.bloodgroup).end()
-                $('#editPatientForm').find('[name="p_id"]').val(response.patient.patient_id).end()
-
-                if (typeof response.patient.img_url !== 'undefined' && response.patient.img_url != '') {
-                    $("#img").attr("src", response.patient.img_url);
-                }
-
-
-                $('.js-example-basic-single.doctor').val(response.patient.doctor).trigger('change');
-                $('#infoModal').modal('show');
-            });
-        });
-    });
-</script>
-
 <script>
-    $(document).ready(function () {
-
-
-        $("#adoctors").select2({
-            placeholder: '<?php echo lang('select_doctor'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'doctor/getDoctorInfo',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function (response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
-        $("#adoctors1").select2({
-            placeholder: '<?php echo lang('select_doctor'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'doctor/getDoctorInfo',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function (response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
-
-    });
-</script>
-<script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $(".flashmessage").delay(3000).fadeOut(100);
     });
 </script>
-
-
-
-
-
-

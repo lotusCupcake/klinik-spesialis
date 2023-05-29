@@ -446,6 +446,11 @@ if ($language == 'english') {
 <?php if ($this->uri->segment(1) == 'appointment') : ?>
     <script src="common/js/pagescript/appointment.js"></script>
 <?php endif ?>
+
+<?php if ($this->uri->segment(1) == 'patient') : ?>
+    <script src="common/js/pagescript/medicalHistory.js"></script>
+<?php endif ?>
+
 </body>
 
 </html>
