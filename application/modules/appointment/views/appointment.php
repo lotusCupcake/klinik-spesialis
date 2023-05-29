@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="calcelled" class="tab-pane">
+                        <div id="cancelled" class="tab-pane">
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <div class="space15"></div>
@@ -177,7 +177,7 @@
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <div class="space15"></div>
-                                    <table class="table table-striped table-bordered" id="ap-sample5">
+                                    <table class="table table-striped table-bordered" width="100%" id="ap-sample5">
                                         <thead>
                                             <tr>
                                                 <th scope="col"> <?php echo lang('id'); ?></th>
@@ -371,7 +371,7 @@
     </div>
 </div>
 
-<div class="modal fade" role="dialog" id="myModal">
+<div class="modal fade" role="dialog" id="cmodal">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div id='medical_history'>
@@ -383,35 +383,6 @@
     </div>
 </div>
 <!-- Add Appointment Modal-->
-
-
-
-<div class="modal fade" tabindex="-1" role="dialog" id="cmodal">
-    <div class="modal-dialog modal-lg" role="document" style="width: 80%;">
-        <div class="modal-content">
-            <!--
-            <div class="modal-header">
-                <h5 class="modal-title"><?php echo lang('patient') . " " . lang('history'); ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            -->
-            <div id='medical_history'>
-                <div class="col-md-12">
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 
 <!-- Edit Event Modal-->
@@ -556,7 +527,7 @@
             }).success(function(response) {
                 var de = response.appointment.date * 1000;
                 var d = new Date(de);
-                var da = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+                var da = d.getFullYear() + '-' + ("0"+ (d.getMonth() + 1)).slice(-2) + '-' + d.getDate();
                 // Populate the form fields with the data returned from server
                 $('#editAppointmentForm').find('[name="id"]').val(response.appointment.id).end()
                 $('#editAppointmentForm').find('[name="patient"]').val(response.appointment.patient).end()

@@ -276,6 +276,10 @@ if ($language == 'english') {
             },
             timeFormat: 'h(:mm) A',
             eventRender: function(event, element) {
+                $(element).css({
+                    'text-align': 'left',
+                    'color': '#FFFFFF',
+                });
                 element.find('.fc-time').html(element.find('.fc-time').text());
                 element.find('.fc-title').html(element.find('.fc-title').text());
 

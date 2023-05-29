@@ -1,21 +1,18 @@
-
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel col-md-6 row">
-            <header class="panel-heading">
-                <?php
+<div class="main-content no-print">
+    <section class="section">
+        <div class="section-header">
+            <h1>
+            <?php
                 if (!empty($appointment->id))
                     echo lang('edit_appointment');
                 else
                     echo lang('add_appointment');
-                ?>
-            </header>
-
-
-            <style>
+            ?>
+            </h1>
+        </div>
+        <style>
                 .panel{
                     background: transparent;
                 }
@@ -25,234 +22,177 @@
                 }
 
             </style>
-
-
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <?php echo validation_errors(); ?>
-                    <?php echo $this->session->flashdata('feedback'); ?>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?>
+            <div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
-                <form role="form" action="appointment/addNew" class="clearfix row" method="post" enctype="multipart/form-data">
-                    <div class="col-md-12 panel">
-                        <div class="col-md-3 payment_label"> 
-                            <label for="exampleInputEmail1"> <?php echo lang('patient'); ?></label>
-                        </div>
-                        <div class="col-md-9"> 
-                            <select class="form-control m-bot15  pos_select" id="pos_select" name="patient" value=''> 
-                                <?php if (!empty($patients)) { ?>
-                                    <option value="<?php echo $patients->id; ?>" selected="selected"><?php echo $patients->name; ?> - <?php echo $patients->id; ?></option>  
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="pos_client clearfix">
-                        <div class="col-md-8 payment pad_bot pull-right">
-                            <div class="col-md-3 payment_label"> 
-                                <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
-                            </div>
-                            <div class="col-md-9"> 
-                                <input type="text" class="form-control pay_in" name="p_name" value='<?php
-                                if (!empty($payment->p_name)) {
-                                    echo $payment->p_name;
-                                }
-                                ?>' placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-md-8 payment pad_bot pull-right">
-                            <div class="col-md-3 payment_label"> 
-                                <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
-                            </div>
-                            <div class="col-md-9"> 
-                                <input type="text" class="form-control pay_in" name="p_email" value='<?php
-                                if (!empty($payment->p_email)) {
-                                    echo $payment->p_email;
-                                }
-                                ?>' placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-md-8 payment pad_bot pull-right">
-                            <div class="col-md-3 payment_label"> 
-                                <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
-                            </div>
-                            <div class="col-md-9"> 
-                                <input type="text" class="form-control pay_in" name="p_phone" value='<?php
-                                if (!empty($payment->p_phone)) {
-                                    echo $payment->p_phone;
-                                }
-                                ?>' placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-md-8 payment pad_bot pull-right">
-                            <div class="col-md-3 payment_label"> 
-                                <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
-                            </div>
-                            <div class="col-md-9"> 
-                                <input type="text" class="form-control pay_in" name="p_age" value='<?php
-                                if (!empty($payment->p_age)) {
-                                    echo $payment->p_age;
-                                }
-                                ?>' placeholder="">
-                            </div>
-                        </div> 
-                        <div class="col-md-8 payment pad_bot pull-right">
-                            <div class="col-md-3 payment_label"> 
-                                <label for="exampleInputEmail1"> <?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
-                            </div>
-                            <div class="col-md-9"> 
-                                <select class="form-control m-bot15" name="p_gender" value=''>
-
-                                    <option value="Male" <?php
-                                    if (!empty($patient->sex)) {
-                                        if ($patient->sex == 'Male') {
-                                            echo 'selected';
-                                        }
-                                    }
-                                    ?> > Male </option>   
-                                    <option value="Female" <?php
-                                    if (!empty($patient->sex)) {
-                                        if ($patient->sex == 'Female') {
-                                            echo 'selected';
-                                        }
-                                    }
-                                    ?> > Female </option>
-                                    <option value="Others" <?php
-                                    if (!empty($patient->sex)) {
-                                        if ($patient->sex == 'Others') {
-                                            echo 'selected';
-                                        }
-                                    }
-                                    ?> > Others </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 panel">
-                        <div class="col-md-3 payment_label"> 
-                            <label for="exampleInputEmail1">  <?php echo lang('doctor'); ?></label>
-                        </div>
-                        <div class="col-md-9"> 
-                            <select class="form-control m-bot15" id="adoctors" name="doctor" value=''>  
-                                <?php if (!empty($doctors)) { ?>
-                                    <option value="<?php echo $doctors->id; ?>" selected="selected"><?php echo $doctors->name; ?> - <?php echo $doctors->id; ?></option>  
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-12 panel">
-                        <div class="col-md-3 payment_label"> 
-                            <label for="exampleInputEmail1"> <?php echo lang('date'); ?></label>
-                        </div>
-                        <div class="col-md-9"> 
-                            <input type="text" class="form-control" id="date" readonly="" name="date" id="exampleInputEmail1" value='<?php
-                            if (!empty($appointment->date)) {
-                                echo date('d-m-Y', $appointment->date);
-                            }
-                            ?>' placeholder="">
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 panel">
-                        <div class="col-md-3 payment_label"> 
-                            <label class=""><?php echo lang('available_slots'); ?></label>
-                        </div>
-                        <div class="col-md-9"> 
-                            <select class="form-control m-bot15" name="time_slot" id="aslots" value=''> 
-
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-12 panel">
-                        <div class="col-md-3 payment_label"> 
-                            <label for="exampleInputEmail1"> <?php echo lang('remarks'); ?></label>
-                        </div>
-                        <div class="col-md-9"> 
-                            <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value='<?php
-                            if (!empty($appointment->remarks)) {
-                                echo $appointment->remarks;
-                            }
-                            ?>' placeholder="">
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-12 panel">
-                        <div class="col-md-3 payment_label"> 
-                            <label for="exampleInputEmail1"> <?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
-                        </div>
-                        <div class="col-md-9"> 
-                            <select class="form-control m-bot15" name="status" value=''>
-                                <option value="Pending Confirmation" <?php
-                                if (!empty($appointment->status)) {
-                                    if ($appointment->status == 'Pending Confirmation') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > <?php echo lang('pending_confirmation'); ?> </option> 
-                                <option value="Confirmed" <?php
-                                if (!empty($appointment->status)) {
-                                    if ($appointment->status == 'Confirmed') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > <?php echo lang('confirmed'); ?> </option>
-                                <option value="Treated" <?php
-                                if (!empty($appointment->status)) {
-                                    if ($appointment->status == 'Treated') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > <?php echo lang('treated'); ?> </option>
-                                <option value="cancelled" <?php
-                                if (!empty($appointment->status)) {
-                                    if ($appointment->status == 'Treated') {
-                                        echo 'selected';
-                                    }
-                                }
-                                ?> > <?php echo lang('cancelled'); ?> </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!--     <div class="col-md-12 panel">
-                         <div class="col-md-3 payment_label"> 
-                         </div>
-                         <div class="col-md-9"> 
-                             <input type="checkbox" name="sms" value="sms"> <?php echo lang('send_sms') ?><br>
-                         </div>
-                     </div>
-                    -->
-
-
-
-
-
-                    <input type="hidden" name="id" id="appointment_id" value='<?php
-                    if (!empty($appointment->id)) {
-                        echo $appointment->id;
-                    }
-                    ?>'>
-
-                    <div class="col-md-12 panel">
-                        <div class="col-md-3 payment_label"> 
-                        </div>
-                        <div class="col-md-9"> 
-                            <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                        </div>
-                    </div>
-
-
-                </form>
             </div>
+        <?php } ?>
 
-        </section>
-        <!-- page end-->
+        <div class="section-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <form role="form" action="appointment/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for=""><?php echo lang('patient'); ?></label>
+                                    <select name="patient" id="pos_select" class="form-control pos_select">
+                                    <?php if (!empty($patients)) { ?>
+                                        <option value="<?php echo $patients->id; ?>" selected="selected"><?php echo $patients->name; ?> - <?php echo $patients->id; ?></option>  
+                                    <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="pos_client col-md-6 clearfix">
+                                    <div class="form-group payment pad_bot pull-right">
+                                        <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('name'); ?></label>
+                                        <input type="text" class="form-control pay_in" name="p_name" id="exampleInputEmail1" value='<?php
+                                        if (!empty($payment->p_name)) {
+                                            echo $payment->p_name;
+                                        }
+                                        ?>' placeholder="">
+                                    </div>
+                                    <div class="form-group payment pad_bot pull-right">
+                                        <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('email'); ?></label>
+                                        <input type="text" class="form-control pay_in" name="p_email" id="exampleInputEmail1" value='<?php
+                                        if (!empty($payment->p_email)) {
+                                            echo $payment->p_email;
+                                        }
+                                        ?>' placeholder="">
+                                    </div>
+                                    <div class="form-group payment pad_bot pull-right">
+                                        <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('phone'); ?></label>
+                                        <input type="text" class="form-control pay_in" name="p_phone" id="exampleInputEmail1" value='<?php
+                                        if (!empty($payment->p_phone)) {
+                                            echo $payment->p_phone;
+                                        }
+                                        ?>' placeholder="">
+                                    </div>
+                                    <div class="form-group payment pad_bot pull-right">
+                                        <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('age'); ?></label>
+                                        <input type="text" class="form-control pay_in" name="p_age" id="exampleInputEmail1" value='<?php
+                                        if (!empty($payment->p_age)) {
+                                            echo $payment->p_age;
+                                        }
+                                        ?>' placeholder="">
+                                    </div>
+                                    <div class="form-group payment pad_bot pull-right">
+                                        <label for="exampleInputEmail1"><?php echo lang('patient'); ?> <?php echo lang('gender'); ?></label>
+                                        <select name="p_gender" class="form-control">
+                                            <option value="Male" <?php
+                                                                    if (!empty($patient->sex)) {
+                                                                        if ($patient->sex == 'Male') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }
+                                                                    ?>> Male </option>
+                                            <option value="Female" <?php
+                                                                    if (!empty($patient->sex)) {
+                                                                        if ($patient->sex == 'Female') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }
+                                                                    ?>> Female </option>
+                                            <option value="Others" <?php
+                                                                    if (!empty($patient->sex)) {
+                                                                        if ($patient->sex == 'Others') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }
+                                                                    ?>> Others </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                    <select name="doctor" id="adoctors" class="form-control">
+                                    <?php if (!empty($doctors)) { ?>
+                                        <option value="<?php echo $doctors->id; ?>" selected="selected"><?php echo $doctors->name; ?> - <?php echo $doctors->id; ?></option>  
+                                    <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="date"><?php echo lang('date'); ?></label>
+                                    <input type="date" class="form-control" name="date" id="date" value='<?php
+                                    if (!empty($appointment->date)) {
+                                        echo date('d-m-Y', $appointment->date);
+                                    }
+                                    ?>' placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="time_slot"><?php echo lang('available_slots'); ?></label>
+                                    <select name="time_slot" id="aslots" class="form-control">
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label><?php echo lang('remarks'); ?></label>
+                                    <input type="text" class="form-control" name="remarks" value="<?php
+                                    if (!empty($appointment->remarks)) {
+                                        echo $appointment->remarks;
+                                    }
+                                    ?>" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="status"><?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                                    <select name="status" class="form-control m-bot15" value=''>
+                                        <option value="Pending Confirmation" <?php
+                                        if (!empty($appointment->status)) {
+                                            if ($appointment->status == 'Pending Confirmation') {
+                                                echo 'selected';
+                                            }
+                                        }
+                                        ?> > <?php echo lang('pending_confirmation'); ?> </option> 
+                                        <option value="Confirmed" <?php
+                                        if (!empty($appointment->status)) {
+                                            if ($appointment->status == 'Confirmed') {
+                                                echo 'selected';
+                                            }
+                                        }
+                                        ?> > <?php echo lang('confirmed'); ?> </option>
+                                        <option value="Treated" <?php
+                                        if (!empty($appointment->status)) {
+                                            if ($appointment->status == 'Treated') {
+                                                echo 'selected';
+                                            }
+                                        }
+                                        ?> > <?php echo lang('treated'); ?> </option>
+                                        <option value="cancelled" <?php
+                                        if (!empty($appointment->status)) {
+                                            if ($appointment->status == 'Treated') {
+                                                echo 'selected';
+                                            }
+                                        }
+                                        ?> > <?php echo lang('cancelled'); ?> </option>
+                                    </select>
+                                </div>
+                                
+                                <input type="hidden" name="id" id="appointment_id" value='<?php
+                                if (!empty($appointment->id)) {
+                                    echo $appointment->id;
+                                }
+                                ?>'>
+                                <div class="card-footer">
+                                    <button type="submit" name="submit" class="btn btn-primary submit_button float-right mb-4"><?php echo lang('submit'); ?></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-</section>
+</div>
+
 <!--main content end-->
 <!--footer start-->
 
