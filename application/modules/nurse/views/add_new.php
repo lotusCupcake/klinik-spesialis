@@ -1,102 +1,104 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
+<div class="main-content no-print">
+    <section class="section">
+        <div class="section-header">
+            <h1>
                 <?php
                 if (!empty($nurse->id))
                     echo lang('edit_nurse');
                 else
                     echo lang('add_nurse');
                 ?>
-            </header>
-            <div class="panel-body col-md-7">
-                <div class="adv-table editable-table ">
-                    <div class="clearfix">
-
-                        <div class="col-lg-12">
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-3"></div>
-                                        <div class="col-lg-6">
-                                            <?php echo validation_errors(); ?>
-                                            <?php echo $this->session->flashdata('feedback'); ?>
-                                        </div>
-                                        <div class="col-lg-3"></div>
-                                    </div>
-                                    <form role="form" action="nurse/addNew" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
-                                            <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('name');
-                                            }
-                                            if (!empty($nurse->name)) {
-                                                echo $nurse->name;
-                                            }
-                                            ?>'>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
-                                            <input type="text" class="form-control" name="email" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('email');
-                                            }
-                                            if (!empty($nurse->email)) {
-                                                echo $nurse->email;
-                                            }
-                                            ?>' placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('password'); ?></label>
-                                            <input type="password" class="form-control" name="password" id="exampleInputEmail1" placeholder="********">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
-                                            <input type="text" class="form-control" name="address" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('address');
-                                            }
-                                            if (!empty($nurse->address)) {
-                                                echo $nurse->address;
-                                            }
-                                            ?>' placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
-                                            <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('phone');
-                                            }
-                                            if (!empty($nurse->phone)) {
-                                                echo $nurse->phone;
-                                            }
-                                            ?>' placeholder="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('image'); ?></label>
-                                            <input type="file" name="img_url">
-                                        </div>
-
-                                        <input type="hidden" name="id" value='<?php
-                                        if (!empty($nurse->id)) {
-                                            echo $nurse->id;
-                                        }
-                                        ?>'>
-                                        <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
-                                    </form>
-                                </div>
-                            </section>
+            </h1>
+        </div>
+        <?php $this->session->flashdata('feedback'); ?>
+        <div class="alert alert-danger alert-has-icon alert-dismissible show fade">
+            <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+                <div class="alert-title">Failed!</div>
+                <?= validation_errors(); ?>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <form role="form" action="nurse/addNew" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><?php echo lang('name'); ?></label>
+                            <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='<?php
+                                                                                                                if (!empty($setval)) {
+                                                                                                                    echo set_value('name');
+                                                                                                                }
+                                                                                                                if (!empty($nurse->name)) {
+                                                                                                                    echo $nurse->name;
+                                                                                                                }
+                                                                                                                ?>'>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><?php echo lang('email'); ?></label>
+                            <input type="text" class="form-control" name="email" id="exampleInputEmail1" value='<?php
+                                                                                                                if (!empty($setval)) {
+                                                                                                                    echo set_value('email');
+                                                                                                                }
+                                                                                                                if (!empty($nurse->email)) {
+                                                                                                                    echo $nurse->email;
+                                                                                                                }
+                                                                                                                ?>' placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><?php echo lang('password'); ?></label>
+                            <input type="password" class="form-control" name="password" id="exampleInputEmail1" placeholder="********">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><?php echo lang('address'); ?></label>
+                            <input type="text" class="form-control" name="address" id="exampleInputEmail1" value='<?php
+                                                                                                                    if (!empty($setval)) {
+                                                                                                                        echo set_value('address');
+                                                                                                                    }
+                                                                                                                    if (!empty($nurse->address)) {
+                                                                                                                        echo $nurse->address;
+                                                                                                                    }
+                                                                                                                    ?>' placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><?php echo lang('phone'); ?></label>
+                            <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='<?php
+                                                                                                                if (!empty($setval)) {
+                                                                                                                    echo set_value('phone');
+                                                                                                                }
+                                                                                                                if (!empty($nurse->phone)) {
+                                                                                                                    echo $nurse->phone;
+                                                                                                                }
+                                                                                                                ?>' placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><?php echo lang('image'); ?></label>
+                            <input type="file" name="img_url">
+                        </div>
+
+                        <input type="hidden" name="id" value='<?php
+                                                                if (!empty($nurse->id)) {
+                                                                    echo $nurse->id;
+                                                                }
+                                                                ?>'>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                </div>
+                                <div class="col-md-8">
+                                    <button type="submit" name="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
+        </div>
     </section>
-</section>
+</div>
 <!--main content end-->
 <!--footer start-->
