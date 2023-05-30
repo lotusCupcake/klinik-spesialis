@@ -18,7 +18,7 @@
 </div>
 
 <div class="modal fade" role="dialog" id="cmodal">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
             
