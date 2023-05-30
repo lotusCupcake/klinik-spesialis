@@ -1609,14 +1609,12 @@ class Patient extends MX_Controller
         $appointments = $this->appointment_model->getAppointmentByPatient($patient->id);
         $patients = $this->patient_model->getPatient();
         $doctors = $this->doctor_model->getDoctor();
-        $data['prescriptions'] = $this->prescription_model->getPrescriptionByPatientId($id);
+        $prescriptions = $this->prescription_model->getPrescriptionByPatientId($id);
         $labs = $this->lab_model->getLabByPatientId($id);
         $medical_histories = $this->patient_model->getMedicalHistoryByPatientId($id);
         $patient_materials = $this->patient_model->getPatientMaterialByPatientId($id);
 
-        // echo json_encode($patient_materials);
-
-        foreach ($data['appointments'] as $appointment) {
+        foreach ($appointments as $appointment) {
             $doctor_details = $this->doctor_model->getDoctorById($appointment->doctor);
             if (!empty($doctor_details)) {
                 $doctor_name = $doctor_details->name;
@@ -1639,7 +1637,7 @@ class Patient extends MX_Controller
                                                     </div>';
         }
 
-        foreach ($data['prescriptions'] as $prescription) {
+        foreach ($prescriptions as $prescription) {
             $doctor_details = $this->doctor_model->getDoctorById($prescription->doctor);
             if (!empty($doctor_details)) {
                 $doctor_name = $doctor_details->name;
@@ -1662,7 +1660,7 @@ class Patient extends MX_Controller
                                                     </div>';
         }
 
-        foreach ($data['labs'] as $lab) {
+        foreach ($labs as $lab) {
 
             $doctor_details = $this->doctor_model->getDoctorById($lab->doctor);
             if (!empty($doctor_details)) {
@@ -1687,7 +1685,7 @@ class Patient extends MX_Controller
                                                     </div>';
         }
 
-        foreach ($data['medical_histories'] as $medical_history) {
+        foreach ($medical_histories as $medical_history) {
             $timeline[$medical_history->date + 4] = '<div class="activity">
                                                         <div class="activity-icon bg-primary text-white shadow-primary">
                                                             <i class="fas fa-notes-medical"></i>
@@ -1703,7 +1701,7 @@ class Patient extends MX_Controller
                                                     </div>';
         }
 
-        foreach ($data['patient_materials'] as $patient_material) {
+        foreach ($patient_materials as $patient_material) {
             $timeline[$patient_material->date + 5] = '<div class="activity">
                                                         <div class="activity-icon bg-primary text-white shadow-primary">
                                                             <i class="fas fa-file"></i>
@@ -1718,31 +1716,6 @@ class Patient extends MX_Controller
                                                         </div>
                                                     </div>';
         }
-
-
-
-
-
-        if (!empty($timeline)) {
-            krsort($timeline);
-            $timeline_value = '';
-            foreach ($timeline as $key => $value) {
-                $timeline_value .= $value;
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         $all_appointments = '';
@@ -1760,7 +1733,7 @@ class Patient extends MX_Controller
                                                                 <td>' . $appointment_doctor . '</td>
                                                                 <td>' . $appointment->status . '</td>
                                                                     <td class="no-print">
-                                                                        <button type="button" class="btn btn-info btn-xs btn_width editAppointmentButton" title="' . lang("edit") . '" data-toggle="modal" data-id="' . $appointment->id . '"><i class="fa fa-edit"></i> </button>
+                                                                        <a href="appointment/editAppointment?id=' . $appointment->id . '"><button type="button" class="btn btn-info btn-xs btn_width" title="' . lang("edit") . ' data-id="' . $appointment->id . '"><i class="fa fa-edit"></i></button></a>
                                                                     </td></tr>';
             $all_appointments .= $patient_appointments;
         }
@@ -1793,7 +1766,7 @@ class Patient extends MX_Controller
 
         $all_prescription = '';
 
-        foreach ($data['prescriptions'] as $prescription) {
+        foreach ($prescriptions as $prescription) {
             $doctor_details = $this->doctor_model->getDoctorById($prescription->doctor);
             if (!empty($doctor_details)) {
                 $prescription_doctor = $doctor_details->name;
@@ -1881,7 +1854,9 @@ class Patient extends MX_Controller
             $all_material .= '<div class="col-md-3">';
             $all_material .= '<article class="article">';
             $all_material .= '<div class="article-header">';
-            $all_material .= '<a href="' . $material->url . '" target="_blank"></a>' . $image;
+            $all_material .= '<a href="' . $material->url . '" target="_blank">';
+            $all_material .= $image;
+            $all_material .= '</a>';
             $all_material .= '</div>';
             $all_material .= '<div class="article-details">';
             if (!empty($material->title)) {
@@ -1901,179 +1876,189 @@ class Patient extends MX_Controller
             $all_material = ' ';
         }
 
-        $data['view'] = '
-        <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="user-item">
-                                <img alt="image" src="' . ((!empty($patient->img_url)) ? $patient->img_url : base_url() . '/template/assets/img/avatar/avatar-1.png') . '" width="70%">
-                                <div class="user-details">
-                                    <div class="user-name">' . $patient->name . '</div>
-                                    <div class="text-job text-muted">' . $patient->email . '</div>
-                                </div>
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for="">' . lang('patient_id') . '</label>
-                                <input type="text" class="form-control" value="' . $patient->id . '" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="">' . lang('gender') . '</label>
-                                <input type="text" class="form-control" value="' . $patient->sex . '" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="">' . lang('gender') . '</label>
-                                <input type="text" class="form-control" value="' . $patient->sex . '" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="">' . lang('birth_date') . '</label>
-                                <input type="text" class="form-control" value="' . $patient->birthdate . '" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="">' . lang('phone') . '</label>
-                                <input type="text" class="form-control" value="' . $patient->phone . '" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="">' . lang('email') . '</label>
-                                <input type="text" class="form-control" value="' . $patient->email . '" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="">' . lang('address') . '</label>
-                                <input type="text" class="form-control" value="' . $patient->address . '" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="appointments-tab" data-toggle="tab" href="#appointments" role="tab" aria-controls="appointments" aria-selected="true">' . lang('appointments') . '</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">' . lang('case_history') . '</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">' . lang('prescription') . '</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="lab-tab" data-toggle="tab" href="#lab" role="tab" aria-controls="lab" aria-selected="false">' . lang('lab') . '</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">' . lang('documents') . '</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false">' . lang('timeline') . '</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <div class="space15"></div>
-                                                <table class="table table-striped table-bordered" id="editable-sample">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>' . lang('date') . '</th>
-                                                            <th>' . lang('time_slot') . '</th>
-                                                            <th>' . lang('doctor') . '</th>
-                                                            <th>' . lang('status') . '</th>
-                                                                <th class="no-print">' . lang('options') . '</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>' . $all_appointments . '
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <div class="space15"></div>
-                                                <table class="table table-striped table-bordered" id="editable-sample">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>' . lang('date') . '</th>
-                                                            <th>' . lang('title') . '</th>
-                                                            <th>' . lang('description') . '</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>' . $all_case . '
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <div class="space15"></div>
-                                                <table class="table table-striped table-bordered" id="editable-sample">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>' . lang('date') . '</th>
-                                                            <th>' . lang('doctor') . '</th>
-                                                            <th>' . lang('medicine') . '</th>
-                                                            <th class="no-print">' . lang('options') . '</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>' . $all_prescription . '
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="lab" role="tabpanel" aria-labelledby="lab-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <div class="space15"></div>
-                                                <table class="table table-striped table-bordered" id="editable-sample">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>' . lang('id') . '</th>
-                                                            <th>' . lang('date') . '</th>
-                                                            <th>' . lang('doctor') . '</th>
-                                                            <th class="no-print">' . lang('options') . '</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>' . $all_lab . '
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                        <div class="">
-                                    ' . $all_material . '
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
-                                    <div class="card">
-                                        <div class="card-body">
-                                        <div class="activities">' . $timeline_value . '</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        ';
+        $data['view'] = '';
+        $data['view'] .= '<div class="row">';
+        $data['view'] .= '<div class="col-md-3">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<div class="user-item">';
+        $data['view'] .= '<img alt="image" src="' . ((!empty($patient->img_url)) ? $patient->img_url : base_url() . '/template/assets/img/avatar/avatar-1.png') . '" width="70%">';
+        $data['view'] .= '<div class="user-details">';
+        $data['view'] .= '<div class="user-name">' . $patient->name . '</div>';
+        $data['view'] .= '<div class="text-job text-muted">' . $patient->email . '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="form-group mt-4">';
+        $data['view'] .= '<label for="">' . lang('patient_id') . '</label>';
+        $data['view'] .= '<input type="text" class="form-control" value="' . $patient->id . '" readonly>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="form-group">';
+        $data['view'] .= '<label for="">' . lang('gender') . '</label>';
+        $data['view'] .= '<input type="text" class="form-control" value="' . $patient->sex . '" readonly>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="form-group">';
+        $data['view'] .= '<label for="">' . lang('gender') . '</label>';
+        $data['view'] .= '<input type="text" class="form-control" value="' . $patient->sex . '" readonly>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="form-group">';
+        $data['view'] .= '<label for="">' . lang('birth_date') . '</label>';
+        $data['view'] .= '<input type="text" class="form-control" value="' . $patient->birthdate . '" readonly>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="form-group">';
+        $data['view'] .= '<label for="">' . lang('phone') . '</label>';
+        $data['view'] .= '<input type="text" class="form-control" value="' . $patient->phone . '" readonly>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="form-group">';
+        $data['view'] .= '<label for="">' . lang('email') . '</label>';
+        $data['view'] .= '<input type="text" class="form-control" value="' . $patient->email . '" readonly>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="form-group">';
+        $data['view'] .= '<label for="">' . lang('address') . '</label>';
+        $data['view'] .= '<input type="text" class="form-control" value="' . $patient->address . '" readonly>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="col-md-9">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<ul class="nav nav-tabs" id="myTab" role="tablist">';
+        $data['view'] .= '<li class="nav-item">';
+        $data['view'] .= '<a class="nav-link active" id="appointments-tab" data-toggle="tab" href="#appointments" role="tab" aria-controls="appointments" aria-selected="true">' . lang('appointments') . '</a>';
+        $data['view'] .= '</li>';
+        $data['view'] .= '<li class="nav-item">';
+        $data['view'] .= '<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">' . lang('case_history') . '</a>';
+        $data['view'] .= '</li>';
+        $data['view'] .= '<li class="nav-item">';
+        $data['view'] .= '<a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">' . lang('prescription') . '</a>';
+        $data['view'] .= '</li>';
+        $data['view'] .= '<li class="nav-item">';
+        $data['view'] .= '<a class="nav-link" id="lab-tab" data-toggle="tab" href="#lab" role="tab" aria-controls="lab" aria-selected="false">' . lang('lab') . '</a>';
+        $data['view'] .= '</li>';
+        $data['view'] .= '<li class="nav-item">';
+        $data['view'] .= '<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">' . lang('documents') . '</a>';
+        $data['view'] .= '</li>';
+        $data['view'] .= '<li class="nav-item">';
+        $data['view'] .= '<a class="nav-link" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false">' . lang('timeline') . '</a>';
+        $data['view'] .= '</li>';
+        $data['view'] .= '</ul>';
+        $data['view'] .= '<div class="tab-content" id="myTabContent">';
+        $data['view'] .= '<div class="tab-pane fade show active" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<div class="table-responsive">';
+        $data['view'] .= '<div class="space15"></div>';
+        $data['view'] .= '<table class="table table-striped table-bordered" id="editable-sample">';
+        $data['view'] .= '<thead>';
+        $data['view'] .= '<tr>';
+        $data['view'] .= '<th>' . lang('date') . '</th>';
+        $data['view'] .= '<th>' . lang('time_slot') . '</th>';
+        $data['view'] .= '<th>' . lang('doctor') . '</th>';
+        $data['view'] .= '<th>' . lang('status') . '</th>';
+        $data['view'] .= '<th class="no-print">' . lang('options') . '</th>';
+        $data['view'] .= '</tr>';
+        $data['view'] .= '</thead>';
+        $data['view'] .= '<tbody>';
+        $data['view'] .= $all_appointments;
+        $data['view'] .= '</tbody>';
+        $data['view'] .= '</table>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<div class="table-responsive">';
+        $data['view'] .= '<div class="space15"></div>';
+        $data['view'] .= '<table class="table table-striped table-bordered" id="editable-sample">';
+        $data['view'] .= '<thead>';
+        $data['view'] .= '<tr>';
+        $data['view'] .= '<th>' . lang('date') . '</th>';
+        $data['view'] .= '<th>' . lang('title') . '</th>';
+        $data['view'] .= '<th>' . lang('description') . '</th>';
+        $data['view'] .= '</tr>';
+        $data['view'] .= '</thead>';
+        $data['view'] .= '<tbody>';
+        $data['view'] .= $all_case;
+        $data['view'] .= '</tbody>';
+        $data['view'] .= '</table>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<div class="table-responsive">';
+        $data['view'] .= '<div class="space15"></div>';
+        $data['view'] .= '<table class="table table-striped table-bordered" id="editable-sample">';
+        $data['view'] .= '<thead>';
+        $data['view'] .= '<tr>';
+        $data['view'] .= '<th>' . lang('date') . '</th>';
+        $data['view'] .= '<th>' . lang('doctor') . '</th>';
+        $data['view'] .= '<th>' . lang('medicine') . '</th>';
+        $data['view'] .= '<th class="no-print" width="20%">' . lang('options') . '</th>';
+        $data['view'] .= '</tr>';
+        $data['view'] .= '</thead>';
+        $data['view'] .= '<tbody>';
+        $data['view'] .= $all_prescription;
+        $data['view'] .= '</tbody>';
+        $data['view'] .= '</table>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="tab-pane fade" id="lab" role="tabpanel" aria-labelledby="lab-tab">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<div class="table-responsive">';
+        $data['view'] .= '<div class="space15"></div>';
+        $data['view'] .= '<table class="table table-striped table-bordered" id="editable-sample">';
+        $data['view'] .= '<thead>';
+        $data['view'] .= '<tr>';
+        $data['view'] .= '<th>' . lang('id') . '</th>';
+        $data['view'] .= '<th>' . lang('date') . '</th>';
+        $data['view'] .= '<th>' . lang('doctor') . '</th>';
+        $data['view'] .= '<th class="no-print">' . lang('options') . '</th>';
+        $data['view'] .= '</tr>';
+        $data['view'] .= '</thead>';
+        $data['view'] .= '<tbody>';
+        $data['view'] .= $all_lab;
+        $data['view'] .= '</tbody>';
+        $data['view'] .= '</table>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<div class="">';
+        $data['view'] .= $all_material;
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '<div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">';
+        $data['view'] .= '<div class="card">';
+        $data['view'] .= '<div class="card-body">';
+        $data['view'] .= '<div class="activities">';
+        if (!empty($timeline)) {
+            krsort($timeline);
+            foreach ($timeline as $key => $value) {
+                $data['view'] .= $value;
+            }
+        }
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
+        $data['view'] .= '</div>';
 
 
         echo json_encode($data);

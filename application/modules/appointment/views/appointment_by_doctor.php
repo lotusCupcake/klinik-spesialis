@@ -108,6 +108,91 @@
     </section>
 </div>
 
+<div class="modal fade" role="dialog" id="editAppointmentModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo lang('edit_appointment'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="appointment/addNew" id="editAppointmentForm" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for=""><?php echo lang('patient'); ?></label>
+                                <select name="patient" id="pos_select" class="form-control js-example-basic-single patient pos_select select2">
+                                    <option value="">Select .....</option>
+                                    <option value="<?php echo $patient->id; ?>"><?php echo $patient->name; ?> </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="doctor"><?php echo lang('doctor'); ?></label>
+                                <select name="doctor" id="adoctors1" class="form-control select2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date"><?php echo lang('date'); ?></label>
+                                <input type="date" class="form-control" name="date" id="date1" value='' placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="time_slot"><?php echo lang('available_slots'); ?></label>
+                                <select name="time_slot" id="aslots1" class="form-control select2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="status"><?php echo lang('appointment'); ?> <?php echo lang('status'); ?></label>
+                                <select name="status" class="form-control m-bot15 select2" value=''>
+                                    <?php if (!$this->ion_auth->in_group('Patient')) { ?>
+                                        <option value="Pending Confirmation" <?php ?>> <?php echo lang('pending_confirmation'); ?> </option>
+                                        <option value="Confirmed" <?php
+                                                                    ?>> <?php echo lang('confirmed'); ?> </option>
+                                        <option value="Treated" <?php
+                                                                ?>> <?php echo lang('treated'); ?> </option>
+                                        <option value="Cancelled" <?php ?>> <?php echo lang('cancelled'); ?> </option>
+                                    <?php } else { ?>
+                                        <option value="Requested" <?php ?>> <?php echo lang('requested'); ?> </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><?php echo lang('remarks'); ?></label>
+                                <input type="text" class="form-control" name="remarks" id="exampleInputEmail1" value="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="sms" value="sms">
+                                <label class="form-check-label">
+                                    <?php echo lang('send_sms') ?>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="redirect" value='patient/medicalHistory?id=<?php echo $patient->id; ?>'>>
+                        <input type="hidden" name="id" id="appointment_id" value=''>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" role="dialog" id="cmodal">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
