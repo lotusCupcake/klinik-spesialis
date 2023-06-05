@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="space15"></div>
-                        <table class="table table-striped table-bordered" id="editable-sample">
+                        <table class="table-striped table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
                                     <th scope="col"><?php echo lang('image'); ?></th>
@@ -114,8 +114,23 @@
                         <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='' placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="formFile"><?php echo lang('image'); ?></label> <br>
-                        <input type="file" name="img_url" id="formFile">
+                        <label>Image Upload</label>
+                        <div class="">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="<?= base_url() . '/template/assets/img/news/img01.jpg' ?>" alt="" />
+                                </div>
+                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div>
+                                    <span class="btn btn-white btn-file">
+                                        <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
+                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                        <input type="file" class="default" name="img_url" />
+                                    </span>
+                                    <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer bg-whitesmoke br">
@@ -168,8 +183,23 @@
                         <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='' placeholder="">
                     </div>
                     <div class="form-group">
-                        <label for="formFile"><?php echo lang('image'); ?></label> <br>
-                        <input type="file" name="img_url" id="formFile">
+                        <label>Image Upload</label>
+                        <div class="">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="<?= base_url() . '/template/assets/img/news/img01.jpg' ?>" alt="" />
+                                </div>
+                                <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                <div>
+                                    <span class="btn btn-white btn-file">
+                                        <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
+                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                        <input type="file" class="default" name="img_url" />
+                                    </span>
+                                    <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <input type="hidden" name="id" value=''>
