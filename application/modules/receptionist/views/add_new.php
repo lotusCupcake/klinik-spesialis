@@ -1,143 +1,140 @@
+
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>
+            <?php
                 if (!empty($receptionist->id))
                     echo lang('edit_receptionist');
                 else
                     echo lang('add_receptionist');
                 ?>
-            </header>
-            <div class="panel-body col-md-7">
-                <div class="adv-table editable-table ">
-                    <div class="clearfix">
-
-                        <div class="col-lg-12">
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-3"></div>
-                                        <div class="col-lg-6">
-                                            <?php echo validation_errors(); ?>
+            </h1>
+        </div>
+        <?php $this->session->flashdata('feedback'); ?>
+        <div class="alert alert-danger alert-has-icon alert-dismissible show fade">
+            <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+                <div class="alert-title">Failed!</div>
+                <?= validation_errors(); ?>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <form role="form" action="receptionist/addNew" method="post" enctype="multipart/form-data">
+                                        <div class="row" style="padding-right:30px">
+                                            <div class="col-md-12 row mb-4">
+                                                <div class="col-md-4 text-right">
+                                                    <label class="col-form-label"><?php echo lang('name'); ?></label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='<?php
+                                                if (!empty($setval)) {
+                                                    echo set_value('name');
+                                                }
+                                                if (!empty($receptionist->name)) {
+                                                    echo $receptionist->name;
+                                                }
+                                                ?>' placeholder="">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-3"></div>
-                                    </div>
-                                    <form role="form" action="receptionist/addNew" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
-
-
-                                            <label for="exampleInputEmail1"> <?php echo lang('name'); ?></label>
-                                            <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('name');
-                                            }
-                                            if (!empty($receptionist->name)) {
-                                                echo $receptionist->name;
-                                            }
-                                            ?>' placeholder="">
-
+                                        <div class="row" style="padding-right:30px">
+                                            <div class="col-md-12 row mb-4">
+                                                <div class="col-md-4 text-right">
+                                                    <label class="col-form-label"><?php echo lang('email'); ?></label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                <input type="text" class="form-control" name="email" id="exampleInputEmail1" value='<?php
+                                                if (!empty($setval)) {
+                                                    echo set_value('email');
+                                                }
+                                                if (!empty($receptionist->email)) {
+                                                    echo $receptionist->email;
+                                                }
+                                                ?>' placeholder="">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"> <?php echo lang('email'); ?></label>
-                                            <input type="text" class="form-control" name="email" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('email');
-                                            }
-                                            if (!empty($receptionist->email)) {
-                                                echo $receptionist->email;
-                                            }
-                                            ?>' placeholder="">
+                                        <div class="row" style="padding-right:30px">
+                                            <div class="col-md-12 row mb-4">
+                                                <div class="col-md-4 text-right">
+                                                    <label class="col-form-label"><?php echo lang('password'); ?></label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                <input type="password" class="form-control" name="password" id="exampleInputEmail1" placeholder="">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"> <?php echo lang('password'); ?></label>
-                                            <input type="password" class="form-control" name="password" id="exampleInputEmail1" placeholder="">
+                                        <div class="row" style="padding-right:30px">
+                                            <div class="col-md-12 row mb-4">
+                                                <div class="col-md-4 text-right">
+                                                    <label class="col-form-label"><?php echo lang('address'); ?></label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                <input type="text" class="form-control" name="address" id="exampleInputEmail1" value='<?php
+                                                if (!empty($setval)) {
+                                                    echo set_value('address');
+                                                }
+                                                if (!empty($receptionist->address)) {
+                                                    echo $receptionist->address;
+                                                }
+                                                ?>' placeholder="">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"> <?php echo lang('address'); ?></label>
-                                            <input type="text" class="form-control" name="address" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('address');
-                                            }
-                                            if (!empty($receptionist->address)) {
-                                                echo $receptionist->address;
-                                            }
-                                            ?>' placeholder="">
+                                        <div class="row" style="padding-right:30px">
+                                            <div class="col-md-12 row mb-4">
+                                                <div class="col-md-4 text-right">
+                                                    <label class="col-form-label"><?php echo lang('phone'); ?></label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='<?php
+                                                    if (!empty($setval)) {
+                                                        echo set_value('phone');
+                                                    }
+                                                    if (!empty($receptionist->phone)) {
+                                                        echo $receptionist->phone;
+                                                    }
+                                                    ?>' placeholder="">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"> <?php echo lang('phone'); ?></label>
-                                            <input type="text" class="form-control" name="phone" id="exampleInputEmail1" value='<?php
-                                            if (!empty($setval)) {
-                                                echo set_value('phone');
-                                            }
-                                            if (!empty($receptionist->phone)) {
-                                                echo $receptionist->phone;
-                                            }
-                                            ?>' placeholder="">
+                                        <div class="row" style="padding-right:30px">
+                                            <div class="col-md-12 row mb-4">
+                                                <div class="col-md-4 text-right">
+                                                    <label class="col-form-label"><?php echo lang('image') ?></label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="file" class="form-control" name="img_url">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"> <?php echo lang('image'); ?></label>
-                                            <input type="file" name="img_url">
-                                        </div>
-
                                         <input type="hidden" name="id" value='<?php
                                         if (!empty($receptionist->id)) {
                                             echo $receptionist->id;
                                         }
                                         ?>'>
-
-
-                                        <button type="submit" name="submit" class="btn btn-info"> <?php echo lang('submit'); ?></button>
-                                    </form>
-
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
                                 </div>
-                            </section>
+                                <div class="col-md-8">
+                                    <button type="submit" name="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
-
+                    </form>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
+        </div>
     </section>
-</section>
+</div>
 <!--main content end-->
 <!--footer start-->
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".editbutton").click(function (e) {
-            e.preventDefault(e);
-            // Get the record's ID via attribute  
-            var iid = $(this).attr('data-id');
-            $('#editReceptionistForm').trigger("reset");
-            $('#myModal2').modal('show');
-            $.ajax({
-                url: 'receptionist/editReceptionistByJason?id=' + iid,
-                method: 'GET',
-                data: '',
-                dataType: 'json',
-            }).success(function (response) {
-                // Populate the form fields with the data returned from server
-                $('#editReceptionistForm').find('[name="id"]').val(response.receptionist.id).end()
-                $('#editReceptionistForm').find('[name="name"]').val(response.receptionist.name).end()
-                $('#editReceptionistForm').find('[name="password"]').val(response.receptionist.password).end()
-                $('#editReceptionistForm').find('[name="email"]').val(response.receptionist.email).end()
-                $('#editReceptionistForm').find('[name="address"]').val(response.receptionist.address).end()
-                $('#editReceptionistForm').find('[name="phone"]').val(response.receptionist.phone).end()
-            });
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $(".flashmessage").delay(3000).fadeOut(100);
-    });
-</script>
-
