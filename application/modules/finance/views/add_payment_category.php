@@ -1,115 +1,150 @@
-<!--sidebar end-->
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="col-md-7">
-            <header class="panel-heading">
-                <?php
+<!-- Main Content -->
+<div class="main-content no-print">
+    <section class="section">
+        <div class="section-header">
+            <h1><?php
                 if (!empty($category->id))
                     echo lang('edit_payment_category');
                 else
                     echo lang('create_payment_procedure');
                 ?>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="clearfix">
-                        <?php echo validation_errors(); ?>
-                        <form role="form" action="finance/addPaymentCategory" class="clearfix" method="post" enctype="multipart/form-data">
-                            <div class="form-group"> 
-                                <label for="exampleInputEmail1"><?php echo lang('category'); ?> <?php echo lang('name'); ?></label>
-                                <input type="text" class="form-control" name="category" id="exampleInputEmail1" value='<?php
-                                if (!empty($setval)) {
-                                    echo set_value('category');
-                                }
-                                if (!empty($category->category)) {
-                                    echo $category->category;
-                                }
-                                ?>' placeholder="">    
-                            </div> 
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1"><?php echo lang('description'); ?></label>
-                                <input type="text" class="form-control" name="description" id="exampleInputEmail1" value='<?php
-                                if (!empty($setval)) {
-                                    echo set_value('description');
-                                }
-                                if (!empty($category->description)) {
-                                    echo $category->description;
-                                }
-                                ?>' placeholder="">
+            </h1>
+        </div>
+        <?php $this->session->flashdata('feedback'); ?>
+        <div class="alert alert-danger alert-has-icon alert-dismissible show fade">
+            <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+                <div class="alert-title">Failed!</div>
+                <?= validation_errors(); ?>
+            </div>
+        </div>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <form role="form" action="finance/addPaymentCategory" method="post" enctype="multipart/form-data">
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('category'); ?> <?php echo lang('name'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="category" id="exampleInputEmail1" value='<?php
+                                                                                                                            if (!empty($setval)) {
+                                                                                                                                echo set_value('category');
+                                                                                                                            }
+                                                                                                                            if (!empty($category->category)) {
+                                                                                                                                echo $category->category;
+                                                                                                                            }
+                                                                                                                            ?>' placeholder="">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1"><?php echo lang('category'); ?> <?php echo lang('price'); ?></label>
-                                <input type="text" class="form-control" name="c_price" id="exampleInputEmail1" value='<?php
-                                if (!empty($setval)) {
-                                    echo set_value('c_price');
-                                }
-                                if (!empty($category->c_price)) {
-                                    echo $category->c_price;
-                                }
-                                ?>' placeholder="">
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('description'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="description" id="exampleInputEmail1" value='<?php
+                                                                                                                                if (!empty($setval)) {
+                                                                                                                                    echo set_value('description');
+                                                                                                                                }
+                                                                                                                                if (!empty($category->description)) {
+                                                                                                                                    echo $category->description;
+                                                                                                                                }
+                                                                                                                                ?>' placeholder="">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1"><?php echo lang('doctors_commission'); ?> <?php echo lang('rate'); ?> (%)</label>
-                                <input type="text" class="form-control" name="d_commission" id="exampleInputEmail1" value='<?php
-                                if (!empty($setval)) {
-                                    echo set_value('d_commission');
-                                }
-                                if (!empty($category->d_commission)) {
-                                    echo $category->d_commission;
-                                }
-                                ?>' placeholder="">
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('doctors_commission'); ?> <?php echo lang('rate'); ?> (%)</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="d_commission" id="exampleInputEmail1" value='<?php
+                                                                                                                                if (!empty($setval)) {
+                                                                                                                                    echo set_value('d_commission');
+                                                                                                                                }
+                                                                                                                                if (!empty($category->d_commission)) {
+                                                                                                                                    echo $category->d_commission;
+                                                                                                                                }
+                                                                                                                                ?>' placeholder="">
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1"><?php echo lang('type'); ?></label>
-                                <select class="form-control m-bot15" name="type" value=''>    
-                                    <option value="diagnostic" <?php
-                                    if (!empty($setval)) {
-                                        if (set_value('type') == 'diagnostic') {
-                                            echo 'selected';
-                                        }
-                                    }
-                                    if (!empty($category->type)) {
-                                        if ($category->type == 'diagnostic') {
-                                            echo 'selected';
-                                        }
-                                    }
-                                    ?> > <?php echo lang('diagnostic_test'); ?> </option>  
-                                    <option value="others" <?php
-                                    if (!empty($setval)) {
-                                        if (set_value('type') == 'others') {
-                                            echo 'selected';
-                                        }
-                                    }
-                                    if (!empty($category->type)) {
-                                        if ($category->type == 'others') {
-                                            echo 'selected';
-                                        }
-                                    }
-                                    ?> > <?php echo lang('others'); ?> </option>  
-                                </select>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('address'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="address" id="exampleInputEmail1" value='<?php
+                                                                                                                            if (!empty($setval)) {
+                                                                                                                                echo set_value('address');
+                                                                                                                            }
+                                                                                                                            if (!empty($patient->address)) {
+                                                                                                                                echo $patient->address;
+                                                                                                                            }
+                                                                                                                            ?>' placeholder="">
+                                </div>
                             </div>
-
-                            <input type="hidden" name="id" value='<?php
-                            if (!empty($category->id)) {
-                                echo $category->id;
-                            }
-                            ?>'>
-
-                            <div class="form-group col-md-12">
-                                <button type="submit" name="submit" class="btn btn-info pull-right"><?php echo lang('submit'); ?></button>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('type'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control select2" name="type">
+                                        <option value="diagnostic" <?php
+                                                                    if (!empty($setval)) {
+                                                                        if (set_value('type') == 'diagnostic') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }
+                                                                    if (!empty($category->type)) {
+                                                                        if ($category->type == 'diagnostic') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }
+                                                                    ?>> <?php echo lang('diagnostic_test'); ?> </option>
+                                        <option value="others" <?php
+                                                                if (!empty($setval)) {
+                                                                    if (set_value('type') == 'others') {
+                                                                        echo 'selected';
+                                                                    }
+                                                                }
+                                                                if (!empty($category->type)) {
+                                                                    if ($category->type == 'others') {
+                                                                        echo 'selected';
+                                                                    }
+                                                                }
+                                                                ?>> <?php echo lang('others'); ?> </option>
+                                    </select>
+                                    </select>
+                                </div>
                             </div>
-                            
-                        </form>
-                    </div>
+                        </div>
+                        <input type="hidden" name="id" value='<?php
+                                                                if (!empty($category->id)) {
+                                                                    echo $category->id;
+                                                                }
+                                                                ?>'>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                </div>
+                                <div class="col-md-8">
+                                    <button type="submit" name="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
     </section>
-</section>
-<!--main content end-->
-<!--footer start-->
+</div>
