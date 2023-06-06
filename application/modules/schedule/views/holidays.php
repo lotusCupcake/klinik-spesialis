@@ -131,7 +131,6 @@
                 var date = new Date(response.holiday.date * 1000);
                 $('#editHolidayForm').find('[name="id"]').val(response.holiday.id).end()
                 $('#editHolidayForm').find('[name="date"]').val(date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + (date.getDate())).slice(-2)).end()
-                console.log(date);
             });
         });
     });
