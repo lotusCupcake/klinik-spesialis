@@ -4,9 +4,11 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 require_once APPPATH . '../vendor/autoload.php';
 
-class Finance extends MX_Controller {
+class Finance extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('finance_model');
         $this->load->model('doctor/doctor_model');
@@ -24,12 +26,14 @@ class Finance extends MX_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
 
         redirect('finance/financial_report');
     }
 
-    public function payment() {
+    public function payment()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -41,7 +45,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function amountDistribution() {
+    function amountDistribution()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -53,7 +58,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addPaymentView() {
+    public function addPaymentView()
+    {
         $data = array();
         $data['discount_type'] = $this->finance_model->getDiscountType();
         $data['settings'] = $this->settings_model->getSettings();
@@ -66,7 +72,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addPayment() {
+    public function addPayment()
+    {
 
         $id = $this->input->post('id');
         $item_selected = array();
@@ -147,11 +154,11 @@ class Finance extends MX_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-// Validating Category Field
-// $this->form_validation->set_rules('category_amount[]', 'Category', 'min_length[1]|max_length[100]');
-// Validating Price Field
+        // Validating Category Field
+        // $this->form_validation->set_rules('category_amount[]', 'Category', 'min_length[1]|max_length[100]');
+        // Validating Price Field
         $this->form_validation->set_rules('patient', 'Patient', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Price Field
+        // Validating Price Field
         $this->form_validation->set_rules('discount', 'Discount', 'trim|min_length[1]|max_length[100]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
@@ -170,7 +177,7 @@ class Finance extends MX_Controller {
                     'how_added' => 'from_pos'
                 );
                 $username = $this->input->post('p_name');
-// Adding New Patient
+                // Adding New Patient
                 if ($this->ion_auth->email_check($p_email)) {
                     $this->session->set_flashdata('feedback', lang('this_email_address_is_already_registered'));
                     redirect('finance/addPaymentView');
@@ -183,7 +190,7 @@ class Finance extends MX_Controller {
                     $id_info = array('ion_user_id' => $ion_user_id);
                     $this->patient_model->updatePatient($patient_user_id, $id_info);
                 }
-//    }
+                //    }
             }
 
             if (!empty($d_name)) {
@@ -194,7 +201,7 @@ class Finance extends MX_Controller {
                     'phone' => $d_phone,
                 );
                 $username = $this->input->post('d_name');
-// Adding New Patient
+                // Adding New Patient
                 if ($this->ion_auth->email_check($d_email)) {
                     $this->session->set_flashdata('feedback', lang('this_email_address_is_already_registered'));
                     redirect('finance/addPaymentView');
@@ -371,9 +378,9 @@ class Finance extends MX_Controller {
                         $stripe = $this->db->get_where('paymentGateway', array('name =' => 'Stripe'))->row();
                         \Stripe\Stripe::setApiKey($stripe->secret);
                         $charge = \Stripe\Charge::create(array(
-                                    "amount" => $amount_received * 100,
-                                    "currency" => "usd",
-                                    "source" => $token
+                            "amount" => $amount_received * 100,
+                            "currency" => "usd",
+                            "source" => $token
                         ));
                         $chargeJson = $charge->jsonSerialize();
                         if ($chargeJson['status'] == 'succeeded') {
@@ -627,7 +634,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    public function smsAndEmail($data) {
+    public function smsAndEmail($data)
+    {
         //sms
         $patientdetails = $this->patient_model->getPatientById($data['patient']);
         $set['settings'] = $this->settings_model->getSettings();
@@ -674,7 +682,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function editPayment() {
+    function editPayment()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) {
             $data = array();
             $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -692,7 +701,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function delete() {
+    function delete()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) {
             $id = $this->input->get('id');
             $this->finance_model->deletePayment($id);
@@ -702,7 +712,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    public function otPayment() {
+    public function otPayment()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -714,7 +725,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addOtPaymentView() {
+    public function addOtPaymentView()
+    {
         $data = array();
         $data['doctors'] = $this->doctor_model->getDoctor();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -726,7 +738,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addOtPayment() {
+    public function addOtPayment()
+    {
         $id = $this->input->post('id');
         $patient = $this->input->post('patient');
         $doctor_c_s = $this->input->post('doctor_c_s');
@@ -754,40 +767,40 @@ class Finance extends MX_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-// Validating Patient Field
+        // Validating Patient Field
         $this->form_validation->set_rules('patient', 'Patient', 'trim|required|min_length[2]|max_length[100]|xss_clean');
-// Validating Consultant surgeon Field
+        // Validating Consultant surgeon Field
         $this->form_validation->set_rules('doctor_c_s', 'Consultant surgeon', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Assistant Surgeon Field
+        // Validating Assistant Surgeon Field
         $this->form_validation->set_rules('doctor_a_s_1', 'Assistant Surgeon (1)', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Assistant Surgeon Field
+        // Validating Assistant Surgeon Field
         $this->form_validation->set_rules('doctor_a_s_2', 'Assistant Surgeon(2)', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Anaesthisist Field
+        // Validating Anaesthisist Field
         $this->form_validation->set_rules('doctor_anaes', 'Anaesthisist', 'trim|min_length[2]|max_length[100]|xss_clean');
-// Validating Nature Of Operation Field
+        // Validating Nature Of Operation Field
         $this->form_validation->set_rules('n_o_o', 'Nature Of Operation', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Consultant Surgeon Fee Field
+        // Validating Consultant Surgeon Fee Field
         $this->form_validation->set_rules('c_s_f', 'Consultant Surgeon Fee', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Assistant surgeon fee Field
+        // Validating Assistant surgeon fee Field
         $this->form_validation->set_rules('a_s_f_1', 'Assistant surgeon fee', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Assistant surgeon fee Field
+        // Validating Assistant surgeon fee Field
         $this->form_validation->set_rules('a_s_f_2', 'Assistant surgeon fee', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Anaesthesist Field
+        // Validating Anaesthesist Field
         $this->form_validation->set_rules('anaes_f', 'Anaesthesist', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating OT Charge Field
+        // Validating OT Charge Field
         $this->form_validation->set_rules('ot_charge', 'OT Charge', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Cabin Rent Field
+        // Validating Cabin Rent Field
         $this->form_validation->set_rules('cab_rent', 'Cabin Rent', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Seat Rent Field
+        // Validating Seat Rent Field
         $this->form_validation->set_rules('seat_rent', 'Seat Rent', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Others Field
+        // Validating Others Field
         $this->form_validation->set_rules('others', 'Others', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Discount Field
+        // Validating Discount Field
         $this->form_validation->set_rules('discount', 'Discount', 'trim|min_length[1]|max_length[100]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
             echo 'form validate noe nai re';
-// redirect('accountant/add_new'); 
+            // redirect('accountant/add_new'); 
         } else {
             $doctor_fees = $c_s_f + $a_s_f_1 + $a_s_f_2 + $anaes_f;
             $hospital_fees = $ot_charge + $cab_rent + $seat_rent + $others;
@@ -893,7 +906,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function editOtPayment() {
+    function editOtPayment()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
             $data = array();
             $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -908,7 +922,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function otInvoice() {
+    function otInvoice()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -918,7 +933,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function otPaymentDetails() {
+    function otPaymentDetails()
+    {
         $id = $this->input->get('id');
         $patient = $this->input->get('patient');
         $data['patient'] = $this->patient_model->getPatientByid($patient);
@@ -930,7 +946,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function otPaymentDelete() {
+    function otPaymentDelete()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
             $id = $this->input->get('id');
             $this->finance_model->deleteOtPayment($id);
@@ -939,7 +956,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function addPaymentByPatient() {
+    function addPaymentByPatient()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['patient'] = $this->patient_model->getPatientById($id);
@@ -948,7 +966,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function addPaymentByPatientView() {
+    function addPaymentByPatientView()
+    {
         $id = $this->input->get('id');
         $type = $this->input->get('type');
         $data = array();
@@ -970,7 +989,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    public function paymentCategory() {
+    public function paymentCategory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -981,13 +1001,15 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addPaymentCategoryView() {
+    public function addPaymentCategoryView()
+    {
         $this->load->view('home/dashboard'); // just the header file
         $this->load->view('add_payment_category');
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addPaymentCategory() {
+    public function addPaymentCategory()
+    {
         $id = $this->input->post('id');
         $category = $this->input->post('category');
         $type = $this->input->post('type');
@@ -1001,15 +1023,15 @@ class Finance extends MX_Controller {
 
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-// Validating Category Name Field
+        // Validating Category Name Field
         $this->form_validation->set_rules('category', 'Category', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Description Field
+        // Validating Description Field
         $this->form_validation->set_rules('description', 'Description', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Description Field
+        // Validating Description Field
         $this->form_validation->set_rules('c_price', 'Category price', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Doctor Commission Rate Field
+        // Validating Doctor Commission Rate Field
         $this->form_validation->set_rules('d_commission', 'Doctor Commission rate', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Description Field
+        // Validating Description Field
         $this->form_validation->set_rules('type', 'Type', 'trim|min_length[1]|max_length[100]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
@@ -1025,7 +1047,8 @@ class Finance extends MX_Controller {
             }
         } else {
             $data = array();
-            $data = array('category' => $category,
+            $data = array(
+                'category' => $category,
                 'description' => $description,
                 'type' => $type,
                 'c_price' => $c_price,
@@ -1042,7 +1065,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function editPaymentCategory() {
+    function editPaymentCategory()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['category'] = $this->finance_model->getPaymentCategoryById($id);
@@ -1051,13 +1075,15 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function deletePaymentCategory() {
+    function deletePaymentCategory()
+    {
         $id = $this->input->get('id');
         $this->finance_model->deletePaymentCategory($id);
         redirect('finance/paymentCategory');
     }
 
-    public function expense() {
+    public function expense()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -1069,7 +1095,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addExpenseView() {
+    public function addExpenseView()
+    {
         $data = array();
         $data['settings'] = $this->settings_model->getSettings();
         $data['categories'] = $this->finance_model->getExpenseCategory();
@@ -1078,7 +1105,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addExpense() {
+    public function addExpense()
+    {
         $id = $this->input->post('id');
         $category = $this->input->post('category');
         $date = time();
@@ -1090,11 +1118,11 @@ class Finance extends MX_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-// Validating Category Field
+        // Validating Category Field
         $this->form_validation->set_rules('category', 'Category', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Generic Name Field
+        // Validating Generic Name Field
         $this->form_validation->set_rules('amount', 'Amount', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Note Field
+        // Validating Note Field
         $this->form_validation->set_rules('note', 'Note', 'trim|min_length[1]|max_length[100]|xss_clean');
 
 
@@ -1141,7 +1169,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function editExpense() {
+    function editExpense()
+    {
         $data = array();
         $data['categories'] = $this->finance_model->getExpenseCategory();
         $data['settings'] = $this->settings_model->getSettings();
@@ -1152,13 +1181,15 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function deleteExpense() {
+    function deleteExpense()
+    {
         $id = $this->input->get('id');
         $this->finance_model->deleteExpense($id);
         redirect('finance/expense');
     }
 
-    public function expenseCategory() {
+    public function expenseCategory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -1168,22 +1199,24 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addExpenseCategoryView() {
+    public function addExpenseCategoryView()
+    {
         $this->load->view('home/dashboard'); // just the header file
         $this->load->view('add_expense_category');
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addExpenseCategory() {
+    public function addExpenseCategory()
+    {
         $id = $this->input->post('id');
         $category = $this->input->post('category');
         $description = $this->input->post('description');
 
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-// Validating Category Name Field
+        // Validating Category Name Field
         $this->form_validation->set_rules('category', 'Category', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Description Field
+        // Validating Description Field
         $this->form_validation->set_rules('description', 'Description', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             if (!empty($id)) {
@@ -1198,7 +1231,8 @@ class Finance extends MX_Controller {
             }
         } else {
             $data = array();
-            $data = array('category' => $category,
+            $data = array(
+                'category' => $category,
                 'description' => $description
             );
             if (empty($id)) {
@@ -1212,7 +1246,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function editExpenseCategory() {
+    function editExpenseCategory()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['category'] = $this->finance_model->getExpenseCategoryById($id);
@@ -1221,13 +1256,15 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function deleteExpenseCategory() {
+    function deleteExpenseCategory()
+    {
         $id = $this->input->get('id');
         $this->finance_model->deleteExpenseCategory($id);
         redirect('finance/expenseCategory');
     }
 
-    function invoice() {
+    function invoice()
+    {
         //$this->load->module('sslcommerzpayment');
         // $rewrite=$this->sslcommerzpayment->helperFileReWriteAftertransaction();
 
@@ -1240,7 +1277,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function printInvoice() {
+    function printInvoice()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -1251,7 +1289,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function expenseInvoice() {
+    function expenseInvoice()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['expense'] = $this->finance_model->getExpenseById($id);
@@ -1260,7 +1299,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function amountReceived() {
+    function amountReceived()
+    {
         $id = $this->input->post('id');
         $amount_received = $this->input->post('amount_received');
         $previous_amount_received = $this->db->get_where('payment', array('id' => $id))->row()->amount_received;
@@ -1271,7 +1311,8 @@ class Finance extends MX_Controller {
         redirect('finance/invoice?id=' . $id);
     }
 
-    function otAmountReceived() {
+    function otAmountReceived()
+    {
         $id = $this->input->post('id');
         $amount_received = $this->input->post('amount_received');
         $previous_amount_received = $this->db->get_where('ot_payment', array('id' => $id))->row()->amount_received;
@@ -1282,7 +1323,8 @@ class Finance extends MX_Controller {
         redirect('finance/oTinvoice?id=' . $id);
     }
 
-    function patientPaymentHistory() {
+    function patientPaymentHistory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -1324,7 +1366,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function deposit() {
+    function deposit()
+    {
         $id = $this->input->post('id');
         $patient = $this->input->post('patient');
         $payment_id = $this->input->post('payment_id');
@@ -1342,24 +1385,25 @@ class Finance extends MX_Controller {
 
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-// Validating Patient Name Field
+        // Validating Patient Name Field
         $this->form_validation->set_rules('patient', 'Patient', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Deposited Amount Field
+        // Validating Deposited Amount Field
         $this->form_validation->set_rules('deposited_amount', 'Deposited Amount', 'trim|min_length[1]|max_length[100]|xss_clean');
         if ($this->form_validation->run() == FALSE) {
             redirect('finance/patientPaymentHistory?patient=' . $patient);
         } else {
             $data = array();
-            $data = array('patient' => $patient,
-               // 'date' => $date,
+            $data = array(
+                'patient' => $patient,
+                // 'date' => $date,
                 'payment_id' => $payment_id,
                 'deposited_amount' => $deposited_amount,
                 'deposit_type' => $deposit_type,
                 'user' => $user
             );
-             if (empty($id)) {
-                  $data['date']=$date;
-             }
+            if (empty($id)) {
+                $data['date'] = $date;
+            }
             if (empty($id)) {
                 if ($deposit_type == 'Card') {
                     $payment_details = $this->finance_model->getPaymentById($payment_id);
@@ -1416,7 +1460,7 @@ class Finance extends MX_Controller {
                             'card_number' => $card_number,
                             'expire_date' => $expire_date,
                             'cvv' => $cvv,
-                                //  'email'=>$patient_email
+                            //  'email'=>$patient_email
                         );
 
                         $this->load->module('authorizenet');
@@ -1433,13 +1477,14 @@ class Finance extends MX_Controller {
                         $stripe = $this->db->get_where('paymentGateway', array('name =' => 'Stripe'))->row();
                         \Stripe\Stripe::setApiKey($stripe->secret);
                         $charge = \Stripe\Charge::create(array(
-                                    "amount" => $deposited_amount * 100,
-                                    "currency" => "usd",
-                                    "source" => $token
+                            "amount" => $deposited_amount * 100,
+                            "currency" => "usd",
+                            "source" => $token
                         ));
                         $chargeJson = $charge->jsonSerialize();
                         if ($chargeJson['status'] == 'succeeded') {
-                            $data1 = array('patient' => $patient,
+                            $data1 = array(
+                                'patient' => $patient,
                                 'date' => $date,
                                 'payment_id' => $payment_id,
                                 'deposited_amount' => $deposited_amount,
@@ -1522,7 +1567,7 @@ class Finance extends MX_Controller {
                             'insertid' => $payment_id,
                             'channel_id' => 'WEB',
                             'industry_type' => 'Retail',
-                                //  'email'=>$patient_email
+                            //  'email'=>$patient_email
                         );
                         //  $this->load->module('paytm/pgRedirects');
                         $this->paytm->PaytmGateway($datapayment);
@@ -1566,13 +1611,15 @@ class Finance extends MX_Controller {
         }
     }
 
-    function editDepositByJason() {
+    function editDepositByJason()
+    {
         $id = $this->input->get('id');
         $data['deposit'] = $this->finance_model->getDepositById($id);
         echo json_encode($data);
     }
 
-    function deleteDeposit() {
+    function deleteDeposit()
+    {
         $id = $this->input->get('id');
         $patient = $this->input->get('patient');
 
@@ -1589,7 +1636,8 @@ class Finance extends MX_Controller {
         redirect('finance/patientPaymentHistory?patient=' . $patient);
     }
 
-    function invoicePatientTotal() {
+    function invoicePatientTotal()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -1601,7 +1649,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function lastPaidInvoice() {
+    function lastPaidInvoice()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -1613,7 +1662,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function makePaid() {
+    function makePaid()
+    {
         $id = $this->input->get('id');
         $patient_id = $this->finance_model->getPaymentById($id)->patient;
         $data = array();
@@ -1625,7 +1675,8 @@ class Finance extends MX_Controller {
         redirect('finance/invoice?id=' . $id);
     }
 
-    function makePaidByPatientIdByStatus() {
+    function makePaidByPatientIdByStatus()
+    {
         $id = $this->input->get('id');
         $data = array();
         $data = array('status' => 'paid-last');
@@ -1636,14 +1687,16 @@ class Finance extends MX_Controller {
         redirect('patient');
     }
 
-    function makeOtStatusPaid() {
+    function makeOtStatusPaid()
+    {
         $id = $this->input->get('id');
         $this->finance_model->makeOtStatusPaid($id);
         $this->session->set_flashdata('feedback', lang('paid'));
         redirect("finance/otInvoice?id=" . "$id");
     }
 
-    function doctorsCommission() {
+    function doctorsCommission()
+    {
         $date_from = strtotime($this->input->post('date_from'));
         $date_to = strtotime($this->input->post('date_to'));
         if (!empty($date_to)) {
@@ -1660,7 +1713,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function docComDetails() {
+    function docComDetails()
+    {
         $date_from = strtotime($this->input->post('date_from'));
         $date_to = strtotime($this->input->post('date_to'));
         if (!empty($date_to)) {
@@ -1684,7 +1738,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function financialReport() {
+    function financialReport()
+    {
         $date_from = strtotime($this->input->post('date_from'));
         $date_to = strtotime($this->input->post('date_to'));
         if (!empty($date_to)) {
@@ -1695,18 +1750,18 @@ class Finance extends MX_Controller {
         $data['expense_categories'] = $this->finance_model->getExpenseCategory();
 
 
-// if(empty($date_from)&&empty($date_to)) {
-//    $data['payments']=$this->finance_model->get_payment();
-//     $data['ot_payments']=$this->finance_model->get_ot_payment();
-//     $data['expenses']=$this->finance_model->get_expense();
-// }
-// else{
+        // if(empty($date_from)&&empty($date_to)) {
+        //    $data['payments']=$this->finance_model->get_payment();
+        //     $data['ot_payments']=$this->finance_model->get_ot_payment();
+        //     $data['expenses']=$this->finance_model->get_expense();
+        // }
+        // else{
 
         $data['payments'] = $this->finance_model->getPaymentByDate($date_from, $date_to);
         $data['ot_payments'] = $this->finance_model->getOtPaymentByDate($date_from, $date_to);
         $data['deposits'] = $this->finance_model->getDepositsByDate($date_from, $date_to);
         $data['expenses'] = $this->finance_model->getExpenseByDate($date_from, $date_to);
-// } 
+        // } 
         $data['from'] = $this->input->post('date_from');
         $data['to'] = $this->input->post('date_to');
         $data['settings'] = $this->settings_model->getSettings();
@@ -1715,7 +1770,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function UserActivityReport() {
+    function UserActivityReport()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -1758,7 +1814,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function UserActivityReportDateWise() {
+    function UserActivityReportDateWise()
+    {
         $data = array();
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -1789,7 +1846,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function AllUserActivityReport() {
+    function AllUserActivityReport()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -1854,7 +1912,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function AllUserActivityReportDateWise() {
+    function AllUserActivityReportDateWise()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -1904,7 +1963,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function getPayment() {
+    function getPayment()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -1945,13 +2005,13 @@ class Finance extends MX_Controller {
             }
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
-                $options1 = ' <a class="btn btn-info btn-xs editbutton" title="' . lang('edit') . '" href="finance/editPayment?id=' . $payment->id . '"><i class="fa fa-edit"> </i> ' . lang('edit') . '</a>';
+                $options1 = '<a href="finance/editPayment?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-light editbutton"><i class="fas fa-edit"></i>' . lang('edit') . '</button></a>';
             }
 
-            $options2 = '<a class="btn btn-info btn-xs invoicebutton" title="' . lang('invoice') . '" style="color: #fff;" href="finance/invoice?id=' . $payment->id . '"><i class="fa fa-file-invoice"></i> ' . lang('invoice') . '</a>';
-            $options4 = '<a class="btn btn-info btn-xs invoicebutton" title="' . lang('print') . '" style="color: #fff;" href="finance/printInvoice?id=' . $payment->id . '"target="_blank"> <i class="fa fa-print"></i> ' . lang('print') . '</a>';
+            $options2 = '<a href="finance/invoice?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-primary invoicebutton"><i class="fas fa-file-invoice"></i>' . lang('invoice') . '</button></a>';
+            $options4 = '<a href="finance/printInvoice?id=' . $payment->id . '" target="_blank"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-print"></i>' . lang('print') . '</button></a>';
             if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
-                $options3 = '<a class="btn btn-info btn-xs delete_button" title="' . lang('delete') . '" href="finance/delete?id=' . $payment->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i> ' . lang('delete') . '</a>';
+                $options3 = '<a href="finance/delete?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-danger delete_button" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fas fa-trash"></i>' . lang('delete') . '</button></a>';
             }
 
             if (empty($options1)) {
@@ -1993,7 +2053,7 @@ class Finance extends MX_Controller {
                 $settings->currency . '' . ($payment->gross_total - $this->finance_model->getDepositAmountByPaymentId($payment->id)),
                 $payment->remarks,
                 $options1 . ' ' . $options2 . ' ' . $options4 . ' ' . $options3,
-                    //  $options2
+                //  $options2
             );
         }
 
@@ -2025,7 +2085,8 @@ class Finance extends MX_Controller {
         echo json_encode($output);
     }
 
-    function previousInvoice() {
+    function previousInvoice()
+    {
         $id = $this->input->get('id');
         $data1 = $this->finance_model->getFirstRowPaymentById();
         if ($id == $data1->id) {
@@ -2048,7 +2109,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function nextInvoice() {
+    function nextInvoice()
+    {
         $id = $this->input->get('id');
 
 
@@ -2079,7 +2141,8 @@ class Finance extends MX_Controller {
         }
     }
 
-    function daily() {
+    function daily()
+    {
         $data = array();
         $year = $this->input->get('year');
         $month = $this->input->get('month');
@@ -2116,7 +2179,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function dailyExpense() {
+    function dailyExpense()
+    {
         $data = array();
         $year = $this->input->get('year');
         $month = $this->input->get('month');
@@ -2155,7 +2219,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function monthly() {
+    function monthly()
+    {
         $data = array();
         $year = $this->input->get('year');
 
@@ -2188,7 +2253,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function monthlyExpense() {
+    function monthlyExpense()
+    {
         $data = array();
         $year = $this->input->get('year');
 
@@ -2221,7 +2287,8 @@ class Finance extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function getExpense() {
+    function getExpense()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -2280,7 +2347,7 @@ class Finance extends MX_Controller {
                 $expense->note,
                 $settings->currency . '' . $expense->amount,
                 $options1 . ' ' . $options2 . ' ' . $options3,
-                    //  $options2
+                //  $options2
             );
         }
 
@@ -2312,7 +2379,8 @@ class Finance extends MX_Controller {
         echo json_encode($output);
     }
 
-    function download() {
+    function download()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -2334,7 +2402,8 @@ class Finance extends MX_Controller {
         //  $this->load->view('home/footer'); // just the footer fi
     }
 
-    function sendInvoice() {
+    function sendInvoice()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->finance_model->getDiscountType();
@@ -2385,7 +2454,6 @@ class Finance extends MX_Controller {
         //   $this->load->view('invoice', $data);
         //  $this->load->view('home/footer'); // just the footer fi
     }
-
 }
 
 /* End of file finance.php */
