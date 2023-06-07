@@ -9,17 +9,20 @@
                     echo lang('add_new_patient');
                 ?></h1>
         </div>
-        <?php $this->session->flashdata('feedback'); ?>
-        <div class="alert alert-danger alert-has-icon alert-dismissible show fade">
-            <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
-            <div class="alert-body">
-                <button class="close" data-dismiss="alert">
-                    <span>&times;</span>
-                </button>
-                <div class="alert-title">Failed!</div>
-                <?= validation_errors(); ?>
+        <?php
+        $message = validation_errors();
+        if (!empty($message)) {
+        ?><div class="alert alert-danger alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Failed!</div>
+                    <?= $message; ?>
+                </div>
             </div>
-        </div>
+        <?php } ?>
         <div class="section-body">
             <div class="card">
                 <div class="card-body">

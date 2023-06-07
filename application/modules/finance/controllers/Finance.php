@@ -2323,13 +2323,11 @@ class Finance extends MX_Controller
 
 
             if ($this->ion_auth->in_group(array('admin'))) {
-                $options1 = ' <a class="btn btn-info btn-xs editbutton" title="' . lang('edit') . '" href="finance/editExpense?id=' . $expense->id . '"><i class="fa fa-edit"> </i></a>';
+                $options1 = '<a href="finance/editExpense?id=' . $expense->id . '"><button class="btn btn-icon icon-left btn-light editbutton"><i class="fas fa-edit"></i></button></a>';
             }
-
-            $options2 = '<a class="btn btn-info btn-xs invoicebutton" title="' . lang('invoice') . '" style="color: #fff;" href="finance/expenseInvoice?id=' . $expense->id . '"><i class="fa fa-file-invoice"></i> </a>';
-            //$options4 = '<a class="btn btn-info btn-xs invoicebutton" title="' . lang('print') . '" style="color: #fff;" href="finance/printInvoice?id=' . $payment->id . '"target="_blank"> <i class="fa fa-print"></i> ' . lang('print') . '</a>';
+            $options2 = '<a href="finance/expenseInvoice?id=' . $expense->id . '"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-file-invoice"></i></button></a>';
             if ($this->ion_auth->in_group(array('admin'))) {
-                $options3 = '<a class="btn btn-info btn-xs delete_button" title="' . lang('delete') . '" href="finance/deleteExpense?id=' . $expense->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i> </a>';
+                $options3 = '<a href="finance/deleteExpense?id=' . $expense->id . '"><button class="btn btn-icon icon-left btn-danger delete_button" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fas fa-trash"></i></button></a>';
             }
 
             if (empty($options1)) {

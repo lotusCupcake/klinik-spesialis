@@ -192,8 +192,8 @@
                                     <li><a class="nav-link" href="finance/payment"><span><?php echo lang('payments'); ?></span></a></li>
                                     <li><a class="nav-link" href="finance/addPaymentView"><span><?php echo lang('add_payment'); ?></span></a></li>
                                     <li><a class="nav-link" href="finance/paymentCategory"><span><?php echo lang('payment_procedures'); ?></span></a></li>
-                                    <li><a class="nav-link" href="finance/expense"><span><?php echo lang('add_expense'); ?></span></a></li>
-                                    <li><a class="nav-link" href="finance/addExpenseView"><span><?php echo lang('receptionist'); ?></span></a></li>
+                                    <li><a class="nav-link" href="finance/expense"><span><?php echo lang('expense'); ?></span></a></li>
+                                    <li><a class="nav-link" href="finance/addExpenseView"><span><?php echo lang('add_expense'); ?></span></a></li>
                                     <li><a class="nav-link" href="finance/expenseCategory"><span><?php echo lang('expense_categories'); ?></span></a></li>
                                 </ul>
                             </li>
