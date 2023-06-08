@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Lab extends MX_Controller {
+class Lab extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('lab_model');
         $this->load->model('doctor/doctor_model');
@@ -17,7 +19,8 @@ class Lab extends MX_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
 
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -52,7 +55,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function lab() {
+    public function lab()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -85,7 +89,8 @@ class Lab extends MX_Controller {
         }
     }
 
-    public function lab1() {
+    public function lab1()
+    {
 
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
@@ -111,7 +116,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addLabView() {
+    public function addLabView()
+    {
         $data = array();
 
 
@@ -133,7 +139,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addLab() {
+    public function addLab()
+    {
         $id = $this->input->post('id');
 
         $report = $this->input->post('report');
@@ -185,11 +192,11 @@ class Lab extends MX_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-// Validating Category Field
-// $this->form_validation->set_rules('category_amount[]', 'Category', 'min_length[1]|max_length[100]');
-// Validating Price Field
+        // Validating Category Field
+        // $this->form_validation->set_rules('category_amount[]', 'Category', 'min_length[1]|max_length[100]');
+        // Validating Price Field
         $this->form_validation->set_rules('patient', 'Patient', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Price Field
+        // Validating Price Field
         $this->form_validation->set_rules('discount', 'Discount', 'trim|min_length[1]|max_length[100]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
@@ -208,7 +215,7 @@ class Lab extends MX_Controller {
                     'how_added' => 'from_pos'
                 );
                 $username = $this->input->post('p_name');
-// Adding New Patient
+                // Adding New Patient
                 if ($this->ion_auth->email_check($p_email)) {
                     $this->session->set_flashdata('feedback', lang('this_email_address_is_already_registered'));
                 } else {
@@ -220,7 +227,7 @@ class Lab extends MX_Controller {
                     $id_info = array('ion_user_id' => $ion_user_id);
                     $this->patient_model->updatePatient($patient_user_id, $id_info);
                 }
-//    }
+                //    }
             }
 
             if (!empty($d_name)) {
@@ -231,7 +238,7 @@ class Lab extends MX_Controller {
                     'phone' => $d_phone,
                 );
                 $username = $this->input->post('d_name');
-// Adding New Patient
+                // Adding New Patient
                 if ($this->ion_auth->email_check($d_email)) {
                     $this->session->set_flashdata('feedback', lang('this_email_address_is_already_registered'));
                 } else {
@@ -314,7 +321,8 @@ class Lab extends MX_Controller {
         }
     }
 
-    function editLab() {
+    function editLab()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Doctor', 'Laboratorist', 'Nurse', 'Patient'))) {
             $data = array();
             $data['settings'] = $this->settings_model->getSettings();
@@ -329,7 +337,8 @@ class Lab extends MX_Controller {
         }
     }
 
-    function delete() {
+    function delete()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Laboratorist'))) {
             $id = $this->input->get('id');
             $this->lab_model->deleteLab($id);
@@ -340,7 +349,8 @@ class Lab extends MX_Controller {
         }
     }
 
-    public function template() {
+    public function template()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -352,7 +362,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addTemplateView() {
+    public function addTemplateView()
+    {
         $data = array();
         $id = $this->input->get('id');
         if (!empty($id)) {
@@ -365,13 +376,15 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function getTemplateByIdByJason() {
+    function getTemplateByIdByJason()
+    {
         $id = $this->input->get('id');
         $data['template'] = $this->lab_model->getTemplateById($id);
         echo json_encode($data);
     }
 
-    public function addTemplate() {
+    public function addTemplate()
+    {
         $id = $this->input->post('id');
         $name = $this->input->post('name');
         $template = $this->input->post('template');
@@ -381,7 +394,7 @@ class Lab extends MX_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         $this->form_validation->set_rules('report', 'Report', 'trim|min_length[1]|max_length[10000]|xss_clean');
-// Validating Price Field
+        // Validating Price Field
         $this->form_validation->set_rules('user', 'User', 'trim|min_length[1]|max_length[100]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
@@ -411,7 +424,8 @@ class Lab extends MX_Controller {
         }
     }
 
-    function editTemplate() {
+    function editTemplate()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Doctor', 'Laboratorist', 'Nurse', 'Patient'))) {
             $data = array();
             $data['settings'] = $this->settings_model->getSettings();
@@ -423,14 +437,16 @@ class Lab extends MX_Controller {
         }
     }
 
-    function deleteTemplate() {
+    function deleteTemplate()
+    {
         $id = $this->input->get('id');
         $this->lab_model->deleteTemplate($id);
         $this->session->set_flashdata('feedback', lang('deleted'));
         redirect('lab/template');
     }
 
-    public function labCategory() {
+    public function labCategory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -441,13 +457,15 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addLabCategoryView() {
+    public function addLabCategoryView()
+    {
         $this->load->view('home/dashboard'); // just the header file
         $this->load->view('add_lab_category');
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addLabCategory() {
+    public function addLabCategory()
+    {
         $id = $this->input->post('id');
         $category = $this->input->post('category');
         $description = $this->input->post('description');
@@ -456,13 +474,13 @@ class Lab extends MX_Controller {
 
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-// Validating Category Name Field
+        // Validating Category Name Field
         $this->form_validation->set_rules('category', 'Category', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Description Field
+        // Validating Description Field
         $this->form_validation->set_rules('description', 'Description', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         // Validating Description Field
         $this->form_validation->set_rules('reference_value', 'Reference Value', 'trim|required|min_length[1]|max_length[1000]|xss_clean');
-// Validating Description Field
+        // Validating Description Field
         $this->form_validation->set_rules('type', 'Type', 'trim|min_length[1]|max_length[100]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
@@ -478,7 +496,8 @@ class Lab extends MX_Controller {
             }
         } else {
             $data = array();
-            $data = array('category' => $category,
+            $data = array(
+                'category' => $category,
                 'description' => $description,
                 'reference_value' => $reference,
             );
@@ -493,7 +512,8 @@ class Lab extends MX_Controller {
         }
     }
 
-    function editLabCategory() {
+    function editLabCategory()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['category'] = $this->lab_model->getLabCategoryById($id);
@@ -502,13 +522,15 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function deleteLabCategory() {
+    function deleteLabCategory()
+    {
         $id = $this->input->get('id');
         $this->lab_model->deleteLabCategory($id);
         redirect('lab/labCategory');
     }
 
-    function invoice() {
+    function invoice()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
@@ -518,7 +540,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function patientLabHistory() {
+    function patientLabHistory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -558,7 +581,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function financialReport() {
+    function financialReport()
+    {
         $date_from = strtotime($this->input->post('date_from'));
         $date_to = strtotime($this->input->post('date_to'));
         if (!empty($date_to)) {
@@ -569,18 +593,18 @@ class Lab extends MX_Controller {
         $data['expense_categories'] = $this->lab_model->getExpenseCategory();
 
 
-// if(empty($date_from)&&empty($date_to)) {
-//    $data['labs']=$this->lab_model->get_lab();
-//     $data['ot_labs']=$this->lab_model->get_ot_lab();
-//     $data['expenses']=$this->lab_model->get_expense();
-// }
-// else{
+        // if(empty($date_from)&&empty($date_to)) {
+        //    $data['labs']=$this->lab_model->get_lab();
+        //     $data['ot_labs']=$this->lab_model->get_ot_lab();
+        //     $data['expenses']=$this->lab_model->get_expense();
+        // }
+        // else{
 
         $data['labs'] = $this->lab_model->getLabByDate($date_from, $date_to);
         $data['ot_labs'] = $this->lab_model->getOtLabByDate($date_from, $date_to);
         $data['deposits'] = $this->lab_model->getDepositsByDate($date_from, $date_to);
         $data['expenses'] = $this->lab_model->getExpenseByDate($date_from, $date_to);
-// } 
+        // } 
         $data['from'] = $this->input->post('date_from');
         $data['to'] = $this->input->post('date_to');
         $data['settings'] = $this->settings_model->getSettings();
@@ -589,7 +613,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function getLab() {
+    function getLab()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -622,15 +647,15 @@ class Lab extends MX_Controller {
         foreach ($data['labs'] as $lab) {
             $date = date('d-m-y', $lab->date);
             if ($this->ion_auth->in_group(array('admin', 'Laboratorist', 'Doctor'))) {
-                $options1 = ' <a class="btn btn-info btn-xs editbutton" title="' . lang('edit') . '" href="lab?id=' . $lab->id . '"><i class="fa fa-edit"> </i> ' . lang('') . '</a>';
+                $options1 = '<a href="lab?id=' . $lab->id . '"><button class="btn btn-icon icon-left btn-light editbutton"><i class="fas fa-edit"></i></button></a>';
             } else {
                 $options1 = '';
             }
 
-            $options2 = '<a class="btn btn-xs invoicebutton" title="' . lang('lab') . '" style="color: #fff;" href="lab/invoice?id=' . $lab->id . '"><i class="fa fa-file"></i> ' . lang('') . '</a>';
+            $options2 = '<a href="lab/invoice?id=' . $lab->id . '"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-file"></i></button></a>';
 
             if ($this->ion_auth->in_group(array('admin', 'Doctor', 'Laboratorist'))) {
-                $options3 = '<a class="btn btn-info btn-xs delete_button" title="' . lang('delete') . '" href="lab/delete?id=' . $lab->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i>' . lang('') . '</a>';
+                $options3 = '<a href="lab/delete?id=' . $lab->id . '"><button class="btn btn-icon icon-left btn-danger delete_button" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fas fa-trash"></i></button></a>';
             } else {
                 $options3 = '';
             }
@@ -658,7 +683,7 @@ class Lab extends MX_Controller {
                 $patient_details,
                 $date,
                 $options1 . ' ' . $options2 . ' ' . $options3,
-                    // $options2 . ' ' . $options3
+                // $options2 . ' ' . $options3
             );
         }
 
@@ -685,7 +710,8 @@ class Lab extends MX_Controller {
         echo json_encode($output);
     }
 
-    public function myLab() {
+    public function myLab()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -703,7 +729,8 @@ class Lab extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function getMyLab() {
+    function getMyLab()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -766,7 +793,7 @@ class Lab extends MX_Controller {
                     $patient_details,
                     $date,
                     $options2,
-                        // $options2 . ' ' . $options3
+                    // $options2 . ' ' . $options3
                 );
             }
         }
@@ -793,7 +820,6 @@ class Lab extends MX_Controller {
 
         echo json_encode($output);
     }
-
 }
 
 /* End of file lab.php */
