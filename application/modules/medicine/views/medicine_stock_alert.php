@@ -1,23 +1,10 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('medicine'); ?>  <?php echo lang('alert_stock_list'); ?>
-                <div class="col-md-4 no-print pull-right"> 
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i> <?php echo lang('add_medicine'); ?>
-                            </button>
-                        </div>
-                    </a>
-                </div>
-
-            </header>
-
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('medicine'); ?>  <?php echo lang('alert_stock_list'); ?></h1>
+        </div>
             <style>
 
                 .editable-table .search_form{
@@ -46,17 +33,34 @@
                 }
 
             </style>
-            <div class="panel-body"> 
-                <div class="adv-table editable-table ">
-                    <div class="space15">
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
+                </div>
+            </div>
+        <?php } ?>
 
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('add_medicine'); ?></button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15">
                         <?php if (!empty($key)) { ?>
                             <p>Search Result For <?php echo $key; ?></p>
                         <?php } ?>
-
-
-                    </div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                        </div>
+                        <table class="table-striped table-bordered" id="editable-sample">
                         <thead>
                             <tr>
                                 <th> <?php echo lang('id'); ?></th>
@@ -90,47 +94,45 @@
                             }
 
                         </style>
-
                         <?php
-                        if (!empty($p_n)) {
-                            $i = $p_n * 50;
-                        } else {
-                            $i = 0;
-                        }
-                        foreach ($medicines as $medicine) {
-                            $i = $i + 1;
-                            ?>
-                            <tr class="">
-                                <td class="medici_name"><?php echo $i; ?></td>
-                                <td class="medici_name"><?php echo $medicine->name; ?></td>
-                                <td> <?php echo $medicine->category; ?></td>
-                                <td> <?php echo $medicine->box; ?></td>
-                                <td><?php echo $settings->currency; ?> <?php echo $medicine->price; ?></td>
-                                <td><?php echo $settings->currency; ?> <?php echo $medicine->s_price; ?></td>
-                                <td> <?php
-                                    if ($medicine->quantity <= 0) {
-                                        echo '<p class="os">Stock Out</p>';
-                                    } else {
-                                        echo $medicine->quantity;
-                                    }
-                                    ?>
-                                    <button type="button" class="btn btn-info btn-xs btn_width load" data-toggle="modal" data-id="<?php echo $medicine->id; ?>"> <?php echo lang('load'); ?></button> 
-                                </td>
-                                <td class="center"><?php echo $medicine->generic; ?></td>
-                                <td><?php echo $medicine->company; ?></td>
-                                <td><?php echo $medicine->effects; ?></td>
-                                <td> <?php echo $medicine->e_date; ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $medicine->id; ?>"><i class="fa fa-edit"></i>  <?php echo lang('edit'); ?></button>   
-                                    <a class="btn btn-info btn-xs btn_width delete_button" href="medicine/delete?id=<?php echo $medicine->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash-o"> </i> <?php echo lang('delete'); ?></a>
-                                </td>
-                            </tr>
-                        <?php } ?>
+                            if (!empty($p_n)) {
+                                $i = $p_n * 50;
+                            } else {
+                                $i = 0;
+                            }
+                            foreach ($medicines as $medicine) {
+                                $i = $i + 1;
+                                ?>
+                                <tr class="">
+                                    <td class="medici_name"><?php echo $i; ?></td>
+                                    <td class="medici_name"><?php echo $medicine->name; ?></td>
+                                    <td> <?php echo $medicine->category; ?></td>
+                                    <td> <?php echo $medicine->box; ?></td>
+                                    <td><?php echo $settings->currency; ?> <?php echo $medicine->price; ?></td>
+                                    <td><?php echo $settings->currency; ?> <?php echo $medicine->s_price; ?></td>
+                                    <td> <?php
+                                        if ($medicine->quantity <= 0) {
+                                            echo '<p class="os">Stock Out</p>';
+                                        } else {
+                                            echo $medicine->quantity;
+                                        }
+                                        ?>
+                                        <button type="button" class="btn btn-info btn-xs btn_width load" style="margin-left: 15px;" data-toggle="modal" data-id="<?php echo $medicine->id; ?>"> <?php echo lang('load'); ?></button> 
+                                    </td>
+                                    <td class="center"><?php echo $medicine->generic; ?></td>
+                                    <td><?php echo $medicine->company; ?></td>
+                                    <td><?php echo $medicine->effects; ?></td>
+                                    <td> <?php echo $medicine->e_date; ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $medicine->id; ?>"><i class="fa fa-edit"></i> </button>   
+                                        <a class="btn btn-danger btn-xs btn_width delete_button" href="medicine/delete?id=<?php echo $medicine->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i></a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+
                         </tbody>
-                    </table>
-
-
-                    <!--
+                        </table>
+                        <!--
                     <?php if (empty($key)) { ?>
 
                                 <div class="row">
@@ -224,13 +226,12 @@
                     <?php } ?>
 
                     -->
-
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -241,74 +242,83 @@
 
 
 <!-- Add Accountant Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add_medicine'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('add_medicine'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body row">
-                <form role="form" action="medicine/addNewMedicine" class="clearfix" method="post" enctype="multipart/form-data">
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('name'); ?></label>
-                        <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('category'); ?></label>
-                        <select class="form-control m-bot15" name="category" value=''>
-                            <?php foreach ($categories as $category) { ?>
-                                <option value="<?php echo $category->category; ?>" <?php
-                                if (!empty($medicine->category)) {
-                                    if ($category->category == $medicine->category) {
-                                        echo 'selected';
+            <form role="form" action="medicine/addNewMedicine" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('name'); ?></label>
+                            <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('category'); ?></label>
+                            <select class="form-control m-bot15" name="category" value=''>
+                                <?php foreach ($categories as $category) { ?>
+                                    <option value="<?php echo $category->category; ?>" <?php
+                                    if (!empty($medicine->category)) {
+                                        if ($category->category == $medicine->category) {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> > <?php echo $category->category; ?> </option>
-                                    <?php } ?> 
-                        </select>
+                                    ?> > <?php echo $category->category; ?> </option>
+                                        <?php } ?> 
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('p_price'); ?></label>
-                        <input type="text" class="form-control" name="price" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('p_price'); ?></label>
+                            <input type="text" class="form-control" name="price" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('s_price'); ?></label>
+                            <input type="text" class="form-control" name="s_price" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('quantity'); ?></label>
+                            <input type="text" class="form-control" name="quantity" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('s_price'); ?></label>
-                        <input type="text" class="form-control" name="s_price" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('generic_name'); ?></label>
+                            <input type="text" class="form-control" name="generic" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('company'); ?></label>
+                            <input type="text" class="form-control" name="company" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('quantity'); ?></label>
-                        <input type="text" class="form-control" name="quantity" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label for="exampleInputEmail1"> <?php echo lang('effects'); ?></label>
+                            <input type="text" class="form-control" name="effects" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-4"> 
+                            <label for="exampleInputEmail1"> <?php echo lang('store_box'); ?></label>
+                            <input type="text" class="form-control" name="box" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="exampleInputEmail1"> <?php echo lang('expiry_date'); ?></label>
+                            <input type="date" class="form-control" name="e_date" value=''>
+                        </div>
                     </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('generic_name'); ?></label>
-                        <input type="text" class="form-control" name="generic" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('company'); ?></label>
-                        <input type="text" class="form-control" name="company" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('effects'); ?></label>
-                        <input type="text" class="form-control" name="effects" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-4"> 
-                        <label for="exampleInputEmail1"> <?php echo lang('store_box'); ?></label>
-                        <input type="text" class="form-control" name="box" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('expiry_date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" name="e_date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- Add Accountant Modal-->
 
@@ -319,78 +329,85 @@
 
 
 <!-- Edit Event Modal-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal2">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('edit_medicine'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('edit_medicine'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body row">
-                <form role="form" id="editMedicineForm" class="clearfix" action="medicine/addNewMedicine" method="post" enctype="multipart/form-data">
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('name'); ?></label>
-                        <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('category'); ?></label>
-                        <select class="form-control m-bot15" name="category" value=''>
-                            <?php foreach ($categories as $category) { ?>
-                                <option value="<?php echo $category->category; ?>" <?php
-                                if (!empty($medicine->category)) {
-                                    if ($category->category == $medicine->category) {
-                                        echo 'selected';
+            <form role="form" action="medicine/addNewMedicine" id="editMedicineForm" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('name'); ?></label>
+                            <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('category'); ?></label>
+                            <select class="form-control m-bot15" name="category" value=''>
+                                <?php foreach ($categories as $category) { ?>
+                                    <option value="<?php echo $category->category; ?>" <?php
+                                    if (!empty($medicine->category)) {
+                                        if ($category->category == $medicine->category) {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> > <?php echo $category->category; ?> </option>
-                                    <?php } ?> 
-                        </select>
+                                    ?> > <?php echo $category->category; ?> </option>
+                                        <?php } ?> 
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('p_price'); ?></label>
-                        <input type="text" class="form-control" name="price" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('p_price'); ?></label>
+                            <input type="text" class="form-control" name="price" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('s_price'); ?></label>
+                            <input type="text" class="form-control" name="s_price" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('quantity'); ?></label>
+                            <input type="text" class="form-control" name="quantity" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('s_price'); ?></label>
-                        <input type="text" class="form-control" name="s_price" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('generic_name'); ?></label>
+                            <input type="text" class="form-control" name="generic" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('company'); ?></label>
+                            <input type="text" class="form-control" name="company" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('quantity'); ?></label>
-                        <input type="text" class="form-control" name="quantity" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('generic_name'); ?></label>
-                        <input type="text" class="form-control" name="generic" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('company'); ?></label>
-                        <input type="text" class="form-control" name="company" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('effects'); ?></label>
-                        <input type="text" class="form-control" name="effects" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-4"> 
-                        <label for="exampleInputEmail1"> <?php echo lang('store_box'); ?></label>
-                        <input type="text" class="form-control" name="box" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('expiry_date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" name="e_date" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label for="exampleInputEmail1"> <?php echo lang('effects'); ?></label>
+                            <input type="text" class="form-control" name="effects" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-4"> 
+                            <label for="exampleInputEmail1"> <?php echo lang('store_box'); ?></label>
+                            <input type="text" class="form-control" name="box" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="exampleInputEmail1"> <?php echo lang('expiry_date'); ?></label>
+                            <input type="date" class="form-control" name="e_date" value=''>
+                        </div>
                     </div>
                     <input type="hidden" name="id" value=''>
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-
-
-
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- Edit Event Modal-->
 
@@ -404,28 +421,29 @@
 
 <!-- Load Medicine -->
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('load_medicine'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('load_medicine'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form role="form" id="editMedicineForm" class="clearfix" action="medicine/load" method="post" enctype="multipart/form-data">
-
+            <form role="form" id="editMedicineForm" class="clearfix" action="medicine/load" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1"> <?php echo lang('add_quantity'); ?></label>
                         <input type="text" class="form-control" name="qty" id="exampleInputEmail1" value='' placeholder="">
                     </div>
-
+    
                     <input type="hidden" name="id" value=''>
-
-                    <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+    
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -514,7 +532,7 @@
             "language": {
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                "url": "common/assets/DataTables/languages/" + bahasa + ".json"
             },
 
         });

@@ -1,65 +1,73 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('medicine_categories'); ?>
-                <div class="col-md-4 no-print pull-right"> 
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i> <?php echo lang('create_medicine_category'); ?>
-                            </button>
-                        </div>
-                    </a>
-                </div>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th> <?php echo lang('category'); ?></th>
-                                <th> <?php echo lang('description'); ?></th>
-                                <th> <?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        <style>
-
-                            .img_url{
-                                height:20px;
-                                width:20px;
-                                background-size: contain; 
-                                max-height:20px;
-                                border-radius: 100px;
-                            }
-
-                        </style>
-
-                        <?php foreach ($categories as $category) { ?>
-                            <tr class="">
-                                <td><?php echo $category->category; ?></td>
-                                <td> <?php echo $category->description; ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $category->id; ?>"><i class="fa fa-edit"> <?php echo lang('edit'); ?></i></button>   
-                                    <a class="btn btn-info btn-xs btn_width delete_button" href="medicine/deleteMedicineCategory?id=<?php echo $category->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> <?php echo lang('delete'); ?></i></a>
-                                </td>
-                            </tr>
-                        <?php } ?>
-
-                        </tbody>
-                    </table>
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('medicine_categories'); ?></h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('create_medicine_category'); ?></button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th> <?php echo lang('category'); ?></th>
+                                    <th> <?php echo lang('description'); ?></th>
+                                    <th> <?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            <style>
+
+                                .img_url{
+                                    height:20px;
+                                    width:20px;
+                                    background-size: contain; 
+                                    max-height:20px;
+                                    border-radius: 100px;
+                                }
+
+                            </style>
+
+                            <?php foreach ($categories as $category) { ?>
+                                <tr class="">
+                                    <td><?php echo $category->category; ?></td>
+                                    <td> <?php echo $category->description; ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $category->id; ?>"><i class="fa fa-edit"> </i></button>   
+                                        <a class="btn btn-danger btn-xs btn_width delete_button" href="medicine/deleteMedicineCategory?id=<?php echo $category->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i></a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -70,15 +78,17 @@
 
 
 <!-- Add Accountant Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('create_medicine_category'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('create_medicine_category'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body row">
-                <form role="form" action="medicine/addNewCategory" class="clearfix" method="post" enctype="multipart/form-data">
+            <form role="form" action="medicine/addNewCategory" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group col-md-12"> 
                         <label for="exampleInputEmail1"> <?php echo lang('category'); ?> <?php echo lang('name'); ?> </label>
                         <input type="text" class="form-control" name="category" id="exampleInputEmail1" value='' placeholder="">    
@@ -87,11 +97,12 @@
                         <label for="exampleInputEmail1"> <?php echo lang('description'); ?></label>
                         <input type="text" class="form-control" name="description" id="exampleInputEmail1" value='' placeholder="">
                     </div>
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -104,15 +115,17 @@
 
 
 <!-- Edit Event Modal-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal2">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> <?php echo lang('edit_medicine_category'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('edit_medicine_category'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body row">
-                <form role="form" id="editCategoryForm" action="medicine/addNewCategory" class="clearfix" method="post" enctype="multipart/form-data">
+            <form role="form" id="editCategoryForm" action="medicine/addNewCategory" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group col-md-12"> 
                         <label for="exampleInputEmail1"> <?php echo lang('category'); ?> <?php echo lang('name'); ?> </label>
                         <input type="text" class="form-control" name="category" id="exampleInputEmail1" value='' placeholder="">    
@@ -122,11 +135,12 @@
                         <input type="text" class="form-control" name="description" id="exampleInputEmail1" value='' placeholder="">
                     </div>
                     <input type="hidden" name="id" value=''>
-                    <div class="form-group col-md-12 col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -183,7 +197,7 @@
                                             "language": {
                                                 "lengthMenu": "_MENU_",
                                                 search: "_INPUT_",
-                                                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                                                "url": "common/assets/DataTables/languages/" + bahasa + ".json"
                                             },
 
                                         });
