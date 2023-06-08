@@ -568,6 +568,10 @@ if ($language == 'english') {
     </script>
 <?php endif ?>
 
+<?php if ($this->uri->segment(1) == 'lab') : ?>
+    <script src="common/js/pagescript/lab.js"></script>
+<?php endif ?>
+
 </body>
 
 </html>
