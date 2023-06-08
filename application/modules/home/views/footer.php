@@ -455,6 +455,119 @@ if ($language == 'english') {
     <script src="common/js/pagescript/medicalHistory.js"></script>
 <?php endif ?>
 
+<?php if ($this->uri->segment(1) == 'prescription') : ?>
+    <script src="common/js/pagescript/add_new_prescription_view.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.medicinee').change(function() {
+                var count = 0;
+                var selected = $('#my_select1_disabled').find('option:selected');
+                var unselected = $('#my_select1_disabled').find('option:not(:selected)');
+                selected.attr('data-selected', '1');
+                $.each(unselected, function(index, value1) {
+                    if ($(this).attr('data-selected') == '1') {
+                        var value = $(this).val();
+                        var res = value.split("*");
+                        var id = res[0];
+                        $('#med_selected_section-' + id).remove();
+                    }
+                });
+
+                $.each($('select.medicinee option:selected'), function() {
+                    var value = $(this).val();
+                    var res = value.split("*");
+                    var id = res[0];
+                    var med_id = res[0];
+                    var med_name = res[1];
+                    if ($('#med_id-' + id).length) {} else {
+                        var html = ''
+                        html += '<div id="med_selected_section-' + med_id + '" class="med_selected form-row">'
+                        html += '<div class="form-group medicine_sect col-md-2">'
+                        html += '<label><?php echo lang("medicine"); ?></label>'
+                        html += '<input type="text" class="form-control medi_div" name="med_id[]" value="' + med_name + '" placeholder="" required>'
+                        html += '<input type="hidden" id="med_id-' + id + '" class="medi_div" name="medicine[]" value="' + med_id + '" placeholder="" required>'
+                        html += '</div>'
+                        html += '<div class="form-group medicine_sect col-md-2">'
+                        html += '<label><?php echo lang("dosage"); ?></label>'
+                        html += '<input type="text" class="form-control state medi_div" name="dosage[]" value="" placeholder="100 mg" required>'
+                        html += '</div>'
+                        html += '<div class="form-group medicine_sect col-md-2">'
+                        html += '<label><?php echo lang("frequency"); ?></label>'
+                        html += '<input type="text" class="form-control potency medi_div sale" id="salee' + count + '" name="frequency[]" value="" placeholder="1 + 0 + 1" required>'
+                        html += '</div>'
+                        html += '<div class="form-group medicine_sect col-md-2">'
+                        html += '<label><?php echo lang("days"); ?></label>'
+                        html += '<input type="text" class="form-control potency medi_div quantity" id="quantity' + count + '" name="days[]" value="" placeholder="7 days" required>'
+                        html += '</div>'
+                        html += '<div class="form-group medicine_sect col-md-2">'
+                        html += '<label><?php echo lang("instruction"); ?></label>'
+                        html += '<input type="text" class="form-control potency medi_div quantity" id="quantity' + count + '" name="instruction[]" value="" placeholder="After Food" required>'
+                        html += '</div>'
+                        html += '</div>'
+                        $(".medicine").append(html);
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var selected = $('#my_select1_disabled').find('option:selected');
+            var unselected = $('#my_select1_disabled').find('option:not(:selected)');
+            selected.attr('data-selected', '1');
+            $.each(unselected, function(index, value1) {
+                if ($(this).attr('data-selected') == '1') {
+                    var value = $(this).val();
+                    var res = value.split("*");
+                    var id = res[0];
+                    $('#med_selected_section-' + id).remove();
+                }
+            });
+            var count = 0;
+            $.each($('select.medicinee option:selected'), function() {
+                var value = $(this).val();
+                var res = value.split("*");
+                var id = res[0];
+                var med_id = res[0];
+                var med_name = res[1];
+                var dosage = $(this).data('dosage');
+                var frequency = $(this).data('frequency');
+                var days = $(this).data('days');
+                var instruction = $(this).data('instruction');
+                if ($('#med_id-' + id).length) {
+
+                } else {
+                    var html = ''
+                    html += '<div id="med_selected_section-' + med_id + '" class="med_selected form-row">'
+                    html += '<div class="form-group medicine_sect col-md-2">'
+                    html += '<label><?php echo lang("medicine"); ?></label>'
+                    html += '<input type="text" class="form-control medi_div" name="med_id[]" value="' + med_name + '" placeholder="" required>'
+                    html += '<input type="hidden" id="med_id-' + id + '" class="medi_div" name="medicine[]" value="' + med_id + '" placeholder="" required>'
+                    html += '</div>'
+                    html += '<div class="form-group medicine_sect col-md-2">'
+                    html += '<label><?php echo lang("dosage"); ?></label>'
+                    html += '<input type="text" class="form-control state medi_div" name="dosage[]" value="' + dosage + '" placeholder="100 mg" required>'
+                    html += '</div>'
+                    html += '<div class="form-group medicine_sect col-md-2">'
+                    html += '<label><?php echo lang("frequency"); ?></label>'
+                    html += '<input type="text" class="form-control potency medi_div sale" id="salee' + count + '" name="frequency[]" value="' + frequency + '" placeholder="1 + 0 + 1" required>'
+                    html += '</div>'
+                    html += '<div class="form-group medicine_sect col-md-2">'
+                    html += '<label><?php echo lang("days"); ?></label>'
+                    html += '<input type="text" class="form-control potency medi_div quantity" id="quantity' + count + '" name="days[]" value="' + days + '" placeholder="7 days" required>'
+                    html += '</div>'
+                    html += '<div class="form-group medicine_sect col-md-2">'
+                    html += '<label><?php echo lang("instruction"); ?></label>'
+                    html += '<input type="text" class="form-control potency medi_div quantity" id="quantity' + count + '" name="instruction[]" value="' + instruction + '" placeholder="After Food" required>'
+                    html += '</div>'
+                    html += '</div>'
+                    $(".medicine").append(html);
+                }
+            });
+        });
+    </script>
+<?php endif ?>
+
 </body>
 
 </html>
