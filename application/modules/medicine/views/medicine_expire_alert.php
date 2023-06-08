@@ -1,23 +1,10 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('medicine'); ?>  <?php echo lang('alert_stock_list'); ?>
-                <div class="col-md-4 no-print pull-right"> 
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i> <?php echo lang('add_medicine'); ?>
-                            </button>
-                        </div>
-                    </a>
-                </div>
-
-            </header>
-
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('medicine'); ?>  <?php echo lang('alert_stock_list'); ?></h1>
+        </div>
             <style>
 
                 .editable-table .search_form{
@@ -46,17 +33,34 @@
                 }
 
             </style>
-            <div class="panel-body"> 
-                <div class="adv-table editable-table ">
-                    <div class="space15">
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
+                </div>
+            </div>
+        <?php } ?>
 
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('add_medicine'); ?></button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15">
                         <?php if (!empty($key)) { ?>
                             <p>Search Result For <?php echo $key; ?></p>
                         <?php } ?>
-
-
-                    </div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                        </div>
+                        <table class="table-striped table-bordered" id="editable-sample">
                         <thead>
                             <tr>
                                 <th> <?php echo lang('id'); ?></th>
@@ -92,26 +96,24 @@
                         </style>
 
                         </tbody>
-                    </table>
-
-
-                    <!--
+                        </table>
+                        <!--
                     <?php if (empty($key)) { ?>
 
-                            <div class="row">
-                                <div class="col-lg-6"><div class="dataTables_paginate paging_bootstrap pagination"><ul>
-                                            <li class="next disabled"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php
+                                <div class="row">
+                                    <div class="col-lg-6"><div class="dataTables_paginate paging_bootstrap pagination"><ul>
+                                                <li class="next disabled"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php
                         if (($pagee_number > 1)) {
                             echo $pagee_number - 1;
                         }
                         ?>"><-- Prev</a>
-                                            </li>
+                                                </li>
 
                         <?php
                         if ($pagee_number < 5) {
                             for ($pagee = 1; $pagee < 6; $pagee++) {
                                 ?>
-                                                            <li class="active"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php echo $pagee; ?>"><?php echo $pagee; ?></a></li>
+                                                                        <li class="active"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php echo $pagee; ?>"><?php echo $pagee; ?></a></li>
                                 <?php
                             }
                         }
@@ -119,44 +121,44 @@
                         if ($pagee_number >= 5) {
                             for ($x = 3; $x > 0; $x--) {
                                 ?>
-                                                            <li class="active"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php echo $pagee_number - $x; ?>"><?php echo $pagee_number - $x; ?></a></li>
+                                                                        <li class="active"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php echo $pagee_number - $x; ?>"><?php echo $pagee_number - $x; ?></a></li>
                                 <?php
                             }
                             for ($x = 0; $x < 4; $x++) {
                                 ?>
-                                                            <li class="active"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php echo $pagee_number + $x; ?>"><?php echo $pagee_number + $x; ?></a></li>
+                                                                        <li class="active"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php echo $pagee_number + $x; ?>"><?php echo $pagee_number + $x; ?></a></li>
                                 <?php
                             }
                         }
                         ?>
-                                            <li class="next disabled"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php
+                                                <li class="next disabled"><a href="medicine/medicineStockAlertByPageNumber?page_number=<?php
                         if (!empty($pagee_number)) {
                             echo $pagee_number + 1;
                         } else {
                             echo '1';
                         }
                         ?>">Next → </a>
-                                            </li>
-                                        </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
                     <?php } else { ?>
-                            <div class="row">
-                                <div class="col-lg-6"><div class="dataTables_paginate paging_bootstrap pagination"><ul>
-                                            <li class="next disabled"><a href="medicine/searchMedicineInAlertStock?page_number=<?php
+                                <div class="row">
+                                    <div class="col-lg-6"><div class="dataTables_paginate paging_bootstrap pagination"><ul>
+                                                <li class="next disabled"><a href="medicine/searchMedicineInAlertStock?page_number=<?php
                         if (($pagee_number > 1)) {
                             echo $pagee_number - 1;
                         }
                         ?>"><-- Prev</a>
-                                            </li>
+                                                </li>
 
                         <?php
                         if ($pagee_number < 5) {
                             for ($pagee = 1; $pagee < 6; $pagee++) {
                                 ?>
-                                                            <li class="active"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php echo $pagee; ?>"><?php echo $pagee; ?></a></li>
+                                                                        <li class="active"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php echo $pagee; ?>"><?php echo $pagee; ?></a></li>
                                 <?php
                             }
                         }
@@ -164,38 +166,37 @@
                         if ($pagee_number >= 5) {
                             for ($x = 3; $x > 0; $x--) {
                                 ?>
-                                                            <li class="active"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php echo $pagee_number - $x; ?>"><?php echo $pagee_number - $x; ?></a></li>
+                                                                        <li class="active"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php echo $pagee_number - $x; ?>"><?php echo $pagee_number - $x; ?></a></li>
                                 <?php
                             }
                             for ($x = 0; $x < 4; $x++) {
                                 ?>
-                                                            <li class="active"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php echo $pagee_number + $x; ?>"><?php echo $pagee_number + $x; ?></a></li>
+                                                                        <li class="active"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php echo $pagee_number + $x; ?>"><?php echo $pagee_number + $x; ?></a></li>
                                 <?php
                             }
                         }
                         ?>
-                                            <li class="next disabled"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php
+                                                <li class="next disabled"><a href="medicine/searchMedicineInAlertStock?key=<?php echo $key; ?>&page_number=<?php
                         if (!empty($pagee_number)) {
                             echo $pagee_number + 1;
                         } else {
                             echo '1';
                         }
                         ?>">Next → </a>
-                                            </li>
-                                        </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                     <?php } ?>
 
                     -->
-
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -206,74 +207,83 @@
 
 
 <!-- Add Accountant Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add_medicine'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('add_medicine'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body row">
-                <form role="form" action="medicine/addNewMedicine" class="clearfix" method="post" enctype="multipart/form-data">
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('name'); ?></label>
-                        <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('category'); ?></label>
-                        <select class="form-control m-bot15" name="category" value=''>
-                            <?php foreach ($categories as $category) { ?>
-                                <option value="<?php echo $category->category; ?>" <?php
-                                if (!empty($medicine->category)) {
-                                    if ($category->category == $medicine->category) {
-                                        echo 'selected';
+            <form role="form" action="medicine/addNewMedicine" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('name'); ?></label>
+                            <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('category'); ?></label>
+                            <select class="form-control m-bot15" name="category" value=''>
+                                <?php foreach ($categories as $category) { ?>
+                                    <option value="<?php echo $category->category; ?>" <?php
+                                    if (!empty($medicine->category)) {
+                                        if ($category->category == $medicine->category) {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> > <?php echo $category->category; ?> </option>
-                                    <?php } ?> 
-                        </select>
+                                    ?> > <?php echo $category->category; ?> </option>
+                                        <?php } ?> 
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('p_price'); ?></label>
-                        <input type="text" class="form-control" name="price" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('p_price'); ?></label>
+                            <input type="text" class="form-control" name="price" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('s_price'); ?></label>
+                            <input type="text" class="form-control" name="s_price" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('quantity'); ?></label>
+                            <input type="text" class="form-control" name="quantity" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('s_price'); ?></label>
-                        <input type="text" class="form-control" name="s_price" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('generic_name'); ?></label>
+                            <input type="text" class="form-control" name="generic" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"> <?php echo lang('company'); ?></label>
+                            <input type="text" class="form-control" name="company" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('quantity'); ?></label>
-                        <input type="text" class="form-control" name="quantity" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <label for="exampleInputEmail1"> <?php echo lang('effects'); ?></label>
+                            <input type="text" class="form-control" name="effects" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-4"> 
+                            <label for="exampleInputEmail1"> <?php echo lang('store_box'); ?></label>
+                            <input type="text" class="form-control" name="box" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="exampleInputEmail1"> <?php echo lang('expiry_date'); ?></label>
+                            <input type="date" class="form-control" name="e_date" value=''>
+                        </div>
                     </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('generic_name'); ?></label>
-                        <input type="text" class="form-control" name="generic" id="exampleInputEmail1" value='' placeholder="">
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('company'); ?></label>
-                        <input type="text" class="form-control" name="company" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="exampleInputEmail1"> <?php echo lang('effects'); ?></label>
-                        <input type="text" class="form-control" name="effects" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-4"> 
-                        <label for="exampleInputEmail1"> <?php echo lang('store_box'); ?></label>
-                        <input type="text" class="form-control" name="box" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1"> <?php echo lang('expiry_date'); ?></label>
-                        <input type="text" class="form-control default-date-picker" name="e_date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- Add Accountant Modal-->
 
