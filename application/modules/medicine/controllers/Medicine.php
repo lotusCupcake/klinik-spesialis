@@ -339,7 +339,7 @@ class Medicine extends MX_Controller {
             } else {
                 $quan = $medicine->quantity;
             }
-            $load = '<button type="button" class="btn btn-info btn-xs btn_width load" data-toggle="modal" data-id="' . $medicine->id . '">' . lang('load') . '</button>';
+            $load = '<button type="button" class="btn btn-info btn-xs btn_width load" data-toggle="modal" style="float: right;" data-id="' . $medicine->id . '">' . lang('load') . '</button>';
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $medicine->id . '"><i class="fa fa-edit"> </i> </button>';
 
             $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="medicine/delete?id=' . $medicine->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i> </a>';
@@ -350,7 +350,7 @@ class Medicine extends MX_Controller {
                 $medicine->box,
                 $settings->currency . $medicine->price,
                 $settings->currency . $medicine->s_price,
-                $quan . '<br>' . $load,
+                $quan . $load,
                 $medicine->generic,
                 $medicine->company,
                 $medicine->effects,
@@ -421,7 +421,7 @@ class Medicine extends MX_Controller {
             } else {
                 $quan = $medicine->quantity;
             }
-            $load = '<button type="button" class="btn btn-info btn-xs btn_width load" data-toggle="modal" data-id="' . $medicine->id . '">' . lang('load') . '</button>';
+            $load = '<button type="button" class="btn btn-info btn-xs btn_width load" data-toggle="modal" style="float: right;" data-id="' . $medicine->id . '">' . lang('load') . '</button>';
             $option1 = '<button type="button" class="btn btn-info btn-xs btn_width editbutton" data-toggle="modal" data-id="' . $medicine->id . '"><i class="fa fa-edit"> </i> </button>';
 
             $option2 = '<a class="btn btn-danger btn-xs btn_width delete_button" href="medicine/delete?id=' . $medicine->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"> </i> </a>';
@@ -432,7 +432,7 @@ class Medicine extends MX_Controller {
                 $medicine->box,
                 $settings->currency . $medicine->price,
                 $settings->currency . $medicine->s_price,
-                $quan . '<br>' . $load,
+                $quan . $load,
                 $medicine->generic,
                 $medicine->company,
                 $medicine->effects,
