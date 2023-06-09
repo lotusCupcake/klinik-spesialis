@@ -31,11 +31,11 @@
                 </div>
             </form>
             <div class="card">
+                <div class="card-header">
+                <button class="btn btn-icon icon-left btn-primary" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print'); ?></button>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <!-- <div class="clearfix">
-                            <button class="export" onclick="javascript:window.print();"><?php echo lang('print'); ?></button>     
-                        </div> -->
                         <div class="space15">
                         <?php
                         if (!empty($from) && !empty($to)) {
