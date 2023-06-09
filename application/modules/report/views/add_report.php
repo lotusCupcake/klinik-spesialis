@@ -1,30 +1,43 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>
+            <?php
                 if (!empty($report->id)) {
                     echo '<i class="fa fa-edit"></i> ' . lang('edit_report');
                 } else {
                     echo '<i class="fa fa-plus-circle"></i> ' . lang('add_new_report');
                 }
-                ?>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="clearfix">
-
-                        <div class="col-lg-12">
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <?php echo validation_errors(); ?>
-                                    <form role="form" action="report/addReport" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('select_type'); ?></label>
-                                            <select class="form-control m-bot15 js-example-basic-single" name="type" value=''>
+            ?>
+            </h1>
+        </div>
+        <?php
+        $message = validation_errors();
+        if (!empty($message)) {
+        ?><div class="alert alert-danger alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Failed!</div>
+                    <?= $message; ?>
+                </div>
+            </div>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <form role="form" action="report/addReport" method="post" enctype="multipart/form-data">
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('select_type'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                        <select class="form-control m-bot15 js-example-basic-single" name="type" value=''>
                                                 <option value="birth" <?php
                                                 if (!empty($setval)) {
                                                     if (set_value('type') == 'birth') {
@@ -61,13 +74,17 @@
                                                     }
                                                 }
                                                 ?>><?php echo lang('expire'); ?></option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-
-
-                                            <label for="exampleInputEmail1"><?php echo lang('description'); ?></label>
-                                            <input type="text" class="form-control" name="description" id="exampleInputEmail1" value='<?php
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('description'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="description" id="exampleInputEmail1" value='<?php
                                             if (!empty($setval)) {
                                                 echo set_value('description');
                                             }
@@ -75,11 +92,16 @@
                                                 echo $report->description;
                                             }
                                             ?>' placeholder="">
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('patient'); ?></label>
-                                            <select class="form-control m-bot15 js-example-basic-single" name="patient" value=''> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('patient'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                        <select class="form-control m-bot15 js-example-basic-single" name="patient" value=''> 
                                                 <?php foreach ($patients as $patient) { ?>
                                                     <option value="<?php echo $patient->name . '*' . $patient->ion_user_id; ?>" <?php
                                                     if (!empty($report->patient)) {
@@ -89,11 +111,17 @@
                                                     }
                                                     ?> ><?php echo $patient->name; ?> </option>
                                                         <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('doctor'); ?></label>
-                                            <select class="form-control m-bot15 js-example-basic-single" name="doctor" value=''> 
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('doctor'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                        <select class="form-control m-bot15 js-example-basic-single" name="doctor" value=''> 
                                                 <?php foreach ($doctors as $doctor) { ?>
                                                     <option value="<?php echo $doctor->name; ?>" <?php
                                                     if (!empty($setval)) {
@@ -108,36 +136,46 @@
                                                     }
                                                     ?> ><?php echo $doctor->name; ?> </option>
                                                         <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
-                                            <input class="form-control form-control-inline input-medium default-date-picker" name="date"  size="16" type="text" value="<?php
+                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('date'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                <input type="date" class="form-control" name="date" value="<?php
                                             if (!empty($setval)) {
                                                 echo set_value('date');
                                             }
                                             if (!empty($report->date)) {
                                                 echo $report->date;
                                             }
-                                            ?>" />
-
-                                        </div>
-                                        <input type="hidden" name="id" value='<?php
+                                            ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value='<?php
                                         if (!empty($report->id)) {
                                             echo $report->id;
                                         }
                                         ?>'>
-                                        <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
-                                    </form>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
                                 </div>
-                            </section>
+                                <div class="col-md-8">
+                                    <button type="submit" name="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
+        </div>
     </section>
-</section>
+</div>
 <!--main content end-->
 <!--footer start-->
