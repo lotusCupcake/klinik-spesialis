@@ -572,6 +572,303 @@ if ($language == 'english') {
     <script src="common/js/pagescript/lab.js"></script>
 <?php endif ?>
 
+<?php if ($this->uri->segment(1) == 'finance') : ?>
+    <script src="common/js/pagescript/addPaymentView.js"></script>
+    <script>
+        $(document).ready(function() {
+            var tot = 0;
+            var selected = $('#my_multi_select4').find('option:selected');
+            var unselected = $('#my_multi_select4').find('option:not(:selected)');
+            selected.attr('data-selected', '1');
+            $.each(unselected, function(index, value1) {
+                if ($(this).attr('data-selected') == '1') {
+                    var value = $(this).val();
+                    var res = value.split("*");
+                    var id = res[0];
+                    $('#id-div' + id).remove();
+                    $('#idinput-' + id).remove();
+                    $('#mediidinput-' + id).remove();
+                }
+            });
+
+            $.each($('select.multi-select1 option:selected'), function() {
+                var value = $(this).val();
+                var res = value.split("*");
+                var unit_price = res[1];
+                var id = res[0];
+                var qtity = $(this).data('qtity');
+                if ($('#idinput-' + id).length) {
+
+                } else {
+                    if ($('#id-div' + id).length) {
+
+                    } else {
+
+                        let html = ''
+                        html += '<div class="card remove1" id="id-div' + id + '">'
+                        html += '<div class="card-body">'
+                        html += '<div class="row name" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Name</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8">'
+                        html += '<input type="text" class="form-control pos_element" value="' + res[2] + '" readonly>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '<div class="row company" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Company</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8">'
+                        html += '<input type="text" class="form-control pos_element" value="' + res[3] + '" readonly>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '<div class="row price" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Price</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8">'
+                        html += '<input type="text" class="form-control pos_element" value="' + res[1] + '" readonly>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '<div class="row current_stock" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Current Stock</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8">'
+                        html += '<input type="text" class="form-control pos_element" value="' + res[4] + '" readonly>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '<div class="row quantity" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Quantity</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8" id="quantity' + id + '">'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        $("#editPaymentForm .qfloww").append(html)
+                    }
+                    var input2 = $('<input>').attr({
+                        type: 'text',
+                        class: "form-control remove",
+                        id: 'idinput-' + id,
+                        name: 'quantity[]',
+                        value: '1',
+                    }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        class: "remove",
+                        id: 'mediidinput-' + id,
+                        name: 'medicine_id[]',
+                        value: id,
+                    }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+                }
+                $(document).ready(function() {
+                    $('#idinput-' + id).keyup(function() {
+                        var qty = 0;
+                        var total = 0;
+                        $.each($('select.multi-select1 option:selected'), function() {
+                            var value = $(this).val();
+                            var res = value.split("*");
+                            var id1 = res[0];
+                            qty = $('#idinput-' + id1).val();
+                            var ekokk = res[1];
+                            total = total + qty * ekokk;
+                        });
+                        tot = total;
+                        var discount = $('#dis_id').val();
+                        var gross = tot - discount;
+                        $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+                        $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                    });
+                });
+                var curr_val = res[1] * $('#idinput-' + id).val();
+                tot = tot + curr_val;
+            });
+            var discount = $('#dis_id').val();
+            var gross = tot - discount;
+            $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+            $('#editPaymentForm').find('[name="grsss"]').val(gross)
+        });
+        $(document).ready(function() {
+            $('#dis_id').keyup(function() {
+                var val_dis = 0;
+                var amount = 0;
+                var ggggg = 0;
+                amount = $('#subtotal').val();
+                val_dis = this.value;
+                ggggg = amount - val_dis;
+                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+            });
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function() {
+            $('.multi-select1').change(function() {
+                var tot = 0;
+                var selected = $('#my_multi_select4').find('option:selected');
+                var unselected = $('#my_multi_select4').find('option:not(:selected)');
+                selected.attr('data-selected', '1');
+                $.each(unselected, function(index, value1) {
+                    if ($(this).attr('data-selected') == '1') {
+                        var value = $(this).val();
+                        var res = value.split("*");
+                        var id = res[0];
+                        $('#id-div' + id).remove();
+                        $('#idinput-' + id).remove();
+                        $('#mediidinput-' + id).remove();
+
+                    }
+                });
+                $.each($('select.multi-select1 option:selected'), function() {
+                    var value = $(this).val();
+                    var res = value.split("*");
+                    var unit_price = res[1];
+                    var id = res[0];
+                    if ($('#idinput-' + id).length) {
+
+                    } else {
+                        if ($('#id-div' + id).length) {
+
+                        } else {
+                            let html = ''
+                            html += '<div class="card remove1" id="id-div' + id + '">'
+                            html += '<div class="card-body">'
+                            html += '<div class="row name" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Name</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8">'
+                            html += '<input type="text" class="form-control pos_element" value="' + res[2] + '" readonly>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '<div class="row company" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Company</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8">'
+                            html += '<input type="text" class="form-control pos_element" value="' + res[3] + '" readonly>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '<div class="row price" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Price</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8">'
+                            html += '<input type="text" class="form-control pos_element" value="' + res[1] + '" readonly>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '<div class="row current_stock" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Current Stock</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8">'
+                            html += '<input type="text" class="form-control pos_element" value="' + res[4] + '" readonly>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '<div class="row quantity" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Quantity</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8" id="quantity' + id + '">'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            $("#editPaymentForm .qfloww").append(html)
+                        }
+                        var input2 = $('<input>').attr({
+                            type: 'text',
+                            class: "form-control remove",
+                            id: 'idinput-' + id,
+                            name: 'quantity[]',
+                            value: '1',
+                        }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+
+                        $('<input>').attr({
+                            type: 'hidden',
+                            class: "remove",
+                            id: 'mediidinput-' + id,
+                            name: 'medicine_id[]',
+                            value: id,
+                        }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+                    }
+
+                    $(document).ready(function() {
+                        $('#idinput-' + id).keyup(function() {
+                            var qty = 0;
+                            var total = 0;
+                            $.each($('select.multi-select1 option:selected'), function() {
+                                var value = $(this).val();
+                                var res = value.split("*");
+                                var id1 = res[0];
+                                qty = $('#idinput-' + id1).val();
+                                var ekokk = res[1];
+                                total = total + qty * ekokk;
+                            });
+
+                            tot = total;
+
+                            var discount = $('#dis_id').val();
+                            var gross = tot - discount;
+                            $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+                            $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                        });
+                    });
+                    var curr_val = res[1] * $('#idinput-' + id).val();
+                    tot = tot + curr_val;
+                });
+                var discount = $('#dis_id').val();
+                var gross = tot - discount;
+                $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+                $('#editPaymentForm').find('[name="grsss"]').val(gross)
+            });
+        });
+        $(document).ready(function() {
+            $('#dis_id').keyup(function() {
+                var val_dis = 0;
+                var amount = 0;
+                var ggggg = 0;
+                amount = $('#subtotal').val();
+                val_dis = this.value;
+                <?php if ($discount_type == 'percentage') { ?>
+                    ggggg = amount - amount * val_dis / 100;
+                <?php } ?>
+                <?php if ($discount_type == 'flat') { ?>
+                    ggggg = amount - val_dis;
+                <?php } ?>
+                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+            });
+        });
+    </script>
+<?php endif ?>
+
 </body>
 
 </html>
