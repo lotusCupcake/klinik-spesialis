@@ -84,10 +84,10 @@
                         <div class="card-header">
                             <h4><?php echo lang('latest_sales'); ?></h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <div class="table-responsive">
                                 <div class="space15"></div>
-                                <table class="table table-striped table-bordered" id="editable-sample">
+                                <table class="table table-striped" id="editable-sample">
                                     <thead>
                                         <tr>
                                             <th> <?php echo lang('date'); ?> </th>
@@ -119,10 +119,10 @@
                         <div class="card-header">
                             <h4><?php echo lang('latest_expense'); ?></h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <div class="table-responsive">
                                 <div class="space15"></div>
-                                <table class="table table-striped table-bordered" id="editable-sample">
+                                <table class="table table-striped" id="editable-sample">
                                     <thead>
                                         <tr>
                                             <th> <?php echo lang('category'); ?> </th>
@@ -157,10 +157,10 @@
                         <div class="card-header">
                             <h4><?php echo lang('statistics'); ?> <?php echo lang('this_month'); ?></h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <div class="table-responsive">
                                 <div class="space15"></div>
-                                <table class="table table-striped table-bordered" id="editable-sample">
+                                <table class="table table-striped" id="editable-sample">
                                     <tbody>
                                         <tr>
                                             <td>1</td>
@@ -320,10 +320,10 @@
                         <div class="card-header">
                             <h4><?php echo lang('latest_medicines'); ?></h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <div class="table-responsive">
                                 <div class="space15"></div>
-                                <table class="table table-striped table-bordered" id="editable-sample">
+                                <table class="table table-striped" id="editable-sample">
                                     <thead>
                                         <tr>
                                             <th> <?php echo lang('name'); ?></th>
