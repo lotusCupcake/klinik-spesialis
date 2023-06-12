@@ -1,29 +1,41 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <div class="col-md-8">
-            <section class="panel">
-                <header class="panel-heading">
-                    <?php if (empty($id)) { ?>
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1>
+                <?php if (empty($id)) { ?>
                         <i class="fa fa-plus-circle"></i> <?php echo lang('add_new'); ?> <?php echo lang('manual'); ?> <?php echo lang('template');
                 } else { ?>
                         <i class="fa fa-edit"></i> <?php echo lang('edit'); ?> <?php echo lang('manual'); ?> <?php echo lang('template');
                 } ?>
-                </header>
-                <div class="panel-body">
-                    <div class="adv-table editable-table ">
-                        <div class="clearfix">
-                            <div class="col-lg-12">
-                                <section class="panel">
-                                    <div class="panel-body">
-<?php echo validation_errors(); ?>
-                                        <form role="form" name="myform" action="sms/addNewManualTemplate" method="post" enctype="multipart/form-data">                                                                                    
-
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1"> <?php echo lang('templatename'); ?></label>
-                                                <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='<?php
+            </h1>
+        </div>
+        <?php
+        $message = validation_errors();
+        if (!empty($message)) {
+        ?><div class="alert alert-danger alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Failed!</div>
+                    <?= $message; ?>
+                </div>
+            </div>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <form role="form" name="myform" action="sms/addNewManualTemplate" method="post" enctype="multipart/form-data">
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('templatename'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='<?php
                                                 if (!empty($templatename->name)) {
                                                     echo $templatename->name;
                                                 }
@@ -31,10 +43,16 @@
                                                     echo set_value('name');
                                                 }
                                                 ?>' placeholder="" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1"> <?php echo lang('message'); ?> <?php echo lang('template'); ?></label>
-                                                <?php
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('message'); ?> <?php echo lang('template'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <?php
                                                 $count = 0;
                                                 foreach ($shortcode as $shortcodes) {
                                                     ?>
@@ -63,26 +81,30 @@
                                                                   echo set_value('message');
                                                               }
                                                               ?></textarea>
-                                            </div>
-                                            <input type="hidden" name="id" value='<?php
-                                            if (!empty($templatename->id)) {
-                                                echo $templatename->id;
-                                            }
-                                            ?>'>
-                                            <input type="hidden" name="type" value='sms'>
-                                            <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
-                                        </form>
-                                    </div>
-                                </section>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <input type="hidden" name="id" value='<?php
+                            if (!empty($templatename->id)) {
+                                echo $templatename->id;
+                            }
+                        ?>'>
+                        <input type="hidden" name="type" value='sms'>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                </div>
+                                <div class="col-md-8">
+                                    <button type="submit" name="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </section>
+            </div>
         </div>
-        <!-- page end-->
-    </section>
-</section>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
