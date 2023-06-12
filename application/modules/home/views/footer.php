@@ -572,6 +572,10 @@ if ($language == 'english') {
     <script src="common/js/pagescript/lab.js"></script>
 <?php endif ?>
 
+<?php if ($this->uri->segment(1) == 'sms') : ?>
+    <script src="common/js/pagescript/sendView.js"></script>
+<?php endif ?>
+
 <?php if ($this->uri->segment(1) == 'finance') : ?>
     <script src="common/js/pagescript/addPaymentView.js"></script>
     <script>
