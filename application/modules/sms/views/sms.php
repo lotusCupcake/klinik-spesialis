@@ -1,72 +1,92 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('sent_messages'); ?>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="clearfix"> 
-                        <button class="export" onclick="javascript:window.print();">Print</button>  
-                    </div>
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th><?php echo lang('date'); ?></th>
-                                <th><?php echo lang('message'); ?></th>
-                                <th><?php echo lang('recipient'); ?></th>
-                                <th><?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $i = 0;
-                            foreach ($sents as $sent) {
-                                $i = $i + 1;
-                                ?>
-                                <tr class="">
-                                    <td><?php echo $i; ?></td>
-                                    <td style='width: 25%;'><?php echo date('h:i:s a m/d/y', $sent->date); ?></td>
-                                    <td><?php
-                                        if (!empty($sent->message)) {
-                                            echo $sent->message;
-                                        }
-                                        ?></td>
-                                    <td><?php
-                                        if (!empty($sent->recipient)) {
-                                            echo $sent->recipient;
-                                        }
-                                        ?></td>
-                                    <td>
-                                        <a class="btn btn-info btn-xs btn_width delete_button" href="sms/delete?id=<?php echo $sent->id; ?>" <?php echo lang('delete'); ?> onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i></a>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('sent_messages'); ?></h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                    <h4></h4>
+                    <div class="clearfix card-header-form">
+                        <button class="btn btn-icon icon-left btn-primary" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print') ?></button>  
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th><?php echo lang('date'); ?></th>
+                                    <th><?php echo lang('message'); ?></th>
+                                    <th><?php echo lang('recipient'); ?></th>
+                                    <th><?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 0;
+                                foreach ($sents as $sent) {
+                                    $i = $i + 1;
+                                    ?>
+                                    <tr class="">
+                                        <td><?php echo $i; ?></td>
+                                        <td style='width: 25%;'><?php echo date('h:i:s a m/d/y', $sent->date); ?></td>
+                                        <td><?php
+                                            if (!empty($sent->message)) {
+                                                echo $sent->message;
+                                            }
+                                            ?></td>
+                                        <td><?php
+                                            if (!empty($sent->recipient)) {
+                                                echo $sent->recipient;
+                                            }
+                                            ?></td>
+                                        <td>
+                                            <a class="btn btn-danger btn-xs btn_width delete_button" href="sms/delete?id=<?php echo $sent->id; ?>" <?php echo lang('delete'); ?> onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i></a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 
 <!-- Add Area Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Add Area</h4>
+                <h5 class="modal-title">Add Area</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form role="form" action="area/addNew" method="post" enctype="multipart/form-data">
+            <form role="form" action="area/addNew" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
                         <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
@@ -82,26 +102,29 @@
                         </div>
                     </div>
                     <input type="hidden" name="id" value=''>
-                    <section class="">
-                        <button type="submit" name="submit" class="btn btn-info submit_button">Submit</button>
-                    </section>
-                </form>
-            </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                    </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
 <!-- Add Area Modal-->
 
 <!-- Edit Area Modal-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Edit Area</h4>
+                <h5 class="modal-title">Edit Area</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form role="form" id="areaEditForm" action="area/addNew" method="post" enctype="multipart/form-data">
+            <form role="form" id="areaEditForm" action="area/addNew" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
                         <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="">
@@ -114,12 +137,13 @@
                     </div>
                     <input type="hidden" name="id" value=''>
                     <input type="hidden" name="p_id" value=''>
-
-                    <section class="">
-                        <button type="submit" name="submit" class="btn btn-info submit_button">Submit</button>
-                    </section>
-                </form>
-            </div>
+    
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                    </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -172,7 +196,7 @@
             "language": {
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                "url": "common/assets/DataTables/languages/" + bahasa + ".json"
             },
 
         });
