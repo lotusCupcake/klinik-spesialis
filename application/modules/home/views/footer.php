@@ -873,6 +873,10 @@ if ($language == 'english') {
     </script>
 <?php endif ?>
 
+<?php if ($this->uri->segment(1) == 'email') : ?>
+    <script src="common/js/pagescript/autoEmailTemplate.js"></script>
+<?php endif ?>
+
 </body>
 
 </html>
