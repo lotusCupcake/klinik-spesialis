@@ -1,57 +1,83 @@
-<!--sidebar end-->
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="col-md-6 row">
-            <header class="panel-heading">
-                <?php
+<!-- Main Content -->
+<div class="main-content no-print">
+    <section class="section">
+        <div class="section-header">
+            <h1><?php
                 if (!empty($expense->id))
                     echo lang('pharmacy') . ' ' . lang('edit_expense');
                 else
                     echo lang('pharmacy') . ' ' . lang('add_expense');
                 ?>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="clearfix">
-                        <?php echo validation_errors(); ?>
-                        <form role="form" action="finance/pharmacy/addExpense" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1"> <?php echo lang('category'); ?> </label>
-                                <select class="form-control m-bot15" name="category" value=''>
-                                    <?php foreach ($categories as $category) { ?>
-                                        <option value="<?php echo $category->category; ?>" <?php
-                                        if (!empty($expense->category)) {
-                                            if ($category->category == $expense->category) {
-                                                echo 'selected';
-                                            }
-                                        }
-                                        ?> > <?php echo $category->category; ?> </option>
-                                            <?php } ?> 
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1"> <?php echo lang('amount'); ?> </label>
-                                <input type="text" class="form-control" name="amount" id="exampleInputEmail1" value='<?php
-                                if (!empty($expense->amount)) {
-                                    echo $expense->amount;
-                                }
-                                ?>' placeholder="<?php echo $settings->currency; ?>">
-                            </div>
-                            <input type="hidden" name="id" value='<?php
-                            if (!empty($expense->id)) {
-                                echo $expense->id;
-                            }
-                            ?>'>
-                            <button type="submit" name="submit" class="btn btn-info"> <?php echo lang('submit'); ?> </button>
-                        </form>
-                    </div>
+            </h1>
+        </div>
+        <?php
+        $message = validation_errors();
+        if (!empty($message)) {
+        ?><div class="alert alert-danger alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Failed!</div>
+                    <?= $message; ?>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <form role="form" action="finance/pharmacy/addExpense" method="post" enctype="multipart/form-data">
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('category'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="category" class="form-control select2" id="">
+                                        <?php foreach ($categories as $category) { ?>
+                                            <option value="<?php echo $category->category; ?>" <?php
+                                                                                                if (!empty($expense->category)) {
+                                                                                                    if ($category->category == $expense->category) {
+                                                                                                        echo 'selected';
+                                                                                                    }
+                                                                                                }
+                                                                                                ?>> <?php echo $category->category; ?> </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                    <label class="col-form-label"><?php echo lang('amount'); ?></label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="amount" id="exampleInputEmail1" value='<?php
+                                                                                                                            if (!empty($expense->amount)) {
+                                                                                                                                echo $expense->amount;
+                                                                                                                            }
+                                                                                                                            ?>' placeholder="<?php echo $settings->currency; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value='<?php
+                                                                if (!empty($expense->id)) {
+                                                                    echo $expense->id;
+                                                                }
+                                                                ?>'>
+                        <div class="row" style="padding-right:30px">
+                            <div class="col-md-12 row mb-4">
+                                <div class="col-md-4 text-right">
+                                </div>
+                                <div class="col-md-8">
+                                    <button type="submit" name="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
     </section>
-</section>
-<!--main content end-->
-<!--footer start-->
+</div>
