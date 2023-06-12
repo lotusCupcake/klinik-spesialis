@@ -10,20 +10,23 @@
         ?>
         <div class="section-header"> 
             <h1 class="col"><?php echo date('Y', $first_minute) . ' ' .lang('hospital').' '. lang('expense_report'); ?> </h1>
-            <div class="col-md-2 btn-group" role="group" aria-label="Basic example">
-                <a class="btn btn-primary no-print" href="finance/monthlyExpense?year=<?php echo $previous_year; ?>">
-                    <i class="fa fa-arrow-left"></i>
-                </a>
-                <a class="btn btn-primary no-print" href="finance/monthlyExpense?year=<?php echo $next_year; ?>">
-                    <i class="fa fa-arrow-right"></i>
-                </a>
-            </div>
-            <div class="col-md-0 btn-group">
-                <a class="no-print btn btn-warning" onclick="javascript:window.print();"> <i class="fa fa-print text-white"></i>  </a> 
-            </div>
         </div>
         <div class="section-body">
             <div class="card">
+                <div class="card-header no-print">
+                    <div style="font-size: 30px;">
+                    <a class="mr-4" href="finance/monthlyExpense?year=<?php echo $previous_year; ?>">
+                        <i class="fa fa-arrow-left"></i>
+                    </a>
+                    <a href="finance/monthlyExpense?year=<?php echo $next_year; ?>">
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                    </div>
+                    <h4></h4>
+                    <div class="card-header-form">
+                        <button class="btn btn-icon icon-left btn-primary" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print') ?></button>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="space15"></div>
