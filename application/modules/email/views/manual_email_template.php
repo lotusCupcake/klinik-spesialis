@@ -1,200 +1,206 @@
-
-<!--sidebar end-->
-<!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('emailtemplate'); ?>
-                <div class="col-md-4 no-print pull-right"> 
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="add_new" class="btn green btn-md">
-                                <i class="fa fa-plus-circle"></i> <?php echo lang('add_new'); ?> <?php echo lang('template'); ?>
-                            </button>
-                        </div>
-                    </a>
-                </div> 
-
-            </header>
-
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample1">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th><?php echo lang('templatename'); ?></th>                        
-                                <th><?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1><?php echo lang('emailtemplate'); ?></h1>
+        </div>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i><?php echo lang('add_new'); ?> <?php echo lang('template'); ?></button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table table-striped table-bordered" id="editable-sample1">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th><?php echo lang('templatename'); ?></th>
+                                    <th><?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
+        </div>
     </section>
-</section>
-<!--main content end-->
+</div>
 
-<!--  add Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"><?php echo lang('add_new'); ?> <?php echo lang('manual'); ?> <?php echo lang('template');?></h4>
+                <h5 class="modal-title"><?php echo lang('add_new'); ?> <?php echo lang('manual'); ?> <?php echo lang('template'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <?php echo validation_errors(); ?>
-                <form role="form" name="myform1" action="email/addNewManualTemplate" method="post" enctype="multipart/form-data">                                                                                    
-
+            <form action="email/addNewManualTemplate" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1"> <?php echo lang('templatename'); ?></label>
+                        <label for="exampleInputEmail1"><?php echo lang('templatename'); ?></label>
                         <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1"> <?php echo lang('message'); ?> <?php echo lang('template'); ?></label><br>
-                        <?php
-                        $count = 0;
-                        foreach ($shortcode as $shortcodes) {
-                            ?>
-                            <input type="button" name="myBtn" value="<?php echo $shortcodes->name; ?>" onClick="addtext1(this);">
+                        <label for="exampleInputEmail1"><?php echo lang('message'); ?> <?php echo lang('template'); ?></label>
+                        <div class="selectgroup w-100">
                             <?php
-                            $count+=1;
-                            if ($count === 7) {
-                                ?>
-                                <br>
-                                <?php
-                            }
-                        }
-                        ?> <br><br>
-                        <textarea class="ckeditor" id="editor5" name="message" value='' cols="70" rows="10"></textarea>
+                            foreach ($shortcode as $shortcodes) { ?>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="myBtn" value="<?php echo $shortcodes->name; ?>" class="selectgroup-input" onClick="addtextMan1(this);">
+                                    <span class="selectgroup-button"><?php echo $shortcodes->name; ?></span>
+                                </label>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control ckeditor" name="message" value="" required id="editor5" rows="70" cols="70"></textarea>
                     </div>
                     <input type="hidden" name="id" value=''>
                     <input type="hidden" name="type" value='email'>
-                    <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<!-- Add Area Modal-->
 
-<!-- Edit sms temp Modal-->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal1">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"><?php echo lang('edit'); ?> <?php echo lang('manual'); ?> <?php echo lang('template');?></h4>
+                <h5 class="modal-title"><?php echo lang('edit'); ?> <?php echo lang('manual'); ?> <?php echo lang('template'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-               <?php echo validation_errors(); ?>
-                <form role="form" id="smstemp" name="myform" action="email/addNewManualTemplate" method="post" enctype="multipart/form-data">                                                                                    
-
+            <form id="smstemp" name="myform" action="email/addNewManualTemplate" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1"> <?php echo lang('templatename'); ?></label>
+                        <label for="exampleInputEmail1"><?php echo lang('templatename'); ?></label>
                         <input type="text" class="form-control" name="name" id="exampleInputEmail1" value='' placeholder="" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1"> <?php echo lang('message'); ?> <?php echo lang('template'); ?></label><br>
-                        <?php
-                        $count1 = 0;
-                        foreach ($shortcode as $shortcodes) {
-                            ?>
-                            <input type="button" name="myBtn" value="<?php echo $shortcodes->name; ?>" onClick="addtext(this);">
+                        <label for="exampleInputEmail1"><?php echo lang('message'); ?> <?php echo lang('template'); ?></label>
+                        <div class="selectgroup w-100">
                             <?php
-                            $count1+=1;
-                            if ($count1 === 7) {
-                                ?>
-                                <br>
-                                <?php
-                            }
-                        }
-                        ?> <br><br>
-                         <textarea class="ckeditor" name="message" id="editor4" value="" cols="70" rows="10"></textarea>
+                            foreach ($shortcode as $shortcodes) { ?>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="myBtn" value="<?php echo $shortcodes->name; ?>" class="selectgroup-input" onClick="addtextMan(this);">
+                                    <span class="selectgroup-button"><?php echo $shortcodes->name; ?></span>
+                                </label>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control ckeditor" name="message" value="" required id="editor4" rows="70" cols="70"></textarea>
                     </div>
                     <input type="hidden" name="id" value=''>
                     <input type="hidden" name="type" value='email'>
-                    <button type="submit" name="submit" class="btn btn-info"><?php echo lang('submit'); ?></button>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+
 <script src="common/js/codearistos.min.js"></script>
-<script>
-    $(document).ready(function () {
+<!-- <script>
+    $(document).ready(function() {
         CKEDITOR.config.autoParagraph = false;
     });
-</script>
+</script> -->
 <script type="text/javascript">
-                                    $(document).ready(function () {
-                                         $(".table").on("click", ".editbutton1", function () {
-                                           // e.preventDefault(e);
-                                            // Get the record's ID via attribute  
-                                            var iid = $(this).attr('data-id');
-                                            var type = 'email';
-                                           
-                                            $.ajax({
-                                                url: 'email/editManualEmailTemplate?id=' + iid + '&type=' + type,
-                                                method: 'GET',
-                                                data: '',
-                                                dataType: 'json',
-                                            }).success(function (response) {
-                                                // Populate the form fields with the data returned from server
-                                                $('#smstemp').find('[name="id"]').val(response.templatename.id).end() ;
-                                                $('#smstemp').find('[name="name"]').val(response.templatename.name).end() ;
-                                                CKEDITOR.instances['editor4'].setData(response.templatename.message)
-                                             //   $('#smstemp').find('[name="message"]').val(response.templatename.message).end();
-                                                $('#myModal1').modal('show');
-                                            });
-                                        });
-                                    });
+    $(document).ready(function() {
+        $(".table").on("click", ".manualTemplate", function() {
+            var iid = $(this).attr('data-id');
+            var type = 'email';
+
+            $.ajax({
+                url: 'email/editManualEmailTemplate?id=' + iid + '&type=' + type,
+                method: 'GET',
+                data: '',
+                dataType: 'json',
+            }).success(function(response) {
+                $('#smstemp').find('[name="id"]').val(response.templatename.id).end();
+                $('#smstemp').find('[name="name"]').val(response.templatename.name).end();
+                CKEDITOR.instances['editor4'].setData(response.templatename.message)
+                $('#myModal1').modal('show');
+            });
+        });
+    });
 </script>
 <script>
-
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         var table = $('#editable-sample1').DataTable({
             responsive: true,
-            //   dom: 'lfrBtip',
-
             "processing": true,
             "serverSide": true,
             "searchable": true,
             "ajax": {
                 url: "email/getManualEmailTemplateList",
                 type: 'POST',
-                'data': {'type': 'email'}
+                'data': {
+                    'type': 'email'
+                }
             },
             scroller: {
                 loadingIndicator: true
             },
             dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        
-             buttons: [
-                {extend: 'copyHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'excelHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'csvHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'pdfHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'print', exportOptions: {columns: [0, 1, 2, 3], }},
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
             ],
             aLengthMenu: [
                 [1, 2, 50, 100, -1],
                 [1, 2, 50, 100, "All"]
             ],
             iDisplayLength: 100,
-            "order": [[0, "desc"]],
+            "order": [
+                [0, "desc"]
+            ],
             "language": {
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
@@ -202,32 +208,27 @@
             },
         });
         table.buttons().container()
-                .appendTo('.custom_buttons');
+            .appendTo('.custom_buttons');
     });
 </script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $(".flashmessage").delay(3000).fadeOut(100);
     });
 </script>
-
 <script>
-    function addtext(ele) {
-       var fired_button = ele.value;
+    function addtextMan(ele) {
+        var fired_button = ele.value;
         var value = CKEDITOR.instances.editor4.getData()
         value += fired_button;
-
-        // console.log(value);
         CKEDITOR.instances['editor4'].setData(value)
     }
 </script>
 <script>
-       function addtext1(ele) {
+    function addtextMan1(ele) {
         var fired_button = ele.value;
         var value = CKEDITOR.instances.editor5.getData()
         value += fired_button;
-
-        // console.log(value);
         CKEDITOR.instances['editor5'].setData(value)
     }
 </script>
