@@ -36,3 +36,18 @@ $(document).ready(function() {
         })
     });
 });
+
+
+function addtext(ele) {
+    var fired_button = ele.value;
+    var value = CKEDITOR.instances.editor1.getData()
+    value += fired_button;
+    CKEDITOR.instances['editor1'].setData(value)
+}
+
+function addtext1(ele) {
+    var fired_button = ele.value;
+    var value = CKEDITOR.instances.editor2.getData()
+    value += fired_button;
+    CKEDITOR.instances['editor2'].setData(value)
+}
