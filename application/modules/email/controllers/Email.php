@@ -3,19 +3,22 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Email extends MX_Controller {
+class Email extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
 
-//    $this->load->model('email_model');
+        //    $this->load->model('email_model');
         $this->load->model('patient/patient_model');
 
         $this->load->model('donor/donor_model');
         $this->load->model('doctor/doctor_model');
     }
 
-    public function index() {
+    public function index()
+    {
         $data = array();
         $id = $this->ion_auth->get_user_id();
         $data['email'] = $this->email_model->getProfileById($id);
@@ -24,7 +27,8 @@ class Email extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    public function sendView() {
+    public function sendView()
+    {
         $data = array();
         $data['groups'] = $this->donor_model->getBloodBank();
         $data['patients'] = $this->patient_model->getPatient();
@@ -38,7 +42,8 @@ class Email extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    public function settings() {
+    public function settings()
+    {
         $data = array();
         $id = $this->ion_auth->get_user_id();
         $gateway_id = $this->input->get('id');
@@ -48,7 +53,8 @@ class Email extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    public function addNewSettings() {
+    public function addNewSettings()
+    {
 
         $id = $this->input->post('id');
         $email = $this->input->post('email');
@@ -58,19 +64,19 @@ class Email extends MX_Controller {
         $email_company = $this->input->post('email_company');
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-// Validating Name Field
+        // Validating Name Field
         if ($type == 'Domain Email') {
             $this->form_validation->set_rules('email', 'Admin Email', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Password Field
+            // Validating Password Field
             $this->form_validation->set_rules('password', 'Password', 'trim|min_length[1]|max_length[100]|xss_clean');
-// Validating Email Field
+            // Validating Email Field
             $this->form_validation->set_rules('api_id', 'Api Id', 'trim|min_length[1]|max_length[100]|xss_clean');
         }
         if ($type == 'Smtp') {
             $this->form_validation->set_rules('email_company', 'Email Company', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Password Field
+            // Validating Password Field
             $this->form_validation->set_rules('user', 'Email Address', 'trim|required|min_length[1]|max_length[100]|xss_clean');
-// Validating Email Field
+            // Validating Email Field
             $this->form_validation->set_rules('password', 'Email Password', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         }
         if ($this->form_validation->run() == FALSE) {
@@ -93,7 +99,7 @@ class Email extends MX_Controller {
                 $smtp_port = '587';
                 $send_multipart = TRUE;
             }
-          /*  if ($emailcompany == 'outlook') {
+            /*  if ($emailcompany == 'outlook') {
                 $extension = $user . '@outlook.com';
                 $smtp_host = 'smtp.office365.com';
                 $smtp_port = '587';
@@ -121,18 +127,19 @@ class Email extends MX_Controller {
                 'password' => $password
             );
 
-//  if (empty($this->email_model->getEmailSettings()->admin_email)) {
-//      $this->email_model->addEmailSettings($data);
-//      $this->session->set_flashdata('feedback', lang('added'));
-//   } else {
+            //  if (empty($this->email_model->getEmailSettings()->admin_email)) {
+            //      $this->email_model->addEmailSettings($data);
+            //      $this->session->set_flashdata('feedback', lang('added'));
+            //   } else {
             $this->email_model->updateEmailSettings($id, $data);
             $this->session->set_flashdata('feedback', lang('updated'));
-//  }
+            //  }
             redirect('email/settings?id=' . $id);
         }
     }
 
-    function send() {
+    function send()
+    {
         $userId = $this->ion_auth->get_user_id();
         $is_v_v = $this->input->post('radio');
 
@@ -254,14 +261,14 @@ class Email extends MX_Controller {
                 $to = implode(',', $to);
             }
         }
-// $message = urlencode("Test Message");
+        // $message = urlencode("Test Message");
         if (!empty($to)) {
-// $message = $this->input->post('message');
+            // $message = $this->input->post('message');
             $subject = $this->input->post('subject');
 
             $mail_provider = $this->settings_model->getSettings()->emailtype;
             $email_settings = $this->email_model->getEmailSettingsByType($mail_provider);
-        
+
             foreach ($data2 as $key => $value) {
                 foreach ($value as $key2 => $value2) {
 
@@ -279,7 +286,7 @@ class Email extends MX_Controller {
 
 
                     $this->email->send();
-                   
+
                     $data = array();
                     $date = time();
                     $data = array(
@@ -290,7 +297,6 @@ class Email extends MX_Controller {
                         'user' => $this->ion_auth->get_user_id()
                     );
                     $this->email_model->insertEmail($data);
-
                 }
             }
             $this->session->set_flashdata('feedback', lang('message_sent'));
@@ -300,7 +306,8 @@ class Email extends MX_Controller {
         redirect('email/sendView');
     }
 
-    function appointmentReminder() {
+    function appointmentReminder()
+    {
         $id = $this->input->post('id');
         $appointment_details = $this->appointment_model->getAppointmentById($id);
         $emailSettings = $this->email_model->getEmailSettings();
@@ -313,7 +320,7 @@ class Email extends MX_Controller {
         $recipient_p = 'Patient Id: ' . $patient_detail->id . '<br> Patient Name: ' . $patient_detail->name . '<br> Patient Email: ' . $patient_detail->email;
         $to = $patient_detail->email;
 
-// $message = urlencode("Test Message");
+        // $message = urlencode("Test Message");
         if (!empty($to)) {
             $message = 'Reminder: Appointment is scheduled for you With Doctor ' . $doctor_detail->name . ' Date: ' . date('d-m-Y', $appointment_details->date) . ' Time: ' . $appointment_details->s_time;
             $message1 = urlencode($message);
@@ -333,7 +340,8 @@ class Email extends MX_Controller {
         redirect('appointment/upcoming');
     }
 
-    function sendEmailDuringAppointment($patient, $doctor, $date, $s_time, $e_time) {
+    function sendEmailDuringAppointment($patient, $doctor, $date, $s_time, $e_time)
+    {
         $emailSettings = $this->email_model->getEmailSettings();
         $username = $emailSettings->username;
         $password = $emailSettings->password;
@@ -348,7 +356,7 @@ class Email extends MX_Controller {
 
         $to = $patient_detail->email . ', ' . $doctor_detail->email;
 
-// $message = urlencode("Test Message");
+        // $message = urlencode("Test Message");
         if (!empty($patient)) {
             $message = 'Appointment is scheduled for you With Doctor ' . $doctor_detail->name . ' Date: ' . date('d-m-Y', $date) . ' Time: ' . $s_time;
             $message1 = urlencode($message);
@@ -380,7 +388,8 @@ class Email extends MX_Controller {
         }
     }
 
-    function appointmentApproved() {
+    function appointmentApproved()
+    {
         $id = $this->input->post('id');
         $appointment_details = $this->appointment_model->getAppointmentById($id);
         $emailSettings = $this->email_model->getEmailSettings();
@@ -393,7 +402,7 @@ class Email extends MX_Controller {
         $recipient_p = 'Patient Id: ' . $patient_detail->id . '<br> Patient Name: ' . $patient_detail->name . '<br> Patient Email: ' . $patient_detail->email;
         $to = $patient_detail->email;
 
-// $message = urlencode("Test Message");
+        // $message = urlencode("Test Message");
         if (!empty($to)) {
             $message = 'Approval: Appointment is scheduled for you With Doctor ' . $doctor_detail->name . ' Date: ' . date('d-m-Y', $appointment_details->date) . ' Time: ' . $appointment_details->s_time;
             $message1 = urlencode($message);
@@ -410,7 +419,8 @@ class Email extends MX_Controller {
         }
     }
 
-    function sendEmailDuringPayment($patient, $amount, $date) {
+    function sendEmailDuringPayment($patient, $amount, $date)
+    {
         $emailSettings = $this->email_model->getEmailSettings();
         $username = $emailSettings->username;
         $password = $emailSettings->password;
@@ -420,7 +430,7 @@ class Email extends MX_Controller {
 
         $recipient_p = 'Patient Id: ' . $patient_detail->id . '<br> Patient Name: ' . $patient_detail->name . '<br> Patient Email: ' . $patient_detail->email;
 
-// $message = urlencode("Test Message");
+        // $message = urlencode("Test Message");
         if (!empty($patient)) {
             $to = $patient_detail->email;
             $message = 'Bill For Patient ' . $patient_detail->name . 'Amount: ' . $amount . ' Date: ' . date('d-m-Y', $date);
@@ -438,7 +448,8 @@ class Email extends MX_Controller {
         }
     }
 
-    function sendEmailDuringPatientRegistration($patient) {
+    function sendEmailDuringPatientRegistration($patient)
+    {
         $emailSettings = $this->email_model->getEmailSettings();
         $username = $emailSettings->username;
         $password = $emailSettings->password;
@@ -448,7 +459,7 @@ class Email extends MX_Controller {
 
         $recipient_p = 'Patient Id: ' . $patient_detail->id . '<br> Patient Name: ' . $patient_detail->name . '<br> Patient Email: ' . $patient_detail->email;
 
-// $message = urlencode("Test Message");
+        // $message = urlencode("Test Message");
         if (!empty($patient)) {
             $to = $patient_detail->email;
             $message = 'Patient Registration' . $patient_detail->name . 'is successfully registerred';
@@ -466,7 +477,8 @@ class Email extends MX_Controller {
         }
     }
 
-    function sent() {
+    function sent()
+    {
         if ($this->ion_auth->in_group(array('admin'))) {
             $data['sents'] = $this->email_model->getEmail();
         } else {
@@ -479,14 +491,16 @@ class Email extends MX_Controller {
         $this->load->view('home/footer');
     }
 
-    function delete() {
+    function delete()
+    {
         $id = $this->input->get('id');
         $this->email_model->delete($id);
         $this->session->set_flashdata('feedback', lang('deleted'));
         redirect('email/sent');
     }
 
-    public function autoEmailTemplate() {
+    public function autoEmailTemplate()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $data['shortcode'] = $this->email_model->getAutoEmailTemplate();
         $this->load->view('home/dashboard', $data);
@@ -494,7 +508,8 @@ class Email extends MX_Controller {
         $this->load->view('home/footer', $data);
     }
 
-    function getAutoEmailTemplateList() {
+    function getAutoEmailTemplateList()
+    {
         $type = $this->input->post('type');
         $requestData = $_REQUEST;
         $start = $requestData['start'];
@@ -514,16 +529,12 @@ class Email extends MX_Controller {
                 $data['cases'] = $this->email_model->getAutoEmailTemplateByLimit($limit, $start);
             }
         }
-//  $data['patients'] = $this->patient_model->getVisitor();
         $i = 0;
         $count = 0;
         foreach ($data['cases'] as $case) {
             $i = $i + 1;
             if ($this->ion_auth->in_group(array('admin'))) {
-
-                $options1 = ' <a type="button" class="btn btn-success btn-xs btn_width editbutton1" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"> </i></a>';
-// $options1 = '<a type='button" class="btn btn-success btn-xs btn_width" title="" . lang('edit') . '"data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"></i></a>';
-//    $options2 = '<a class="btn btn-danger btn-xs btn_width" title="' . lang('delete') . '" href="sms/deleteTemplate?id=' . $case->id . '&redirect=sms/smsTemplate" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash-o"></i></a>';
+                $options1 = '<button class="btn btn-icon icon-left btn-light editbutton1" data-id="' . $case->id . '"><i class="fas fa-edit"></i></button>';
             }
             $info[] = array(
                 $i,
@@ -544,7 +555,6 @@ class Email extends MX_Controller {
             );
         } else {
             $output = array(
-// "draw" => 1,
                 "recordsTotal" => 0,
                 "recordsFiltered" => 0,
                 "data" => []
@@ -554,7 +564,8 @@ class Email extends MX_Controller {
         echo json_encode($output);
     }
 
-    public function editAutoEmailTemplate() {
+    public function editAutoEmailTemplate()
+    {
         $id = $this->input->get('id');
         $data['autotemplatename'] = $this->email_model->getAutoEmailTemplateById($id);
         $data['autotag'] = $this->email_model->getAutoEmailTemplateTag($data['autotemplatename']->type);
@@ -572,7 +583,8 @@ class Email extends MX_Controller {
         echo json_encode($data);
     }
 
-    public function addNewAutoEmailTemplate() {
+    public function addNewAutoEmailTemplate()
+    {
         $message = $this->input->post('message');
         $name = $this->input->post('category');
         $id = $this->input->post('id');
@@ -602,16 +614,17 @@ class Email extends MX_Controller {
         }
     }
 
-    public function addNewManualTemplate() {
+    public function addNewManualTemplate()
+    {
         $message = $this->input->post('message');
         $name = $this->input->post('name');
         $type = $this->input->post('type');
         $id = $this->input->post('id');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-// Validating 
+        // Validating 
         $this->form_validation->set_rules('message', 'Message', 'trim|xss_clean|required');
 
-// Validating 
+        // Validating 
         $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
         if ($this->form_validation->run() == FALSE) {
             if (!empty($id)) {
@@ -649,7 +662,8 @@ class Email extends MX_Controller {
         }
     }
 
-    public function manualEmailTemplate() {
+    public function manualEmailTemplate()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $type = 'email';
         $data['shortcode'] = $this->email_model->getManualEmailShortcodeTag($type);
@@ -658,7 +672,8 @@ class Email extends MX_Controller {
         $this->load->view('home/footer', $data);
     }
 
-    function getManualEmailTemplateList() {
+    function getManualEmailTemplateList()
+    {
         $type = $this->input->post('type');
         $requestData = $_REQUEST;
         $start = $requestData['start'];
@@ -678,7 +693,7 @@ class Email extends MX_Controller {
                 $data['cases'] = $this->email_model->getManualEmailTemplateByLimit($limit, $start, $type);
             }
         }
-//  $data['patients'] = $this->patient_model->getVisitor();
+        //  $data['patients'] = $this->patient_model->getVisitor();
         $i = 0;
         $count = 0;
         foreach ($data['cases'] as $case) {
@@ -686,7 +701,7 @@ class Email extends MX_Controller {
             if ($this->ion_auth->in_group(array('admin'))) {
 
                 $options1 = ' <a type="button" class="btn btn-success btn-xs btn_width editbutton1" title="' . lang('edit') . '" data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"> </i></a>';
-// $options1 = '<a type='button" class="btn btn-success btn-xs btn_width" title="" . lang('edit') . '"data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"></i></a>';
+                // $options1 = '<a type='button" class="btn btn-success btn-xs btn_width" title="" . lang('edit') . '"data-toggle = "modal" data-id="' . $case->id . '"><i class="fa fa-edit"></i></a>';
                 $options2 = '<a class="btn btn-danger btn-xs btn_width" title="' . lang('delete') . '" href="email/deleteManualEmailTemplate?id=' . $case->id . '&redirect=sms/smsTemplate" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i></a>';
             }
             $info[] = array(
@@ -706,7 +721,7 @@ class Email extends MX_Controller {
             );
         } else {
             $output = array(
-// "draw" => 1,
+                // "draw" => 1,
                 "recordsTotal" => 0,
                 "recordsFiltered" => 0,
                 "data" => []
@@ -716,14 +731,16 @@ class Email extends MX_Controller {
         echo json_encode($output);
     }
 
-    public function deleteManualEmailTemplate() {
+    public function deleteManualEmailTemplate()
+    {
         $id = $this->input->get('id');
         $this->email_model->deleteManualEmailTemplate($id);
         $this->session->set_flashdata('feedback', lang('deleted'));
         redirect('email/manualEmailTemplate');
     }
 
-    public function editManualEmailTemplate() {
+    public function editManualEmailTemplate()
+    {
         $id = $this->input->get('id');
         $type = $this->input->get('type');
 
@@ -732,24 +749,26 @@ class Email extends MX_Controller {
         echo json_encode($data);
     }
 
-    public function getManualEmailTemplateinfo() {
-// Search term
+    public function getManualEmailTemplateinfo()
+    {
+        // Search term
         $searchTerm = $this->input->post('searchTerm');
         $type = 'email';
-// Get users
+        // Get users
         $response = $this->email_model->getManualEmailTemplateListSelect2($searchTerm, $type);
 
         echo json_encode($response);
     }
 
-    public function getManualEmailTemplateMessageboxText() {
+    public function getManualEmailTemplateMessageboxText()
+    {
         $id = $this->input->get('id');
         $type = $this->input->get('type');
         $data['user'] = $this->email_model->getManualEmailTemplateById($id, $type);
         echo json_encode($data);
     }
 
-  /*  public function sendSmtp() {
+    /*  public function sendSmtp() {
 
 
         $htmlContent = '<h1>Sending email via Gmail SMTP server</h1>';
@@ -785,7 +804,7 @@ class Email extends MX_Controller {
         $this->email->initialize($config);
     }
 */
-  /*  public function smtpCredentials($type) {
+    /*  public function smtpCredentials($type) {
         
         $emailSettings = $this->email_model->getEmailSettingsByType($type);
         $config['protocol'] = 'smtp';
@@ -804,14 +823,14 @@ class Email extends MX_Controller {
         $this->email->initialize($config);
     }
 */
-    public function emailSettings() {
+    public function emailSettings()
+    {
         $data['email'] = $this->email_model->getEmailSettings();
         $data['settings'] = $this->settings_model->getSettings();
         $this->load->view('home/dashboard'); // just the header file
         $this->load->view('email_settings', $data);
         $this->load->view('home/footer'); // just the footer file
     }
-
 }
 
 /* End of file profile.php */
