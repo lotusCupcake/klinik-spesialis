@@ -877,7 +877,6 @@ if ($language == 'english') {
     <script src="common/js/pagescript/autoEmailTemplate.js"></script>
     <script src="common/js/pagescript/sendViewEmail.js"></script>
 <?php endif ?>
-
 </body>
 
 </html>
