@@ -4,18 +4,17 @@
     <div class="section">
         <div class="section-header">
             <h1 class="col"><?php echo lang('send_sms'); ?></h1>
-            <div class="col-md-2 btn-group" role="group" aria-label="Basic example">
-                <button class='btn btn-primary no-print' onclick="location.href = 'sms/sent'" type="button"><?php echo lang('sent_messages'); ?></button>
-            </div>
-            <div class="col-md-1 btn-group" role="group" aria-label="Basic example">
-                <button class='btn btn-primary no-print' onclick="location.href = 'sms/manualSMSTemplate'" type="button"><?php echo lang('template'); ?></button>
-            </div>
-            <div class="col-md-2 btn-group" role="group" aria-label="Basic example">
-                <button class='btn btn-primary no-print' data-toggle="modal" data-target="#myModal1" type="button"><?php echo lang('add'); ?> <?php echo lang('template'); ?></button>
-            </div>
         </div>
         <div class="section-body">
             <div class="card">
+                <div class="card-header">
+                    <h4></h4>
+                    <div class="card-header-form">
+                        <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i><?php echo lang('add'); ?> <?php echo lang('template'); ?></button>
+                        <button class="btn btn-icon icon-left btn-info ml-2" onclick="location.href = 'sms/manualSMSTemplate'"><i class="fa-brands fa-squarespace"></i> <?php echo lang('template'); ?></button>
+                        <button class="btn btn-icon icon-left btn-success ml-2" onclick="location.href = 'sms/sent'"><i class="fa-solid fa-paper-plane"></i> <?php echo lang('sent_messages'); ?></button>
+                    </div>
+                </div>
                 <div class="card-body">
                     <form role="form" name="myform" id="myform" class="clearfix" action="sms/send" method="post">
                         <div class="row" style="padding-right:30px">
