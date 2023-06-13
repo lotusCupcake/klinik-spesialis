@@ -165,8 +165,8 @@
                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                         <div>
                                             <span class="btn btn-white btn-file">
-                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
-                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                <button type="button" class="btn btn-left btn-light fileupload-new"><i class="fa fa-paper-clip"></i> Select image</button>
+                                                <button type="button" class="btn btn-left btn-light fileupload-exists"><i class="fa fa-undo"></i> Change</button>
                                                 <input type="file" class="default" name="img_url" />
                                             </span>
                                             <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
@@ -313,8 +313,8 @@
                                         <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                         <div>
                                             <span class="btn btn-white btn-file">
-                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
-                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                <button type="button" class="btn btn-left btn-light fileupload-new"><i class="fa fa-paper-clip"></i> Select image</button>
+                                                <button type="button" class="btn btn-left btn-light fileupload-exists"><i class="fa fa-undo"></i> Change</button>
                                                 <input type="file" class="default" name="img_url" />
                                             </span>
                                             <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
