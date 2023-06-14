@@ -69,6 +69,211 @@
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
+                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-money-check"></i></a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                                <div class="dropdown-header"><?= lang('payments'); ?></div>
+                                <div class="dropdown-list-content dropdown-list-icons" style="height: 100px">
+                                    <a href="finance/payment" class="dropdown-item dropdown-item-unread">
+                                        <div class="dropdown-item-icon bg-success text-white">
+                                            <i class="fa fa-money-check"></i>
+                                        </div>
+                                        <div class="dropdown-item-desc">
+                                            <?php
+                                            $query = $this->db->get('payment');
+                                            $query = $query->result();
+                                            foreach ($query as $payment) {
+                                                $payment_date = date('y/m/d', $payment->date);
+                                                if ($payment_date == date('y/m/d')) {
+                                                    $payment_number[] = '1';
+                                                }
+                                            }
+                                            if (!empty($payment_number)) {
+                                                $payment_number = array_sum($payment_number);
+                                            } else {
+                                                $payment_number = 0;
+                                            }
+                                            ?>
+                                            <p style="margin: auto; padding-top: 7px;"><?php
+                                                                                        echo $payment_number . ' ';
+                                                                                        if ($payment_number <= 1) {
+                                                                                            echo lang('payment_today');
+                                                                                        } else {
+                                                                                            echo lang('payments_today');
+                                                                                        }
+                                                                                        ?></p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="finance/payment" class="text-success"><?php echo lang('see_all_payments'); ?><i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Nurse', 'Laboratorist'))) { ?>
+                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-user-injured"></i></a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                                <div class="dropdown-header"><?= lang('patient'); ?></div>
+                                <div class="dropdown-list-content dropdown-list-icons" style="height: 100px">
+                                    <a href="patient" class="dropdown-item dropdown-item-unread">
+                                        <div class="dropdown-item-icon bg-warning text-white">
+                                            <i class="fa fa-user-injured"></i>
+                                        </div>
+                                        <div class="dropdown-item-desc">
+                                            <?php
+                                            $this->db->where('add_date', date('m/d/y'));
+                                            $query = $this->db->get('patient');
+                                            $query = $query->result();
+                                            foreach ($query as $patient) {
+                                                $patient_number[] = '1';
+                                            }
+                                            if (!empty($patient_number)) {
+                                                $patient_number = array_sum($patient_number);
+                                            } else {
+                                                $patient_number = 0;
+                                            }
+                                            ?>
+                                            <p style="margin: auto; padding-top: 7px;"><?php
+                                                                                        echo $patient_number . ' ';
+                                                                                        if ($patient_number <= 1) {
+                                                                                            echo lang('patient_registerred_today');
+                                                                                        } else {
+                                                                                            echo lang('patients_registerred_today');
+                                                                                        }
+                                                                                        ?></p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="patient" class="text-warning"><?php echo lang('see_all_patients'); ?><i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist', 'Doctor'))) { ?>
+                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-medkit"></i></a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                                <div class="dropdown-header"><?= lang('medicine'); ?></div>
+                                <div class="dropdown-list-content dropdown-list-icons" style="height: 100px">
+                                    <a href="medicine" class="dropdown-item dropdown-item-unread">
+                                        <div class="dropdown-item-icon bg-danger text-white">
+                                            <i class="fa fa-medkit"></i>
+                                        </div>
+                                        <div class="dropdown-item-desc">
+                                            <?php
+                                            $this->db->where('add_date', date('m/d/y'));
+                                            $query = $this->db->get('medicine');
+                                            $query = $query->result();
+                                            foreach ($query as $medicine) {
+                                                $medicine_number[] = '1';
+                                            }
+                                            if (!empty($medicine_number)) {
+                                                $medicine_number = array_sum($medicine_number);
+                                            } else {
+                                                $medicine_number = 0;
+                                            }
+                                            ?>
+                                            <p style="margin: auto; padding-top: 7px;"><?php
+                                                                                        echo $medicine_number . ' ';
+                                                                                        if ($medicine_number <= 1) {
+                                                                                            echo lang('medicine_registered_today');
+                                                                                        } else {
+                                                                                            echo lang('medicines_registered_today');
+                                                                                        }
+                                                                                        ?></p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="medicine" class="text-danger"><?php echo lang('see_all_medicines'); ?><i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Doctor', 'Laboratorist', 'Nurse'))) { ?>
+                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-notes-medical"></i></a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                                <div class="dropdown-header"><?= lang('reports'); ?></div>
+                                <div class="dropdown-list-content dropdown-list-icons" style="height: 100px">
+                                    <a href="report" class="dropdown-item dropdown-item-unread">
+                                        <div class="dropdown-item-icon bg-info text-white">
+                                            <i class="fa fa-notes-medical"></i>
+                                        </div>
+                                        <div class="dropdown-item-desc">
+                                            <?php
+                                            $this->db->where('add_date', date('m/d/y'));
+                                            $query = $this->db->get('report');
+                                            $query = $query->result();
+                                            foreach ($query as $report) {
+                                                $report_number[] = '1';
+                                            }
+                                            if (!empty($report_number)) {
+                                                $report_number = array_sum($report_number);
+                                            } else {
+                                                $report_number = 0;
+                                            }
+                                            ?>
+                                            <p style="margin: auto; padding-top: 7px;"><?php
+                                                                                        echo $report_number . ' ';
+                                                                                        if ($report_number <= 1) {
+                                                                                            echo lang('report_added_today');
+                                                                                        } else {
+                                                                                            echo lang('reports_added_today');
+                                                                                        }
+                                                                                        ?></p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="report" class="text-info"><?php echo lang('see_all_reports'); ?><i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } ?>
+                    <?php if ($this->ion_auth->in_group('Patient')) { ?>
+                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-notes-medical"></i></a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                                <div class="dropdown-header"><?= lang('reports'); ?></div>
+                                <div class="dropdown-list-content dropdown-list-icons" style="height: 100px">
+                                    <a href="report/myreports" class="dropdown-item dropdown-item-unread">
+                                        <div class="dropdown-item-icon bg-info text-white">
+                                            <i class="fa fa-notes-medical"></i>
+                                        </div>
+                                        <div class="dropdown-item-desc">
+                                            <?php
+                                            $query = $this->db->get('report');
+                                            $query = $query->result();
+                                            foreach ($query as $report) {
+                                                if ($this->ion_auth->user()->row()->id == explode('*', $report->patient)[1]) {
+                                                    $report_number[] = '1';
+                                                }
+                                            }
+                                            if (!empty($report_number)) {
+                                                $report_number = array_sum($report_number);
+                                            } else {
+                                                $report_number = 0;
+                                            }
+                                            ?>
+                                            <p style="margin: auto; padding-top: 7px;"><?php
+                                                                                        echo $report_number . ' ';
+                                                                                        if ($report_number <= 1) {
+                                                                                            echo lang('report_is_available_for_you');
+                                                                                        } else {
+                                                                                            echo lang('reports_are_available_for_you');
+                                                                                        }
+                                                                                        ?></p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-footer text-center">
+                                    <a href="report/myreports" class="text-info"><?php echo lang('see_all_reports'); ?><i class="fas fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+                <ul class="navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                             <img alt="image" src="<?= base_url() ?>/template/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, <?php $username = $this->ion_auth->user()->row()->username;
@@ -81,7 +286,7 @@
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-title"></div>
                             <div class="buttons">
-                                <a style="display: inline-block;  margin-left: 18px; margin-bottom: 20px;" href="home" class="btn btn-icon btn-secondary"></i> Close</a>
+                                <a style="display: inline-block;  margin-left: 18px; margin-bottom: 10px;" href="home" class="btn btn-icon btn-secondary"></i> Close</a>
                                 <a tstyle="display: inline-block; margin-bottom: 20px;" class="btn btn-icon icon-left btn-danger" href="auth/logout"><i class="fas fa-sign-out-alt"></i> logout</a>
                             </div>
                         </div>
