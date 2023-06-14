@@ -1,85 +1,89 @@
 
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('gridsection'); ?>
-                <div class="col-md-4 no-print pull-right"> 
-                    <a data-toggle="modal" href="#myModal">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i> <?php echo lang('add_gridsection'); ?>
-                            </button>
-                        </div>
-                    </a>
-                </div>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th><?php echo lang('image'); ?></th>
-                                <th><?php echo lang('category'); ?></th>
-                                <th><?php echo lang('title'); ?></th>
-                                <th><?php echo lang('description'); ?></th>
-                                <th><?php echo lang('position'); ?></th>
-                                <th><?php echo lang('status'); ?></th>
-                                <th class="no-print"><?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        <style>
-
-                            .img_url{
-                                height:20px;
-                                width:20px;
-                                background-size: contain; 
-                                max-height:20px;
-                                border-radius: 100px;
-                            }
-
-                        </style>
-
-                        <?php foreach ($gridsections as $gridsection) { ?>
-                            <tr class="">
-                                <td style="width:10%;"><img style="width:95%;" src="<?php echo $gridsection->img; ?>"></td>
-                                <td><?php echo $gridsection->category; ?></td>
-                                <td> <?php echo $gridsection->title; ?></td>
-                                <td><?php echo $gridsection->description; ?></td>
-                                <td><?php echo $gridsection->position; ?></td>
-                                <td>
-                                    <?php
-                                    if ($gridsection->status == 'Active') {
-                                        echo lang('active');
-                                    } else {
-                                        echo lang('in_active');
-                                    }
-                                    ?>
-                                </td>
-                                <td class="no-print">
-                                    <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $gridsection->id; ?>"><i class="fa fa-edit"> </i></button>   
-                                    <a class="btn btn-info btn-xs btn_width delete_button" title="<?php echo lang('delete'); ?>" href="gridsection/delete?id=<?php echo $gridsection->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i></a>
-                                </td>
-                            </tr>
-                        <?php } ?>
-
-
-
-
-                        </tbody>
-                    </table>
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('gridsection'); ?></h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> <?php echo lang('add_gridsection'); ?></button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th><?php echo lang('image'); ?></th>
+                                    <th><?php echo lang('category'); ?></th>
+                                    <th><?php echo lang('title'); ?></th>
+                                    <th><?php echo lang('description'); ?></th>
+                                    <th><?php echo lang('position'); ?></th>
+                                    <th><?php echo lang('status'); ?></th>
+                                    <th class="no-print"><?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            <style>
+
+                                .img_url{
+                                    height:20px;
+                                    width:20px;
+                                    background-size: contain; 
+                                    max-height:20px;
+                                    border-radius: 100px;
+                                }
+
+                            </style>
+
+                            <?php foreach ($gridsections as $gridsection) { ?>
+                                <tr class="">
+                                    <td style="width:10%;"><img style="width:95%;" src="<?php echo $gridsection->img; ?>"></td>
+                                    <td><?php echo $gridsection->category; ?></td>
+                                    <td> <?php echo $gridsection->title; ?></td>
+                                    <td><?php echo $gridsection->description; ?></td>
+                                    <td><?php echo $gridsection->position; ?></td>
+                                    <td>
+                                        <?php
+                                        if ($gridsection->status == 'Active') {
+                                            echo lang('active');
+                                        } else {
+                                            echo lang('in_active');
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="no-print" style="width: 10%;">
+                                        <button type="button" class="btn btn-info btn-xs btn_width editbutton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $gridsection->id; ?>"><i class="fa fa-edit"> </i></button>   
+                                        <a class="btn btn-danger btn-xs btn_width delete_button" title="<?php echo lang('delete'); ?>" href="gridsection/delete?id=<?php echo $gridsection->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i></a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -91,20 +95,22 @@
 
 
 <!-- Add Slide Modal-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"> <?php echo lang('add_gridsection'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('add_gridsection'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form role="form" action="gridsection/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+            <form role="form" action="gridsection/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('title'); ?></label>
                         <input type="text" class="form-control" name="title" id="exampleInputEmail1" value=''>
                     </div>
-
+    
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('category'); ?></label>
                         <input type="text" class="form-control" name="category" id="exampleInputEmail1" value='' placeholder="">
@@ -148,37 +154,34 @@
                             </option>
                         </select>
                     </div>
-                    <div class="form-group last">
-                        <label class="control-label">Image Upload</label>
+                    <div class="form-group">
+                        <label>Image Upload</label>
                         <div class="">
                             <div class="fileupload fileupload-new" data-provides="fileupload">
                                 <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                    <img src="//www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+                                    <img src="<?= base_url() . '/template/assets/img/news/img01.jpg' ?>" alt="" />
                                 </div>
                                 <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                 <div>
                                     <span class="btn btn-white btn-file">
                                         <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
                                         <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                        <input type="file" class="default" name="img_url"/>
+                                        <input type="file" class="default" name="img_url" />
                                     </span>
                                     <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
+    
                     <input type="hidden" name="id" value=''>
-
-
-                    <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"><?php echo lang('submit'); ?></button>
+    
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -191,28 +194,29 @@
 
 
 <!-- Edit Event Modal-->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('edit_gridsection'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('edit_gridsection'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-
-            <div class="modal-body">
-                <form role="form" id="editSlideForm" class="clearfix" action="gridsection/addNew" method="post" enctype="multipart/form-data">
+            <form role="form" id="editSlideForm"  action="gridsection/addNew" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('title'); ?></label>
                         <input type="text" class="form-control" name="title" id="exampleInputEmail1" value=''>
                     </div>
-
+    
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('category'); ?></label>
                         <input type="text" class="form-control" name="category" id="exampleInputEmail1" value='' placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('description'); ?></label>
-                        <textarea type="text" class="form-control" name="description" id="exampleInputEmail1" value='' placeholder="" cols="20"></textarea>
+                        <textarea class="form-control" name="description" id="exampleInputEmail1" value='' placeholder="" cols="20"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1"><?php echo lang('position'); ?></label>
@@ -249,35 +253,34 @@
                             </option>
                         </select>
                     </div>
-                    <div class="form-group last">
-                        <label class="control-label">Image Upload</label>
+                    <div class="form-group">
+                        <label>Image Upload</label>
                         <div class="">
                             <div class="fileupload fileupload-new" data-provides="fileupload">
                                 <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                    <img src="//www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" id="img" alt="" />
+                                    <img src="<?= base_url() . '/template/assets/img/news/img01.jpg' ?>" id="img" alt="" />
                                 </div>
                                 <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
                                 <div>
                                     <span class="btn btn-white btn-file">
                                         <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
                                         <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                        <input type="file" class="default" name="img_url"/>
+                                        <input type="file" class="default" name="img_url" />
                                     </span>
                                     <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
+    
                     <input type="hidden" name="id" value=''>
-
-                    <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"><?php echo lang('submit'); ?></button>
+    
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
                     </div>
-
-                </form>
-            </div>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -320,7 +323,7 @@
 
 <script>
     $(document).ready(function () {
-    var = $('#editable-sample').DataTable({
+    $('#editable-sample').DataTable({
     responsive: true,
             dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
             "<'row'<'col-sm-12'tr>>" +
@@ -342,7 +345,7 @@
             "language": {
             "lengthMenu": "_MENU_",
                     search: "_INPUT_",
-                    "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                    "url": "common/assets/DataTables/languages/" + bahasa + ".json"
             },
     });
     table.buttons().container()
