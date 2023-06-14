@@ -12,7 +12,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <div class="space15"></div>
-                                <table class="table table-striped table-bordered" id="editable-sample">
+                                <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
