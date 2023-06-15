@@ -361,7 +361,7 @@
                                             <div class="row" style="padding-right:30px">
                                                 <div class="col-md-12 row mb-4">
                                                     <div class="col-md-4 text-right">
-                                                        <label class="col-form-label"><?php echo lang('cardholder'); ?> <?php echo lang('name'); ?></label>
+                                                        <label class="col-form-label"><?php echo lang('name'); ?> <?php echo lang('cardholder'); ?></label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" id="cardholder" class="form-control pay_in" name="cardholder" value='' placeholder="">
@@ -373,7 +373,7 @@
                                             <div class="row" style="padding-right:30px">
                                                 <div class="col-md-12 row mb-4">
                                                     <div class="col-md-4 text-right">
-                                                        <label class="col-form-label"><?php echo lang('card'); ?> <?php echo lang('number'); ?></label>
+                                                        <label class="col-form-label"><?php echo lang('number'); ?> <?php echo lang('card'); ?></label>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" id="card" class="form-control pay_in" name="card_number" value='' placeholder="">
