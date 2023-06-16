@@ -12,7 +12,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <form role="form" id="editPaymentForm" action="finance/pharmacy/addPayment" method="post" enctype="multipart/form-data">
+                    <form role="form" id="editPaymentForm" action="finance/addPayment" method="post" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="row" style="padding-right:30px">
