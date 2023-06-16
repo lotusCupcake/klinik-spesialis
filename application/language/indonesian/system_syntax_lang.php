@@ -290,6 +290,7 @@ $lang['download'] = 'Unduh';
 $lang['file'] = 'Mengajukan';
 $lang['files'] = 'File';
 $lang['prescription'] = 'Resep';
+$lang['prescription_id'] = 'Resep ID';
 $lang['view'] = 'Melihat';
 $lang['note'] = 'Catatan';
 $lang['medication'] = 'Pengobatan';

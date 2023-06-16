@@ -50,7 +50,7 @@
                             <h5><?php echo lang('date'); ?> : <?php echo date('d-m-Y', $prescription->date); ?></h5>
                         </div>
                         <div class="col-md-2">
-                            <h5><?php echo lang('prescription'); ?> <?php echo lang('id'); ?> : <?php echo $prescription->id; ?></h5>
+                            <h5><?php echo lang('prescription_id'); ?> : <?php echo $prescription->id; ?></h5>
                         </div>
                     </div>
                     <hr>
@@ -87,7 +87,7 @@
                     </div>
                     <hr>
                     <div class="row mt-5">
-                        <div class="col-md-5 ml-3">
+                        <div class="col-md-5 ml-3" style="border-right: 1px solid #ccc;">
                             <h5><strong><?php echo lang('history'); ?>: </strong> <br> <br> <?php echo $prescription->symptom; ?></h5>
                             <hr>
                             <h5><strong><?php echo lang('note'); ?>:</strong> <br> <br> <?php echo $prescription->note; ?></h5>
@@ -132,6 +132,16 @@
                             <?php
                             }
                             ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" style="font-size: 18px; margin-top: 100px;">
+                            <hr><?php echo lang('signature'); ?>
+                        </div>
+                        <div class="col-md-8 text-right">
+                            <h3 style="color: #2f80bf; margin-top: 100px;"><?php echo $settings->title; ?></h3>
+                            <h5><?php echo $settings->address; ?></h5>
+                            <h5><?php echo $settings->phone; ?></h5>
                         </div>
                     </div>
                 </div>
