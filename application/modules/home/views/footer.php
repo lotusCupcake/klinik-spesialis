@@ -444,7 +444,7 @@ if ($language == 'english') {
 </script>
 
 <script>
-    var bahasa = <?php echo $this->language; ?>;
+    var bahasa = <?php echo "'" . $this->language . "'"; ?>;
 </script>
 
 <?php if ($this->uri->segment(1) == 'appointment') : ?>
