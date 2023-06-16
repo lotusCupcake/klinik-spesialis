@@ -484,7 +484,7 @@ if ($language == 'english') {
                         html += '<div id="med_selected_section-' + med_id + '" class="med_selected form-row">'
                         html += '<div class="form-group medicine_sect col-md-2">'
                         html += '<label><?php echo lang("medicine"); ?></label>'
-                        html += '<input type="text" class="form-control medi_div" name="med_id[]" value="' + med_name + '" placeholder="" required>'
+                        html += '<input type="text" class="form-control medi_div" name="med_id[]" value="' + med_name + '" placeholder="" required readonly>'
                         html += '<input type="hidden" id="med_id-' + id + '" class="medi_div" name="medicine[]" value="' + med_id + '" placeholder="" required>'
                         html += '</div>'
                         html += '<div class="form-group medicine_sect col-md-2">'
