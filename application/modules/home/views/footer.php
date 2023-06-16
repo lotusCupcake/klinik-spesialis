@@ -484,7 +484,7 @@ if ($language == 'english') {
                         html += '<div id="med_selected_section-' + med_id + '" class="med_selected form-row">'
                         html += '<div class="form-group medicine_sect col-md-2">'
                         html += '<label><?php echo lang("medicine"); ?></label>'
-                        html += '<input type="text" class="form-control medi_div" name="med_id[]" value="' + med_name + '" placeholder="" required>'
+                        html += '<input type="text" class="form-control medi_div" name="med_id[]" value="' + med_name + '" placeholder="" required readonly>'
                         html += '<input type="hidden" id="med_id-' + id + '" class="medi_div" name="medicine[]" value="' + med_id + '" placeholder="" required>'
                         html += '</div>'
                         html += '<div class="form-group medicine_sect col-md-2">'
@@ -720,8 +720,6 @@ if ($language == 'english') {
         });
     </script>
 
-
-
     <script>
         $(document).ready(function() {
             $('.multi-select1').change(function() {
@@ -868,6 +866,282 @@ if ($language == 'english') {
                     ggggg = amount - val_dis;
                 <?php } ?>
                 $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var tot = 0;
+            // $(".ms-selected").click(function() {
+            //     var idd = $(this).data('idd');
+            //     $('#id-div' + idd).remove();
+            //     $('#idinput-' + idd).remove();
+            //     $('#categoryinput-' + idd).remove();
+            // });
+            var selected = $('#my_multi_select3').find('option:selected');
+            var unselected = $('#my_multi_select3').find('option:not(:selected)');
+            selected.attr('data-selected', '1');
+            $.each(unselected, function(index, value1) {
+                if ($(this).attr('data-selected') == '1') {
+                    var idd = $(this).data('idd');
+                    $('#id-div' + idd).remove();
+                    $('#idinput-' + idd).remove();
+                    $('#categoryinput-' + idd).remove();
+                }
+            });
+            $.each($('select.multi-select option:selected'), function() {
+                var curr_val = $(this).data('id');
+                var idd = $(this).data('idd');
+                var qtity = $(this).data('qtity');
+                var cat_name = $(this).data('cat_name');
+                if ($('#idinput-' + idd).length) {
+
+                } else {
+                    if ($('#id-div' + idd).length) {
+
+                    } else {
+                        let html = ''
+                        html += '<div class="card remove1" id="id-div' + idd + '">'
+                        html += '<div class="card-body">'
+                        html += '<div class="row name" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Name</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8">'
+                        html += '<input type="text" class="form-control" value="' + $(this).data("cat_name") + '" readonly>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '<div class="row price" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Price</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8">'
+                        html += '<input type="text" class="form-control pos_element" value="' + $(this).data('id') + '" readonly>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '<div class="row quantity" style="padding-right:30px">'
+                        html += '<div class="col-md-12 row mb-4">'
+                        html += '<div class="col-md-4 text-right">'
+                        html += '<label class="col-form-label">Quantity</label>'
+                        html += '</div>'
+                        html += '<div class="col-md-8" id="quantity' + idd + '">'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        html += '</div>'
+                        $("#editPaymentForm .qfloww").append(html)
+                    }
+                    var input2 = $('<input>').attr({
+                        type: 'text',
+                        class: "form-control remove",
+                        id: 'idinput-' + idd,
+                        name: 'quantity[]',
+                        value: qtity,
+                    }).appendTo('#editPaymentForm .qfloww #quantity' + idd);
+                    $('<input>').attr({
+                        type: 'hidden',
+                        class: "form-control remove",
+                        id: 'categoryinput-' + idd,
+                        name: 'category_id[]',
+                        value: idd,
+                    }).appendTo('#editPaymentForm .qfloww #quantity' + idd);
+                }
+                $(document).ready(function() {
+                    $('#idinput-' + idd).keyup(function() {
+                        var qty = 0;
+                        var total = 0;
+                        $.each($('select.multi-select option:selected'), function() {
+                            var id1 = $(this).data('idd');
+                            qty = $('#idinput-' + id1).val();
+                            var ekokk = $(this).data('id');
+                            total = total + qty * ekokk;
+                        });
+                        tot = total;
+                        var discount = $('#dis_id').val();
+                        var gross = tot - discount;
+                        $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+                        $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                        var amount_received = $('#amount_received').val();
+                        var change = amount_received - gross;
+                        $('#editPaymentForm').find('[name="change"]').val(change).end()
+                    });
+                });
+                var sub_total = $(this).data('id') * $('#idinput-' + idd).val();
+                tot = tot + sub_total;
+            });
+            var discount = $('#dis_id').val();
+            <?php
+            if ($discount_type == 'flat') {
+            ?>
+                var gross = tot - discount;
+            <?php } else { ?>
+                var gross = tot - tot * discount / 100;
+            <?php } ?> $('#editPaymentForm').find('[name="subtotal"]').val(tot).end() $('#editPaymentForm').find('[name="grsss"]').val(gross) var amount_received = $('#amount_received').val();
+            var change = amount_received - gross;
+            $('#editPaymentForm').find('[name="change"]').val(change).end()
+        });
+        $(document).ready(function() {
+            $('#dis_id').keyup(function() {
+                var val_dis = 0;
+                var amount = 0;
+                var ggggg = 0;
+                amount = $('#subtotal').val();
+                val_dis = this.value;
+                <?php
+                if ($discount_type == 'flat') {
+                ?>
+                    ggggg = amount - val_dis;
+                <?php } else { ?>
+                    ggggg = amount - amount * val_dis / 100;
+                <?php } ?>
+                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+                var amount_received = $('#amount_received').val();
+                var change = amount_received - ggggg;
+                $('#editPaymentForm').find('[name="change"]').val(change).end()
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.multi-select').change(function() {
+                var tot = 0;
+                // $(".ms-selected").click(function() {
+                //     var idd = $(this).data('idd');
+                //     $('#id-div' + idd).remove();
+                //     $('#idinput-' + idd).remove();
+                //     $('#categoryinput-' + idd).remove();
+                // });
+                var selected = $('#my_multi_select3').find('option:selected');
+                var unselected = $('#my_multi_select3').find('option:not(:selected)');
+                selected.attr('data-selected', '1');
+                $.each(unselected, function(index, value1) {
+                    if ($(this).attr('data-selected') == '1') {
+                        var idd = $(this).data('idd');
+                        $('#id-div' + idd).remove();
+                        $('#idinput-' + idd).remove();
+                        $('#categoryinput-' + idd).remove();
+                    }
+                });
+                $.each($('select.multi-select option:selected'), function() {
+                    var curr_val = $(this).data('id');
+                    var idd = $(this).data('idd');
+                    var cat_name = $(this).data('cat_name');
+                    if ($('#idinput-' + idd).length) {} else {
+                        if ($('#id-div' + idd).length) {} else {
+                            let html = ''
+                            html += '<div class="card remove1" id="id-div' + idd + '">'
+                            html += '<div class="card-body">'
+                            html += '<div class="row name" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Name</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8">'
+                            html += '<input type="text" class="form-control" value="' + $(this).data("cat_name") + '" readonly>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '<div class="row price" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Price</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8">'
+                            html += '<input type="text" class="form-control pos_element" value="' + $(this).data('id') + '" readonly>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '<div class="row quantity" style="padding-right:30px">'
+                            html += '<div class="col-md-12 row mb-4">'
+                            html += '<div class="col-md-4 text-right">'
+                            html += '<label class="col-form-label">Quantity</label>'
+                            html += '</div>'
+                            html += '<div class="col-md-8" id="quantity' + idd + '">'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            html += '</div>'
+                            $("#editPaymentForm .qfloww").append(html)
+                        }
+                        var input2 = $('<input>').attr({
+                            type: 'text',
+                            class: "form-control remove",
+                            id: 'idinput-' + idd,
+                            name: 'quantity[]',
+                            value: '1',
+                        }).appendTo('#editPaymentForm .qfloww #quantity' + idd);
+                        $('<input>').attr({
+                            type: 'hidden',
+                            class: "form-control remove",
+                            id: 'categoryinput-' + idd,
+                            name: 'category_id[]',
+                            value: idd,
+                        }).appendTo('#editPaymentForm .qfloww #quantity' + idd);
+                    }
+                    $(document).ready(function() {
+                        $('#idinput-' + idd).keyup(function() {
+                            var qty = 0;
+                            var total = 0;
+                            $.each($('select.multi-select option:selected'), function() {
+                                var id1 = $(this).data('idd');
+                                qty = $('#idinput-' + id1).val();
+                                var ekokk = $(this).data('id');
+                                total = total + qty * ekokk;
+                            });
+                            tot = total;
+                            var discount = $('#dis_id').val();
+                            var gross = tot - discount;
+                            $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+                            $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                            var amount_received = $('#amount_received').val();
+                            var change = amount_received - gross;
+                            $('#editPaymentForm').find('[name="change"]').val(change).end()
+                        });
+                    });
+                    var sub_total = $(this).data('id') * $('#idinput-' + idd).val();
+                    tot = tot + sub_total;
+                });
+                var discount = $('#dis_id').val();
+                <?php
+                if ($discount_type == 'flat') {
+                ?>
+                    var gross = tot - discount;
+                <?php } else { ?>
+                    var gross = tot - tot * discount / 100;
+                <?php } ?>
+                $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+                $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                var amount_received = $('#amount_received').val();
+                var change = amount_received - gross;
+                $('#editPaymentForm').find('[name="change"]').val(change).end()
+            });
+        });
+        $(document).ready(function() {
+            $('#dis_id').keyup(function() {
+                var val_dis = 0;
+                var amount = 0;
+                var ggggg = 0;
+                amount = $('#subtotal').val();
+                val_dis = this.value;
+                <?php
+                if ($discount_type == 'flat') {
+                ?>
+                    ggggg = amount - val_dis;
+                <?php } else { ?>
+                    ggggg = amount - amount * val_dis / 100;
+                <?php } ?>
+                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+                var amount_received = $('#amount_received').val();
+                var change = amount_received - ggggg;
+                $('#editPaymentForm').find('[name="change"]').val(change).end()
             });
         });
     </script>

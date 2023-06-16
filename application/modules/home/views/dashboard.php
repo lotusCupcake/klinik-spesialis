@@ -419,7 +419,7 @@
                             <li><a class="nav-link" href="lab/lab1"><i class="fas fa-file-medical"></i><span><?php echo lang('lab_reports') ?></span></a></li>
                         <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('Accountant', 'Receptionist'))) { ?>
-                            <li><a class="nav-link" href="finance/UserActivityReport"><i class="fas fa-file-user"></i><span><?php echo lang('user_activity_report') ?></span></a></li>
+                            <li><a class="nav-link" href="finance/UserActivityReport"><i class="fas fa-file"></i><span><?php echo lang('user_activity_report') ?></span></a></li>
                         <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('Doctor'))) { ?>
                             <li><a class="nav-link" href="prescription"><i class="fas fa-prescription"></i><span><?php echo lang('prescription') ?></span></a></li>
