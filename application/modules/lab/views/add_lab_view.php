@@ -108,7 +108,8 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1"><?php echo lang('patient'); ?></label>
-                                        <select class="form-control m-bot15 pos_select" id="pos_select" name="patient" value=''>
+                                        <select class="form-control pos_select" id="pos_select" name="patient" value=''>
+                                            <option value=""><?php echo lang('select_patient'); ?></option>
                                             <?php if (!empty($lab->patient)) { ?>
                                                 <option value="<?php echo $patients->id; ?>" selected="selected"><?php echo $patients->name; ?> - <?php echo $patients->id; ?></option>
                                             <?php } ?>
@@ -184,7 +185,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1"> <?php echo lang('refd_by_doctor'); ?></label>
                                         <select class="form-control m-bot15 add_doctor" id="add_doctor" name="doctor" value=''>
-
+                                            <option value=""><?php echo lang('select_doctor'); ?></option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -799,55 +800,5 @@
                 CKEDITOR.instances['editor'].setData(data1)
             });
         });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $("#pos_select").select2({
-            placeholder: '<?php echo lang('select_patient'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'patient/getPatientinfoWithAddNewOption',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
-
-        $("#add_doctor").select2({
-            placeholder: '<?php echo lang('select_doctor'); ?>',
-            allowClear: true,
-            ajax: {
-                url: 'doctor/getDoctorWithAddNewOption',
-                type: "post",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        searchTerm: params.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-
-        });
-
     });
 </script>
