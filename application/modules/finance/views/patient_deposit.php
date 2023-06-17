@@ -101,7 +101,7 @@
                                                             <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
                                                                 <a href="finance/editPayment?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i></button></a>
                                                             <?php } ?>
-                                                            <a href="finance/invoice?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-light invoicebutton"><i class="fas fa-invoice"></i></button></a>
+                                                            <a href="finance/invoice?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-file-invoice"></i></button></a>
                                                             <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
                                                                 <a href="finance/delete?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-danger delete_button" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fas fa-trash"></i></button></a>
                                                             <?php } ?>
