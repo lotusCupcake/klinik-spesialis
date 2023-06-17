@@ -30,15 +30,22 @@
                     <div class="row">
                         <div class="col-md-6">
                             <?php
-                            if (!empty($doctor)) {
-                                echo $doctor->name;
-                            } else {
+                            if (!empty($doctor)) { ?>
+                                <h2 style="color: #2f80bf;"><?php echo $doctor->name;; ?></h2>
+                            <?php } else {
                             ?>
                                 <h2 style="color: #2f80bf;"><?php echo $settings->title; ?></h2>
                                 <h5><?php echo $settings->address; ?></h5>
                                 <h5><?php echo $settings->phone; ?></h5>
                             <?php }
                             ?>
+                            <h4>
+                                <?php
+                                if (!empty($doctor)) {
+                                    echo $doctor->profile;
+                                }
+                                ?>
+                            </h4>
                         </div>
                         <div class="col-md-6">
                             <img align="right" src="<?php echo $settings->logo; ?>" height="150">
