@@ -14,10 +14,12 @@
                     <h4></h4>
                     <div class="card-header-form">
                         <a class="btn btn-icon icon-left btn-primary ml-2" href='finance/payment'><i class="fa fa-arrow-left"></i> <?php echo lang('back_to_payment_modules'); ?></a>
-                        <button class="btn btn-icon icon-left btn-success invoice_button ml-2" onclick="javascript:window.print();"><i class="fas fa-print"></i><?php echo lang('print'); ?></button>
-                        <a class="btn btn-icon icon-left btn-light editbutton ml-2" href='finance/editPayment?id=<?php echo $payment->id; ?>'><i class="fa fa-edit"></i> <?php echo lang('edit'); ?> <?php echo lang('invoice'); ?></a>
+                        <button class="btn btn-icon icon-left btn-success invoice_button ml-2" onclick="javascript:window.print();"><i class="fas fa-print"></i><?php echo lang('print'); ?> <?php echo lang('invoice'); ?></button>
+                        <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
+                            <a class="btn btn-icon icon-left btn-light editbutton ml-2" href='finance/editPayment?id=<?php echo $payment->id; ?>'><i class="fa fa-edit"></i> <?php echo lang('edit'); ?> <?php echo lang('invoice'); ?></a>
+                            <a class="btn btn-icon icon-left btn-info ml-2" href='finance/sendInvoice?id=<?php echo $payment->id; ?>'><i class="fa fa-paper-plane"></i> <?php echo lang('send_invoice'); ?> </a>
+                        <?php } ?>
                         <a class="btn btn-icon icon-left btn-primary ml-2" href='finance/addPaymentView'><i class="fa fa-plus"></i> <?php echo lang('add_another_payment'); ?> </a>
-                        <a class="btn btn-icon icon-left btn-info ml-2" href='finance/sendInvoice?id=<?php echo $payment->id; ?>'><i class="fa fa-paper-plane"></i> <?php echo lang('send_invoice'); ?> </a>
                     </div>
                 </div>
                 <div class="card-body print">
