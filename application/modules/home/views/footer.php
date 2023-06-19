@@ -982,7 +982,10 @@ if ($language == 'english') {
                 var gross = tot - discount;
             <?php } else { ?>
                 var gross = tot - tot * discount / 100;
-            <?php } ?> $('#editPaymentForm').find('[name="subtotal"]').val(tot).end() $('#editPaymentForm').find('[name="grsss"]').val(gross) var amount_received = $('#amount_received').val();
+            <?php } ?>
+            $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
+            $('#editPaymentForm').find('[name="grsss"]').val(gross)
+            var amount_received = $('#amount_received').val()
             var change = amount_received - gross;
             $('#editPaymentForm').find('[name="change"]').val(change).end()
         });
