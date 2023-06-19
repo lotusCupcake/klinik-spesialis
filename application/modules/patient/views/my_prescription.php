@@ -1,80 +1,80 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('prescription'); ?>
-            </header>
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('prescription'); ?></h1>
+        </div>
+        <div class="section-body">
+            <div class="card">
             <?php if ($this->ion_auth->in_group('Doctor')) { ?>
-                <div class="panel-body">
+                <div class="card-header">
                     <a class="btn btn-info btn_width" data-toggle="modal" href="#myModa3">
                         <i class="fa fa-plus-circle"> </i> <?php echo lang('add_new'); ?> 
                     </a>
                 </div>
             <?php } ?>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th> <?php echo lang('date'); ?></th>
-                                <th> <?php echo lang('patient'); ?></th>
-                                <th> <?php echo lang('medicine'); ?></th>
-                                <th> <?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th> <?php echo lang('date'); ?></th>
+                                    <th> <?php echo lang('patient'); ?></th>
+                                    <th> <?php echo lang('medicine'); ?></th>
+                                    <th> <?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <style>
+                            <style>
 
-                            .img_url{
-                                height:20px;
-                                width:20px;
-                                background-size: contain; 
-                                max-height:20px;
-                                border-radius: 100px;
-                            }
+                                .img_url{
+                                    height:20px;
+                                    width:20px;
+                                    background-size: contain; 
+                                    max-height:20px;
+                                    border-radius: 100px;
+                                }
 
-                        </style>
+                            </style>
 
-                        <?php foreach ($prescriptions as $prescription) { ?>
-                            <tr class="">
-                                <td><?php echo date('d-m-Y', $prescription->date); ?></td>
-                                <td> <?php echo $this->patient_model->getPatientById($prescription->patient)->name; ?></td>
-                                <td>
+                            <?php foreach ($prescriptions as $prescription) { ?>
+                                <tr class="">
+                                    <td><?php echo date('d-m-Y', $prescription->date); ?></td>
+                                    <td> <?php echo $this->patient_model->getPatientById($prescription->patient)->name; ?></td>
+                                    <td>
 
-                                    <?php
-                                    if (!empty($prescription->medicine)) {
-                                        $medicine = explode('###', $prescription->medicine);
+                                        <?php
+                                        if (!empty($prescription->medicine)) {
+                                            $medicine = explode('###', $prescription->medicine);
 
-                                        foreach ($medicine as $key => $value) {
-                                            $medicine_id = explode('***', $value);
-                                            $medicine_name_with_dosage = $this->medicine_model->getMedicineById($medicine_id[0])->name . ' -' . $medicine_id[1];
-                                            $medicine_name_with_dosage = $medicine_name_with_dosage . ' | ' . $medicine_id[3] . ' Days<br>';
-                                            rtrim($medicine_name_with_dosage, ',');
-                                            echo '<p>' . $medicine_name_with_dosage . '</p>';
+                                            foreach ($medicine as $key => $value) {
+                                                $medicine_id = explode('***', $value);
+                                                $medicine_name_with_dosage = $this->medicine_model->getMedicineById($medicine_id[0])->name . ' -' . $medicine_id[1];
+                                                $medicine_name_with_dosage = $medicine_name_with_dosage . ' | ' . $medicine_id[3] . ' Days<br>';
+                                                rtrim($medicine_name_with_dosage, ',');
+                                                echo '<p>' . $medicine_name_with_dosage . '</p>';
+                                            }
                                         }
-                                    }
-                                    ?>
+                                        ?>
 
 
-                                </td>
-                                <td>
-                                    <a class="btn btn-info btn-xs btn_width" href="prescription/viewPrescription?id=<?php echo $prescription->id; ?>"><i class="fa fa-eye"> <?php echo lang('view'); ?> <?php echo lang('prescription'); ?> </i></a>   
-                                </td>
-                            </tr>
-                        <?php } ?>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info btn-xs btn_width" href="prescription/viewPrescription?id=<?php echo $prescription->id; ?>"><i class="fa fa-eye"> <?php echo lang('view'); ?> <?php echo lang('prescription'); ?> </i></a>   
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -88,15 +88,17 @@ if ($this->ion_auth->in_group('Doctor')) {
 ?>
 
 <!-- Add Prescription Modal-->
-<div class="modal fade" id="myModa3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="myModa3" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">  
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"><i class="fa fa-plus-circle"></i> <?php echo lang('add_prescription'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('add_prescription'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div> 
-            <div class="modal-body">
-                <form role="form" action="prescription/addNewPrescription" method="post" enctype="multipart/form-data">
+            <form role="form" action="prescription/addNewPrescription" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group col-md-12">
                         <input type="hidden" class="form-control form-control-inline input-medium default-date-picker" name="doctor" id="exampleInputEmail1" value='<?php
                         if (!empty($doctor_id)) {
@@ -104,53 +106,58 @@ if ($this->ion_auth->in_group('Doctor')) {
                         }
                         ?>' placeholder="">
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control form-control-inline input-medium default-date-picker" name="date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('patient'); ?></label>
-                        <select class="form-control m-bot15 js-example-basic-single" name="patient" value=''> 
-                            <option value="">Select .....</option>
-                            <?php foreach ($patients as $patientss) { ?>
-                                <option value="<?php echo $patientss->id; ?>" <?php
-                                if (!empty($prescription->patient)) {
-                                    if ($prescription->patient == $patientss->id) {
-                                        echo 'selected';
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
+                            <input type="date" class="form-control form-control-inline input-medium " name="date" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"><?php echo lang('patient'); ?></label>
+                            <select class="form-control m-bot15 js-example-basic-single" name="patient" value=''> 
+                                <option value="">Select .....</option>
+                                <?php foreach ($patients as $patientss) { ?>
+                                    <option value="<?php echo $patientss->id; ?>" <?php
+                                    if (!empty($prescription->patient)) {
+                                        if ($prescription->patient == $patientss->id) {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> ><?php echo $patientss->name; ?> </option>
-                                    <?php } ?>
-                        </select>
+                                    ?> ><?php echo $patientss->name; ?> </option>
+                                        <?php } ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3"><?php echo lang('history'); ?></label>
-                        <div class="col-md-9">
+                        <div class="col">
                             <textarea class="ckeditor form-control" name="symptom" value="" rows="10"></textarea>
                         </div>
                     </div>
-
+    
                     <div class="form-group">
                         <label class="control-label col-md-3"><?php echo lang('medication'); ?></label>
-                        <div class="col-md-9">
+                        <div class="col">
                             <textarea class="ckeditor form-control" name="medicine" value="" rows="10"></textarea>
                         </div>
                     </div>
-
+    
                     <div class="form-group">
                         <label class="control-label col-md-3"><?php echo lang('note'); ?></label>
-                        <div class="col-md-9">
+                        <div class="col">
                             <textarea class="ckeditor form-control" name="note" value="" rows="10"></textarea>
                         </div>
                     </div>
-
+    
                     <input type="hidden" name="patient_id" value='<?php echo $patient->id; ?>'>
                     <input type="hidden" name="id" value=''>
-                    <section class="">
-                        <button type="submit" name="submit" class="btn btn-info submit_button">Submit</button>
-                    </section>
-                </form>
-            </div>
+
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                    </div>
+                                
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -158,65 +165,75 @@ if ($this->ion_auth->in_group('Doctor')) {
 
 
 <!-- Edit Prescription Modal-->
-<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="myModa5" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">  
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"><i class="fa fa-plus-circle"></i> <?php echo lang('edit_prescription'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('edit_prescription'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div> 
-            <div class="modal-body">
-                <form role="form" id="prescriptionEditForm" action="prescription/addNewPrescription" method="post" enctype="multipart/form-data">
+            <form role="form" id="prescriptionEditForm" action="prescription/addNewPrescription" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group col-md-12">
-                        <input type="hidden" class="form-control form-control-inline input-medium default-date-picker" name="doctor" id="exampleInputEmail1" value='' placeholder="">
+                        <input type="hidden" class="form-control form-control-inline input-medium default-date-picker" name="doctor" id="exampleInputEmail1" value='<?php
+                        if (!empty($doctor_id)) {
+                            echo $doctor_id;
+                        }
+                        ?>' placeholder="">
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
-                        <input type="text" class="form-control form-control-inline input-medium default-date-picker" name="date" id="exampleInputEmail1" value='' placeholder="">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('patient'); ?></label>
-                        <select class="form-control m-bot15" name="patient" value=''> 
-                            <option value="">Select .....</option>
-                            <?php foreach ($patients as $patientss) { ?>
-                                <option value="<?php echo $patientss->id; ?>" <?php
-                                if (!empty($prescription->patient)) {
-                                    if ($prescription->patient == $patientss->id) {
-                                        echo 'selected';
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
+                            <input type="date" class="form-control form-control-inline input-medium " name="date" id="exampleInputEmail1" value='' placeholder="">
+                        </div>
+                        <div class="form-group col">
+                            <label for="exampleInputEmail1"><?php echo lang('patient'); ?></label>
+                            <select class="form-control m-bot15 js-example-basic-single" name="patient" value=''> 
+                                <option value="">Select .....</option>
+                                <?php foreach ($patients as $patientss) { ?>
+                                    <option value="<?php echo $patientss->id; ?>" <?php
+                                    if (!empty($prescription->patient)) {
+                                        if ($prescription->patient == $patientss->id) {
+                                            echo 'selected';
+                                        }
                                     }
-                                }
-                                ?> ><?php echo $patientss->name; ?> </option>
-                                    <?php } ?>
-                        </select>
+                                    ?> ><?php echo $patientss->name; ?> </option>
+                                        <?php } ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3"><?php echo lang('history'); ?></label>
-                        <div class="col-md-9">
-                            <textarea class="ckeditor form-control" id="editor1" name="symptom" value="" rows="10"></textarea>
+                        <div class="col">
+                            <textarea class="ckeditor form-control" name="symptom" value="" rows="10"></textarea>
                         </div>
                     </div>
-
+    
                     <div class="form-group">
                         <label class="control-label col-md-3"><?php echo lang('medication'); ?></label>
-                        <div class="col-md-9">
-                            <textarea class="ckeditor form-control" id="editor2" name="medicine" value="" rows="10"></textarea>
+                        <div class="col">
+                            <textarea class="ckeditor form-control" name="medicine" value="" rows="10"></textarea>
                         </div>
                     </div>
-
+    
                     <div class="form-group">
                         <label class="control-label col-md-3"><?php echo lang('note'); ?></label>
-                        <div class="col-md-9">
-                            <textarea class="ckeditor form-control" id="editor3" name="note" value="" rows="10"></textarea>
+                        <div class="col">
+                            <textarea class="ckeditor form-control" name="note" value="" rows="10"></textarea>
                         </div>
                     </div>
-
-
+    
                     <input type="hidden" name="id" value=''>
-                    <section class="">
-                        <button type="submit" name="submit" class="btn btn-info submit_button"><?php echo lang('submit'); ?></button>
-                    </section>
-                </form>
-            </div>
+
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                    </div>
+                                
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -283,7 +300,7 @@ if ($this->ion_auth->in_group('Doctor')) {
             "language": {
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                "url": "common/assets/DataTables/languages/" + bahasa + ".json"
             },
 
         });
