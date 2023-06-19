@@ -1,60 +1,50 @@
 
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('lab_report'); ?></h1>
+        </div>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th><?php echo lang('report_id'); ?></th>
+                                    <th><?php echo lang('patient'); ?></th>
+                                    <th><?php echo lang('date'); ?></th>
+                                    <th class=""><?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                            <style>
 
+                                .img_url{
+                                    height:20px;
+                                    width:20px;
+                                    background-size: contain; 
+                                    max-height:20px;
+                                    border-radius: 100px;
+                                }
+                                .option_th{
+                                    width:18%;
+                                }
 
+                            </style>
 
-
-
-
-
-
-
-        <section class="col-md-12">
-            <header class="panel-heading">
-                <?php echo lang('lab_report'); ?>
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th><?php echo lang('report_id'); ?></th>
-                                <th><?php echo lang('patient'); ?></th>
-                                <th><?php echo lang('date'); ?></th>
-                                <th class=""><?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        <style>
-
-                            .img_url{
-                                height:20px;
-                                width:20px;
-                                background-size: contain; 
-                                max-height:20px;
-                                border-radius: 100px;
-                            }
-                            .option_th{
-                                width:18%;
-                            }
-
-                        </style>
-
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
