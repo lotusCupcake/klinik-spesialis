@@ -1,25 +1,33 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('patient'); ?>  <?php echo lang('documents'); ?> 
-                <div class="col-md-4 no-print pull-right"> 
-                    <a data-toggle="modal" href="#myModal1">
-                        <div class="btn-group pull-right">
-                            <button id="" class="btn green btn-xs">
-                                <i class="fa fa-plus-circle"></i> <?php echo lang('add_new'); ?>
-                            </button>
-                        </div>
-                    </a>
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('patient'); ?>  <?php echo lang('documents'); ?></h1>
+        </div>
+        <?php
+        $message = $this->session->flashdata('feedback');
+        if (!empty($message)) {
+        ?><div class="alert alert-primary alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                    <div class="alert-title">Info!</div>
+                    <?= $message ?>
                 </div>
-            </header> 
-            <div class="">
-                <div class="">
-                    <div class="adv-table editable-table panel-body">
-                        <table class="table table-striped table-hover table-bordered" id="editable-sample">
+            </div>
+        <?php } ?>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table-striped table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
                                     <th><?php echo lang('date'); ?></th>
@@ -70,13 +78,10 @@
                         </table>
                     </div>
                 </div>
-
             </div>
-
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -84,35 +89,56 @@
 
 
 <!-- Add Patient Material Modal-->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
+<div class="modal fade" role="dialog" id="myModal1">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add'); ?> <?php echo lang('files'); ?></h4>
+                <h5 class="modal-title"><?php echo lang('add'); ?> <?php echo lang('files'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form role="form" action="patient/addPatientMaterial" class="clearfix" method="post" enctype="multipart/form-data">
-
-                 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1"> <?php echo lang('title'); ?></label>
-                        <input type="text" class="form-control" name="title" id="exampleInputEmail1" placeholder="">
+            <form action="#" class="clearfix" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-grup">
+                                <label for="exampleInputEmail1"> <?php echo lang('title'); ?></label>
+                                <input type="text" class="form-control" name="title" id="exampleInputEmail1" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Image Upload</label>
+                                <div class="">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="<?= base_url() . '/template/assets/img/news/img01.jpg' ?>" id="img" alt="" />
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <span class="btn btn-white btn-file">
+                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
+                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                                <input type="file" class="default" name="img_url" />
+                                            </span>
+                                            <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
+                                        </div>
+                                    </div>
+                                    <span class="help-block"><?php echo lang('recommended_size'); ?> : 3000 x 2024</span>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="redirect" value='patient/myDocuments'>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1"> <?php echo lang('file'); ?></label>
-                        <input type="file" name="img_url">
-                        <span class="help-block"><?php echo lang('recommended_size'); ?> : 3000 x 2024</span>
-                    </div>
-                    <input type="hidden" name="redirect" value='patient/myDocuments'>
-                    <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-info pull-right"> <?php echo lang('submit'); ?></button>
-                    </div>
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><?php echo lang('submit'); ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- Add Patient Modal-->
 
