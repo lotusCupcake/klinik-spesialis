@@ -1,58 +1,59 @@
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('my'); ?> <?php echo lang('cases'); ?> 
-            </header> 
-            <div class="panel-body"> 
-                <div class="adv-table editable-table">
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
-                            <tr>
-                                <th style="width: 10%"><?php echo lang('id'); ?></th>
-                                <th style="width: 20%"><?php echo lang('case'); ?> <?php echo lang('title'); ?></th>
-                                <th style="width: 60%"><?php echo lang('case'); ?></th> 
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <?php foreach ($medical_histories as $medical_history) { ?>
-                                <?php $patient_info = $this->db->get_where('patient', array('id' => $medical_history->patient_id))->row(); ?>
-
-                                <tr class="">
-
-                                    <td>
-                                        <?php
-                                        echo $medical_history->id;
-                                        ?>
-                                    </td>
-
-                                    <td>
-                                        <?php
-                                        echo $medical_history->title;
-                                        ?>
-                                    </td>
-
-                                    <td><?php
-                                        if (!empty($medical_history->description)) {
-                                            echo $medical_history->description;
-                                        }
-                                        ?></td>
-
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('my'); ?> <?php echo lang('cases'); ?> </h1>
+        </div>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table-striped table-bordered" id="editable-sample">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%"><?php echo lang('id'); ?></th>
+                                    <th style="width: 20%"><?php echo lang('case'); ?> <?php echo lang('title'); ?></th>
+                                    <th style="width: 60%"><?php echo lang('case'); ?></th> 
                                 </tr>
-                            <?php } ?>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                                <?php foreach ($medical_histories as $medical_history) { ?>
+                                    <?php $patient_info = $this->db->get_where('patient', array('id' => $medical_history->patient_id))->row(); ?>
+
+                                    <tr class="">
+
+                                        <td>
+                                            <?php
+                                            echo $medical_history->id;
+                                            ?>
+                                        </td>
+
+                                        <td>
+                                            <?php
+                                            echo $medical_history->title;
+                                            ?>
+                                        </td>
+
+                                        <td><?php
+                                            if (!empty($medical_history->description)) {
+                                                echo $medical_history->description;
+                                            }
+                                            ?></td>
+
+                                    </tr>
+                                <?php } ?>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -121,7 +122,7 @@ if ($this->ion_auth->in_group('Doctor')) {
             "language": {
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                "url": "common/assets/DataTables/languages/" + bahasa + ".json"
             },
 
         });
