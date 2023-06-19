@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h4 class="text-center" style="font-weight: bold; margin-top: 20px; margin-bottom: 20px; text-transform: uppercase;">
-                                <?php echo lang('payments') ?> <?php echo lang('invoice') ?>
+                                <?php echo lang('invoice') ?> <?php echo lang('payments') ?>
                             </h4>
                         </div>
                     </div>
