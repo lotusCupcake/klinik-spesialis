@@ -1,55 +1,49 @@
 
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('todays_appointments'); ?>               
-            </header>
-            <div class="panel-body">
-                <div class="adv-table editable-table ">
-                    <div class="space15"></div>
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample1">
-                        <thead>
-                            <tr>
-                                <th> <?php echo lang('id'); ?></th>
-                                <th> <?php echo lang('patient'); ?></th>
-                                <th> <?php echo lang('doctor'); ?></th>
-                                <th> <?php echo lang('date-time'); ?></th>
-                                <th> <?php echo lang('remarks'); ?></th>
-                                <th> <?php echo lang('status'); ?></th>
-                                <th> <?php echo lang('options'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+<div class="main-content">
+    <div class="section">
+        <div class="section-header">
+            <h1><?php echo lang('todays_appointments'); ?></h1>
+        </div>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="space15"></div>
+                        <table class="table-striped table-bordered" id="editable-sample1">
+                            <thead>
+                                <tr>
+                                    <th> <?php echo lang('id'); ?></th>
+                                    <th> <?php echo lang('patient'); ?></th>
+                                    <th> <?php echo lang('doctor'); ?></th>
+                                    <th> <?php echo lang('date-time'); ?></th>
+                                    <th> <?php echo lang('remarks'); ?></th>
+                                    <th> <?php echo lang('status'); ?></th>
+                                    <th> <?php echo lang('options'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <style>
+                            <style>
 
-                            .img_url{
-                                height:20px;
-                                width:20px;
-                                background-size: contain; 
-                                max-height:20px;
-                                border-radius: 100px;
-                            }
+                                .img_url{
+                                    height:20px;
+                                    width:20px;
+                                    background-size: contain; 
+                                    max-height:20px;
+                                    border-radius: 100px;
+                                }
 
-                        </style>
-
-
-
-
-
-
-                        </tbody>
-                    </table>
+                            </style>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </section>
-        <!-- page end-->
-    </section>
-</section>
+        </div>
+    </div>
+</div>
 <!--main content end-->
 <!--footer start-->
 
@@ -458,7 +452,7 @@
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
                 searchPlaceholder: "Search...",
-                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                "url": "common/assets/DataTables/languages/" + bahasa + ".json"
             },
         });
         table.buttons().container().appendTo('.custom_buttons');
