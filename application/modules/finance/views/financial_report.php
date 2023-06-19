@@ -303,7 +303,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card card-statistic-1">
-                                        <div class="card-icon bg-success">
+                                        <div class="card-icon bg-warning">
                                             <i class="fas fa-money-bills"></i>
                                         </div>
                                         <div class="card-wrap">
@@ -384,7 +384,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card card-statistic-1">
-                                        <div class="card-icon bg-warning">
+                                        <div class="card-icon bg-success">
                                             <i class="fas fa-money-bills"></i>
                                         </div>
                                         <div class="card-wrap">
