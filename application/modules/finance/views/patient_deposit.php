@@ -99,7 +99,7 @@
                                                         <td> <?php echo $payment->deposit_type; ?></td>
                                                         <td class="no-print">
                                                             <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
-                                                                <a href="finance/editPayment?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-info"><i class="fas fa-edit"></i></button></a>
+                                                                <a href="finance/editPayment?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-light"><i class="fas fa-edit"></i></button></a>
                                                             <?php } ?>
                                                             <a href="finance/invoice?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-file-invoice"></i></button></a>
                                                             <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
@@ -128,7 +128,6 @@
                                                                     <button class="btn btn-icon icon-left btn-light editbutton" data-toggle="modal" data-target="#modal" data-id="<?php echo $deposit->id; ?>"><i class="fas fa-edit"></i></button>
                                                                 <?php } ?>
                                                                 <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
-                                                                    <a class="btn-xs btn-info delete_button" title="<?php echo lang('delete'); ?>" style="width: 25%;" href="finance/deleteDeposit?id=<?php echo $deposit->id; ?>&patient=<?php echo $patient->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>
                                                                     <a href="finance/deleteDeposit?id=<?php echo $deposit->id; ?>&patient=<?php echo $patient->id; ?>"><button class="btn btn-icon icon-left btn-danger delete_button" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fas fa-trash"></i></button></a>
                                                                 <?php } ?>
                                                             </td>
