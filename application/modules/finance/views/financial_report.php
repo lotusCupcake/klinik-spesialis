@@ -1,13 +1,16 @@
 <!--main content start-->
-<div class="main-content no-print">
+<div class="main-content">
     <div class="section">
         <div class="section-header">
             <h1><?php echo lang('financial_report'); ?> </h1>
         </div>
+        <div class="clearfix float-right">
+            <button class="btn btn-icon icon-left btn-primary" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print') ?></button>
+        </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-md-12">
-                    <form role="form" class="f_report" action="finance/financialReport" method="post" enctype="multipart/form-data">
+                    <form role="form" class="f_report" action="appointment/treatmentReport" method="post" enctype="multipart/form-data">
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label><?php echo lang('date_from'); ?></label>
@@ -28,9 +31,6 @@
                             <div class="form-group col-md-2" style="margin-top:32px">
                                 <button type="submit" name="submit" class="btn btn-icon icon-left btn-primary range_submit"><?php echo lang('submit'); ?></button>
                             </div>
-                            <!-- <div class="form-group col-md-6" style="margin-top:32px">
-                                <button class="btn btn-icon icon-left btn-primary float-right" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print') ?></button>
-                            </div> -->
                         </div>
                     </form>
                 </div>
@@ -247,7 +247,7 @@
                     <h2 class="section-title"><?php echo lang('expense'); ?> </h2>
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-striped table-advance table-hover">
+                            <table class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th> <?php echo lang('category'); ?></th>
@@ -480,30 +480,30 @@
         </div>
     </div>
 </div>
-
+<!-- 
 <?php echo $settings->currency; ?>
-<?php
-if (empty($total_payment_by_category)) {
-    if (empty($total_expense_by_category)) {
-        echo '0';
-    } else {
-        $profit = 0 - array_sum($total_expense_by_category);
-        echo $profit;
-    }
-}
-if (empty($total_expense_by_category)) {
-    if (empty($total_payment_by_category)) {
-        echo '0';
-    } else {
-        $profit = $gross - 0;
-        echo $profit;
-    }
-} else {
-    if (!empty($gross)) {
-        $profit = $gross - array_sum($total_expense_by_category);
-        echo $profit;
-    }
-}
-?>
+                <?php
+                if (empty($total_payment_by_category)) {
+                    if (empty($total_expense_by_category)) {
+                        echo '0';
+                    } else {
+                        $profit = 0 - array_sum($total_expense_by_category);
+                        echo $profit;
+                    }
+                }
+                if (empty($total_expense_by_category)) {
+                    if (empty($total_payment_by_category)) {
+                        echo '0';
+                    } else {
+                        $profit = $gross - 0;
+                        echo $profit;
+                    }
+                } else {
+                    if (!empty($gross)) {
+                        $profit = $gross - array_sum($total_expense_by_category);
+                        echo $profit;
+                    }
+                }
+                ?> -->
 <!--main content end-->
 <!--footer start-->
