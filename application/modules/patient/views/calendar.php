@@ -1,9 +1,4 @@
 <!--sidebar end-->
-
-
-
-
-
 <?php
 if ($this->ion_auth->in_group(array('Patient'))) {
     $patient_ion_id = $this->ion_auth->get_user_id();
@@ -13,24 +8,22 @@ if ($this->ion_auth->in_group(array('Patient'))) {
 
 
 <!--main content start-->
-<section id="main-content">
-    <section class="wrapper site-min-height">
-        <!-- page start-->
-        <section class="panel">
-            <header class="panel-heading">
-                <?php echo lang('appointment'); ?> <?php echo lang('calendar'); ?>| <?php echo $patient->name; ?> | <?php echo $patient->phone; ?>
-            </header> 
-            <aside>
-                <section class="">
-                    <div class="panel-body">
-                        <div id="calendar" class="has-toolbar calendar_view"></div>
-                    </div>
-                </section>
-            </aside>
-        </section>
-        <!-- page end-->
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1><?php echo lang('appointment'); ?> <?php echo lang('calendar'); ?>| <?php echo $patient->name; ?> | <?php echo $patient->phone; ?></h1>
+        </div>
+        <div class="section-body">
+                <aside>
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div id="calendar" class="has-toolbar calendar_view"></div>
+                        </div>
+                    </section>
+                </aside>
+        </div>
     </section>
-</section>
+</div>
 <!--main content end-->
 <!--footer start-->
 
