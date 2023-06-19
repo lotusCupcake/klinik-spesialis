@@ -21,9 +21,6 @@
         <?php } ?>
         <div class="section-body">
             <div class="card">
-                <div class="card-header">
-                    <button class="btn btn-icon icon-left btn-primary" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print'); ?></button>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="space15"></div>
