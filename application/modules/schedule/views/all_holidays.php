@@ -39,35 +39,33 @@
 
                                 </tr>
                             </thead>
-                            <tbody>  
-                            <style>  
-
-                                .img_url{
-                                    height:20px;
-                                    width:20px;
-                                    background-size: contain; 
-                                    max-height:20px;
-                                    border-radius: 100px;
-                                }
-
-                            </style>
-                            <?php
-                            $i = 0;
-                            foreach ($holidays as $holiday) {
-                                $i = $i + 1;
-                                ?> 
-                                <tr class="">
-                                    <td> <?php echo $i; ?></td>
-                                    <td> <?php echo $this->doctor_model->getDoctorById($holiday->doctor)->name; ?></td> 
-                                    <td> <?php echo date('d-m-Y', $holiday->date); ?></td> 
-                                    <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
-                                        <td>
-                                            <button type="button" class="btn btn-success btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $holiday->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>   
-                                            <a class="btn btn-danger btn-xs btn_width delete_button" href="schedule/deleteHoliday?id=<?php echo $holiday->id; ?>&doctor=<?php echo $holiday->doctor; ?>&redirect=schedule/allHolidays" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
-                                        </td>
-                                    <?php } ?>
-                                </tr>
-                            <?php } ?>
+                            <tbody>
+                                <style>
+                                    .img_url {
+                                        height: 20px;
+                                        width: 20px;
+                                        background-size: contain;
+                                        max-height: 20px;
+                                        border-radius: 100px;
+                                    }
+                                </style>
+                                <?php
+                                $i = 0;
+                                foreach ($holidays as $holiday) {
+                                    $i = $i + 1;
+                                ?>
+                                    <tr class="">
+                                        <td> <?php echo $i; ?></td>
+                                        <td> <?php echo $this->doctor_model->getDoctorById($holiday->doctor)->name; ?></td>
+                                        <td> <?php echo date('d-m-Y', $holiday->date); ?></td>
+                                        <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-xs btn_width editbutton" data-toggle="modal" data-id="<?php echo $holiday->id; ?>"><i class="fa fa-edit"></i> <?php echo lang('edit'); ?></button>
+                                                <a class="btn btn-danger btn-xs btn_width delete_button" href="schedule/deleteHoliday?id=<?php echo $holiday->id; ?>&doctor=<?php echo $holiday->doctor; ?>&redirect=schedule/allHolidays" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"> </i> <?php echo lang('delete'); ?></a>
+                                            </td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -132,7 +130,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><?php echo lang('edit'); ?>  <?php echo lang('holiday'); ?></h5>
+                <h5 class="modal-title"><?php echo lang('edit'); ?> <?php echo lang('holiday'); ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -172,59 +170,85 @@
 
 <script src="common/js/codearistos.min.js"></script>
 <script type="text/javascript">
-                                    $(document).ready(function () {
-                                        $(".editbutton").click(function (e) {
-                                            e.preventDefault(e);
-                                            // Get the record's ID via attribute  
-                                            var iid = $(this).attr('data-id');
-                                            $('#editHolidayForm').trigger("reset");
-                                            $('#myModal2').modal('show');
-                                            $.ajax({
-                                                url: 'schedule/editHolidayByJason?id=' + iid,
-                                                method: 'GET',
-                                                data: '',
-                                                dataType: 'json',
-                                            }).success(function (response) {
-                                                // Populate the form fields with the data returned from server
-                                                var date = new Date(response.holiday.date * 1000);
-                                                $('#editHolidayForm').find('[name="id"]').val(response.holiday.id).end()
-                                                $('.js-example-basic-single.doctor').val(response.holiday.doctor).trigger('change');
-                                                $('#editHolidayForm').find('[name="date"]').val(date.getFullYear() + '-' + ("0"+ (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()).end()
+    $(document).ready(function() {
+        $(".editbutton").click(function(e) {
+            e.preventDefault(e);
+            // Get the record's ID via attribute  
+            var iid = $(this).attr('data-id');
+            $('#editHolidayForm').trigger("reset");
+            $('#myModal2').modal('show');
+            $.ajax({
+                url: 'schedule/editHolidayByJason?id=' + iid,
+                method: 'GET',
+                data: '',
+                dataType: 'json',
+            }).success(function(response) {
+                // Populate the form fields with the data returned from server
+                var date = new Date(response.holiday.date * 1000);
+                $('#editHolidayForm').find('[name="id"]').val(response.holiday.id).end()
+                $('.js-example-basic-single.doctor').val(response.holiday.doctor).trigger('change');
+                $('#editHolidayForm').find('[name="date"]').val(date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2)).end()
+                console.log(date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + date.getDate()).slice(-2));
+
+                var option1 = new Option(response.doctor.name + '-' + response.doctor.id, response.doctor.id, true, true);
+                $('#editHolidayForm').find('[name="doctor"]').append(option1).trigger('change');
 
 
-                                                var option1 = new Option(response.doctor.name + '-' + response.doctor.id, response.doctor.id, true, true);
-                                                $('#editHolidayForm').find('[name="doctor"]').append(option1).trigger('change');
-
-
-                                            });
-                                        });
-                                    });
+            });
+        });
+    });
 </script>
 
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         var table = $('#editable-sample').DataTable({
             responsive: true,
 
             dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 
-            buttons: [
-                {extend: 'copyHtml5', exportOptions: {columns: [0, 1, 2, 3, 4, 5], }},
-                {extend: 'excelHtml5', exportOptions: {columns: [0, 1, 2, 3, 4, 5], }},
-                {extend: 'csvHtml5', exportOptions: {columns: [0, 1, 2, 3, 4, 5], }},
-                {extend: 'pdfHtml5', exportOptions: {columns: [0, 1, 2, 3, 4, 5], }},
-                {extend: 'print', exportOptions: {columns: [0, 1, 2, 3, 4, 5], }},
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5],
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5],
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5],
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5],
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5],
+                    }
+                },
             ],
             aLengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
             iDisplayLength: -1,
-            "order": [[0, "desc"]],
+            "order": [
+                [0, "desc"]
+            ],
 
             "language": {
                 "lengthMenu": "_MENU_",
@@ -235,7 +259,7 @@
         });
 
         table.buttons().container()
-                .appendTo('.custom_buttons');
+            .appendTo('.custom_buttons');
     });
 </script>
 
@@ -244,7 +268,7 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         $("#patientchoose").select2({
             placeholder: '<?php echo lang('select_patient'); ?>',
@@ -254,12 +278,12 @@
                 type: "post",
                 dataType: 'json',
                 delay: 250,
-                data: function (params) {
+                data: function(params) {
                     return {
                         searchTerm: params.term // search term
                     };
                 },
-                processResults: function (response) {
+                processResults: function(response) {
                     return {
                         results: response
                     };
@@ -276,12 +300,12 @@
                 type: "post",
                 dataType: 'json',
                 delay: 250,
-                data: function (params) {
+                data: function(params) {
                     return {
                         searchTerm: params.term // search term
                     };
                 },
-                processResults: function (response) {
+                processResults: function(response) {
                     return {
                         results: response
                     };
@@ -298,12 +322,12 @@
                 type: "post",
                 dataType: 'json',
                 delay: 250,
-                data: function (params) {
+                data: function(params) {
                     return {
                         searchTerm: params.term // search term
                     };
                 },
-                processResults: function (response) {
+                processResults: function(response) {
                     return {
                         results: response
                     };
@@ -322,7 +346,7 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $(".flashmessage").delay(3000).fadeOut(100);
     });
 </script>
