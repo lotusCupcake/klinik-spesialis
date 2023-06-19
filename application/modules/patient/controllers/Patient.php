@@ -1526,10 +1526,10 @@ class Patient extends MX_Controller
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
                 //   $options1 = '<a type="button" class="btn editbutton" title="Edit" data-toggle="modal" data-id="463"><i class="fa fa-edit"> </i> Edit</a>';
-                $options1 = '<a class="btn btn-info btn-xs" href="' . $document->url . '" download> ' . lang('download') . ' </a>';
+                $options1 = '<a href="' . $document->url . '" download><button class="btn btn-icon icon-left btn-info"><i class="fas fa-download"></i> ' . lang('download') . '</button></a>';
             }
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
-                $options2 = '<a class="btn btn-info btn-xs delete_button" href="patient/deletePatientMaterial?id=' . $document->id . '&redirect=documents"onclick="return confirm(\'You want to delete the item??\');"> X </a>';
+                $options2 = '<a href="patient/deletePatientMaterial?id=' . $document->id . '&redirect=documents"onclick="return confirm(\'You want to delete the item??\');"><button class="btn btn-icon icon-left btn-danger delete_button"><i class="fas fa-trash"></i> ' . lang('delete') . '</button></a>';
             }
 
             if (!empty($document->patient)) {

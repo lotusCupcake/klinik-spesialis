@@ -3,7 +3,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1><?php echo lang('patient'); ?>  <?php echo lang('documents'); ?></h1>
+            <h1><?php echo lang('patient'); ?> <?php echo lang('documents'); ?></h1>
         </div>
         <?php
         $message = $this->session->flashdata('feedback');
@@ -22,7 +22,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -60,45 +60,27 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="#" class="clearfix" method="post" enctype="multipart/form-data">
+            <form action="patient/addPatientMaterial" class="clearfix" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-grup">
-                                <label for=""><?php echo lang('patient'); ?></label>
+                                <label><?php echo lang('patient'); ?></label>
                                 <select name="patient" id="patientchoose" class="form-control select2"></select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="title"><?php echo lang('title'); ?></label>
+                                <label><?php echo lang('title'); ?></label>
                                 <input type="text" class="form-control" name="title" id="title" value='' placeholder="">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Image Upload</label>
-                                <div class="">
-                                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                            <img src="<?= base_url() . '/template/assets/img/news/img01.jpg' ?>" id="img" alt="" />
-                                        </div>
-                                        <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                        <div>
-                                            <span class="btn btn-white btn-file">
-                                                <span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select image</span>
-                                                <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                                <input type="file" class="default" name="img_url" />
-                                            </span>
-                                            <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> Remove</a>
-                                        </div>
-                                    </div>
-                                    <span class="help-block"><?php echo lang('recommended_size'); ?> : 3000 x 2024</span>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="hidden" name="redirect" value='patient/documents'>
                     </div>
+                    <div class="form-group">
+                        <label><?php echo lang('file'); ?></label>
+                        <input type="file" class="form-control" name="img_url">
+                    </div>
+                    <input type="hidden" name="redirect" value='patient/documents'>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -116,16 +98,14 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $(".flashmessage").delay(3000).fadeOut(100);
     });
 </script>
 
 
 <script>
-
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         var table = $('#editable-sample').DataTable({
             responsive: true,
             //   dom: 'lfrBtip',
@@ -141,22 +121,48 @@
                 loadingIndicator: true
             },
             dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        
-             buttons: [
-                {extend: 'copyHtml5', exportOptions: {columns: [1, 2, 3], }},
-                {extend: 'excelHtml5', exportOptions: {columns: [1, 2, 3], }},
-                {extend: 'csvHtml5', exportOptions: {columns: [1, 2, 3], }},
-                {extend: 'pdfHtml5', exportOptions: {columns: [1, 2, 3], }},
-                {extend: 'print', exportOptions: {columns: [1, 2, 3], }},
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [1, 2, 3],
+                    }
+                },
             ],
             aLengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
             iDisplayLength: 100,
-            "order": [[0, "desc"]],
+            "order": [
+                [0, "desc"]
+            ],
 
             "language": {
                 "lengthMenu": "_MENU_",
@@ -167,13 +173,11 @@
         });
 
         table.buttons().container()
-                .appendTo('.custom_buttons');
+            .appendTo('.custom_buttons');
     });
-
-
 </script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#patientchoose").select2({
             placeholder: '<?php echo lang('select_patient'); ?>',
             allowClear: true,
@@ -182,12 +186,12 @@
                 type: "post",
                 dataType: 'json',
                 delay: 250,
-                data: function (params) {
+                data: function(params) {
                     return {
                         searchTerm: params.term // search term
                     };
                 },
-                processResults: function (response) {
+                processResults: function(response) {
                     return {
                         results: response
                     };
@@ -196,7 +200,7 @@
             }
 
         });
-    
+
 
 
     });
