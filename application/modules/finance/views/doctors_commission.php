@@ -1,6 +1,13 @@
 
 <!--sidebar end-->
 <!--main content start-->
+<style>
+    @media print {
+        .f_report, .card-header, .print1 {
+            display: none;
+        }
+    }
+</style>
 <div class="main-content">
     <div class="section">
         <div class="section-header">
@@ -31,7 +38,7 @@
                 </div>
             </form>
             <div class="card">
-                <div class="card-header">
+                <div class="card-header no-print">
                 <button class="btn btn-icon icon-left btn-primary" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print'); ?></button>
                 </div>
                 <div class="card-body">
@@ -50,7 +57,7 @@
                                     <th><?php echo lang('doctor'); ?></th>
                                     <th><?php echo lang('commission'); ?></th>
                                     <th><?php echo lang('total'); ?></th>
-                                    <th><?php echo lang('options'); ?></th>
+                                    <th class="print1"><?php echo lang('options'); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,7 +109,7 @@
                                         }
                                         ?>
                                     </td>
-                                    <td> <a class="btn btn-info btn-xs invoicebutton" href="finance/docComDetails?id=<?php echo $doctor->id; ?>"><i class="fa fa-file-text"></i> <?php echo lang('details'); ?> </a></td>
+                                    <td class="print1"> <a class="btn btn-info btn-xs invoicebutton" href="finance/docComDetails?id=<?php echo $doctor->id; ?>"><i class="fa fa-file-text"></i> <?php echo lang('details'); ?> </a></td>
                                 </tr>
                                 <?php $doctor_amount = NULL; ?>
                                 <?php $doctor_gross = NULL; ?>
