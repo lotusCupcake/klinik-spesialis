@@ -1,10 +1,10 @@
 <!--main content start-->
-<div class="main-content no-print">
+<div class="main-content">
     <div class="section">
         <div class="section-header">
             <h1><?php echo lang('financial_report'); ?> </h1>
         </div>
-        <div class="clearfix float-right">
+        <div class="clearfix float-right no-print">
             <button class="btn btn-icon icon-left btn-primary" onclick="javascript:window.print();"><i class="fas fa-print"></i> <?php echo lang('print') ?></button>  
         </div>
         <div class="section-body">
@@ -29,7 +29,7 @@
                                                                                                 ?>">
                         </div>
                         <div class="form-group col-md-2" style="margin-top:32px">
-                            <button type="submit" name="submit" class="btn btn-icon icon-left btn-primary range_submit"><?php echo lang('submit'); ?></button>
+                            <button type="submit" name="submit" class="btn btn-icon icon-left btn-primary range_submit no-print"><?php echo lang('submit'); ?></button>
                         </div>
                     </div>
                 </form>
@@ -269,7 +269,7 @@
                     <h2 class="section-title"><?php echo lang('expense'); ?>  </h2>
                     <div class="card">
                         <div class="card-body">
-                            <table class="table table-striped table-advance table-hover">
+                            <table class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th> <?php echo lang('category'); ?></th>
@@ -502,7 +502,7 @@
         </div>
     </div>
 </div>
-
+<!-- 
 <?php echo $settings->currency; ?>
                 <?php
                 if (empty($total_payment_by_category)) {
@@ -526,6 +526,6 @@
                         echo $profit;
                     }
                 }
-                ?>
+                ?> -->
 <!--main content end-->
 <!--footer start-->
