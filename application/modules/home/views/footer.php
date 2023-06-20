@@ -662,7 +662,7 @@ if ($language == 'english') {
                         html += '</div>'
                         html += '</div>'
                         html += '</div>'
-                        $("#editPaymentForm .qfloww").append(html)
+                        $("#editPaymentPharmForm .qfloww").append(html)
                     }
                     var input2 = $('<input>').attr({
                         type: 'text',
@@ -670,7 +670,7 @@ if ($language == 'english') {
                         id: 'idinput-' + id,
                         name: 'quantity[]',
                         value: '1',
-                    }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+                    }).appendTo('#editPaymentPharmForm .qfloww #quantity' + id);
 
                     $('<input>').attr({
                         type: 'hidden',
@@ -678,7 +678,7 @@ if ($language == 'english') {
                         id: 'mediidinput-' + id,
                         name: 'medicine_id[]',
                         value: id,
-                    }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+                    }).appendTo('#editPaymentPharmForm .qfloww #quantity' + id);
                 }
                 $(document).ready(function() {
                     $('#idinput-' + id).keyup(function() {
@@ -695,8 +695,8 @@ if ($language == 'english') {
                         tot = total;
                         var discount = $('#dis_id').val();
                         var gross = tot - discount;
-                        $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
-                        $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                        $('#editPaymentPharmForm').find('[name="subtotal"]').val(tot).end()
+                        $('#editPaymentPharmForm').find('[name="grsss"]').val(gross)
                     });
                 });
                 var curr_val = res[1] * $('#idinput-' + id).val();
@@ -704,8 +704,8 @@ if ($language == 'english') {
             });
             var discount = $('#dis_id').val();
             var gross = tot - discount;
-            $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
-            $('#editPaymentForm').find('[name="grsss"]').val(gross)
+            $('#editPaymentPharmForm').find('[name="subtotal"]').val(tot).end()
+            $('#editPaymentPharmForm').find('[name="grsss"]').val(gross)
         });
         $(document).ready(function() {
             $('#dis_id').keyup(function() {
@@ -715,7 +715,7 @@ if ($language == 'english') {
                 amount = $('#subtotal').val();
                 val_dis = this.value;
                 ggggg = amount - val_dis;
-                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+                $('#editPaymentPharmForm').find('[name="grsss"]').val(ggggg)
             });
         });
     </script>
@@ -803,7 +803,7 @@ if ($language == 'english') {
                             html += '</div>'
                             html += '</div>'
                             html += '</div>'
-                            $("#editPaymentForm .qfloww").append(html)
+                            $("#editPaymentPharmForm .qfloww").append(html)
                         }
                         var input2 = $('<input>').attr({
                             type: 'text',
@@ -811,7 +811,7 @@ if ($language == 'english') {
                             id: 'idinput-' + id,
                             name: 'quantity[]',
                             value: '1',
-                        }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+                        }).appendTo('#editPaymentPharmForm .qfloww #quantity' + id);
 
                         $('<input>').attr({
                             type: 'hidden',
@@ -819,7 +819,7 @@ if ($language == 'english') {
                             id: 'mediidinput-' + id,
                             name: 'medicine_id[]',
                             value: id,
-                        }).appendTo('#editPaymentForm .qfloww #quantity' + id);
+                        }).appendTo('#editPaymentPharmForm .qfloww #quantity' + id);
                     }
 
                     $(document).ready(function() {
@@ -839,8 +839,8 @@ if ($language == 'english') {
 
                             var discount = $('#dis_id').val();
                             var gross = tot - discount;
-                            $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
-                            $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                            $('#editPaymentPharmForm').find('[name="subtotal"]').val(tot).end()
+                            $('#editPaymentPharmForm').find('[name="grsss"]').val(gross)
                         });
                     });
                     var curr_val = res[1] * $('#idinput-' + id).val();
@@ -848,8 +848,8 @@ if ($language == 'english') {
                 });
                 var discount = $('#dis_id').val();
                 var gross = tot - discount;
-                $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
-                $('#editPaymentForm').find('[name="grsss"]').val(gross)
+                $('#editPaymentPharmForm').find('[name="subtotal"]').val(tot).end()
+                $('#editPaymentPharmForm').find('[name="grsss"]').val(gross)
             });
         });
         $(document).ready(function() {
@@ -865,7 +865,7 @@ if ($language == 'english') {
                 <?php if ($discount_type == 'flat') { ?>
                     ggggg = amount - val_dis;
                 <?php } ?>
-                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+                $('#editPaymentPharmForm').find('[name="grsss"]').val(ggggg)
             });
         });
     </script>
