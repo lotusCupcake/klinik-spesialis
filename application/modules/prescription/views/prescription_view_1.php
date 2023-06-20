@@ -122,7 +122,6 @@
                                 $medicine = explode('###', $medicine);
                                 foreach ($medicine as $key => $value) {
                                 ?>
-                                <?php } ?>
                                 <?php $single_medicine = explode('***', $value); ?>
                                 <hr>
                                 <div class="row">
@@ -136,6 +135,7 @@
                                         <p style="font-size: 18px;"><?php echo $single_medicine[2] ?></p>
                                     </div>
                                 </div>
+                                <?php } ?>
                             <?php
                             }
                             ?>
