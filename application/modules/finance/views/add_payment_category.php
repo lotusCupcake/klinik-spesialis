@@ -82,7 +82,7 @@
                         <div class="row" style="padding-right:30px">
                             <div class="col-md-12 row mb-4">
                                 <div class="col-md-4 text-right">
-                                    <label class="col-form-label"><?php echo lang('doctors_commission'); ?> <?php echo lang('rate'); ?> (%)</label>
+                                    <label class="col-form-label"><?php echo lang('doctors_commission'); ?> <?php echo lang('rate'); ?></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" name="d_commission" id="exampleInputEmail1" value='<?php
