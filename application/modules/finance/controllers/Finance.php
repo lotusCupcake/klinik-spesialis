@@ -245,19 +245,28 @@ class Finance extends MX_Controller
                     $indiviual_cat_nam1 = explode('*', $indiviual_cat_nam);
                     $qty = $indiviual_cat_nam1[3];
                     $d_commission = $this->finance_model->getPaymentCategoryById($indiviual_cat_nam1[0])->d_commission;
-                    $h_commission = 100 - $d_commission;
-                    $hospital_amount_per_unit = $indiviual_cat_nam1[1] * $h_commission / 100;
+                    $h_commission = $indiviual_cat_nam1[1] - $d_commission;
+                    $hospital_amount_per_unit = $h_commission;
+                    $doctor_amount_per_unit = $d_commission;
                     $hospital_amount_by_category[] = $hospital_amount_per_unit * $qty;
+                    $doctor_amount_by_category[] = $doctor_amount_per_unit * $qty;
                 }
                 $hospital_amount = array_sum($hospital_amount_by_category);
+                $doctor_amount = array_sum($doctor_amount_by_category);
                 if ($discount_type == 'flat') {
                     $flat_discount = $discount;
+                    $hospital_disc = $flat_discount * (25 / 100);
+                    $doctor_disc = $flat_discount * (75 / 100);
+                    $hospital_amount = $hospital_amount - $hospital_disc;
+                    $doctor_amount = $doctor_amount - $doctor_disc;
                     $gross_total = $sub_total - $flat_discount;
-                    $doctor_amount = $amount - $hospital_amount - $flat_discount;
                 } else {
                     $flat_discount = $sub_total * ($discount / 100);
+                    $hospital_disc = $flat_discount * (25 / 100);
+                    $doctor_disc = $flat_discount * (75 / 100);
+                    $hospital_amount = $hospital_amount - $hospital_disc;
+                    $doctor_amount = $doctor_amount - $doctor_disc;
                     $gross_total = $sub_total - $flat_discount;
-                    $doctor_amount = $amount - $hospital_amount - $flat_discount;
                 }
             } else {
                 $doctor_amount = '0';

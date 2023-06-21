@@ -32,7 +32,7 @@
                                     <th><?php echo lang('category'); ?> <?php echo lang('name'); ?></th>
                                     <th><?php echo lang('description'); ?></th>
                                     <th><?php echo lang('category'); ?> <?php echo lang('price'); ?> ( <?php echo $settings->currency; ?> )</th>
-                                    <th><?php echo lang('doctors_commission'); ?></th>
+                                    <th><?php echo lang('doctors_commission'); ?> ( <?php echo $settings->currency; ?> )</th>
                                     <th><?php echo lang('type'); ?></th>
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
                                         <th class="no-print"><?php echo lang('options'); ?></th>
@@ -45,7 +45,7 @@
                                         <td><?php echo $category->category; ?></td>
                                         <td> <?php echo $category->description; ?></td>
                                         <td> <?php echo $category->c_price; ?></td>
-                                        <td> <?php echo $category->d_commission; ?> %</td>
+                                        <td> <?php echo $category->d_commission; ?></td>
                                         <td> <?php
                                                 if ($category->type == 'diagnostic') {
                                                     echo lang('diagnostic_test');
