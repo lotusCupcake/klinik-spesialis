@@ -153,7 +153,18 @@
                                 }
                                 ?>
                         <?php } ?>
+                        <?php if (!empty($payment->spec_discount)) { ?>
+                            <?php
+                            $dis_spec = "";
+                            ?> <?php
+                                $spec_discount = $payment->spec_discount;
+                                $dis_spec = ($payment->amount - $payment->flat_discount) * $spec_discount / 100;
+                                ?>
+                        <?php } ?>
                         <p><strong><?php echo lang('discount'); ?></strong> <?php echo $type; ?> <?php echo $settings->currency . " " . $dis; ?></p>
+                        <?php if (!empty($payment->spec_discount)) { ?>
+                            <p><strong><?php echo lang('discount'); ?> Spesial</strong> <?php echo $type; ?> <?php echo $settings->currency . " " . $dis_spec; ?></p>
+                        <?php } ?>
                         <p><strong><?php echo lang('grand_total'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $g = $payment->gross_total; ?></p>
                         <p><strong><?php echo lang('amount_received'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $r = $this->finance_model->getDepositAmountByPaymentId($payment->id); ?></p>
                         <p><strong><?php echo lang('amount_to_be_paid'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $g - $r; ?></p>

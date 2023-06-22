@@ -147,6 +147,10 @@ class Finance extends MX_Controller
         if (empty($discount)) {
             $discount = 0;
         }
+        $spec_discount = $this->input->post('spec_discount');
+        if (empty($spec_discount)) {
+            $spec_discount = 0;
+        }
         $amount_received = $this->input->post('amount_received');
         $deposit_type = $this->input->post('deposit_type');
         $user = $this->ion_auth->get_user_id();
@@ -258,15 +262,19 @@ class Finance extends MX_Controller
                     $hospital_disc = $flat_discount * (25 / 100);
                     $doctor_disc = $flat_discount * (75 / 100);
                     $hospital_amount = $hospital_amount - $hospital_disc;
-                    $doctor_amount = $doctor_amount - $doctor_disc;
                     $gross_total = $sub_total - $flat_discount;
+                    $flat_spec_discount = $gross_total * ($spec_discount / 100);
+                    $gross_total = $gross_total - $flat_spec_discount;
+                    $doctor_amount = $doctor_amount - $doctor_disc - $flat_spec_discount;
                 } else {
                     $flat_discount = $sub_total * ($discount / 100);
                     $hospital_disc = $flat_discount * (25 / 100);
                     $doctor_disc = $flat_discount * (75 / 100);
                     $hospital_amount = $hospital_amount - $hospital_disc;
-                    $doctor_amount = $doctor_amount - $doctor_disc;
                     $gross_total = $sub_total - $flat_discount;
+                    $flat_spec_discount = $gross_total * ($spec_discount / 100);
+                    $gross_total = $gross_total - $flat_spec_discount;
+                    $doctor_amount = $doctor_amount - $doctor_disc - $flat_spec_discount;
                 }
             } else {
                 $doctor_amount = '0';
@@ -309,6 +317,7 @@ class Finance extends MX_Controller
                     'amount' => $sub_total,
                     'doctor' => $doctor,
                     'discount' => $discount,
+                    'spec_discount' => $spec_discount,
                     'flat_discount' => $flat_discount,
                     'gross_total' => $gross_total,
                     'status' => 'unpaid',
