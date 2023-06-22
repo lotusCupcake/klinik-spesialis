@@ -412,7 +412,7 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
+                        <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
                             <li><a class="nav-link" href="prescription/all"><i class="fas fa-prescription"></i><span><?php echo lang('prescription') ?></span></a></li>
                         <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('Receptionist'))) { ?>
