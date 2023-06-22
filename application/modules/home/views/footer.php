@@ -964,7 +964,9 @@ if ($language == 'english') {
                         });
                         tot = total;
                         var discount = $('#dis_id').val();
+                        var spec_discount = $('#dis_spec_id').val();
                         var gross = tot - discount;
+                        var gross = gross - (gross * spec_discount / 100);
                         $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
                         $('#editPaymentForm').find('[name="grsss"]').val(gross)
                         var amount_received = $('#amount_received').val();
@@ -976,6 +978,7 @@ if ($language == 'english') {
                 tot = tot + sub_total;
             });
             var discount = $('#dis_id').val();
+            var spec_discount = $('#dis_spec_id').val();
             <?php
             if ($discount_type == 'flat') {
             ?>
@@ -983,6 +986,7 @@ if ($language == 'english') {
             <?php } else { ?>
                 var gross = tot - tot * discount / 100;
             <?php } ?>
+            var gross = gross - (gross * spec_discount / 100);
             $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
             $('#editPaymentForm').find('[name="grsss"]').val(gross)
             var amount_received = $('#amount_received').val()
@@ -1003,6 +1007,26 @@ if ($language == 'english') {
                 <?php } else { ?>
                     ggggg = amount - amount * val_dis / 100;
                 <?php } ?>
+                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+                var amount_received = $('#amount_received').val();
+                var change = amount_received - ggggg;
+                $('#editPaymentForm').find('[name="change"]').val(change).end()
+            });
+        });
+        $(document).ready(function() {
+            $('#dis_spec_id').keyup(function() {
+                var val_dis = 0;
+                var amount = 0;
+                var ggggg = 0;
+                <?php
+                if ($discount_type == 'flat') {
+                ?>
+                    amount = $('#subtotal').val() - $('#dis_id').val();
+                <?php } else { ?>
+                    amount = $('#subtotal').val() - $('#subtotal').val() * $('#dis_id').val() / 100;
+                <?php } ?>
+                val_dis = this.value;
+                ggggg = amount - (amount * val_dis / 100);
                 $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
                 var amount_received = $('#amount_received').val();
                 var change = amount_received - ggggg;
@@ -1101,7 +1125,9 @@ if ($language == 'english') {
                             });
                             tot = total;
                             var discount = $('#dis_id').val();
+                            var spec_discount = $('#dis_spec_id').val();
                             var gross = tot - discount;
+                            var gross = gross - (gross * spec_discount / 100);
                             $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
                             $('#editPaymentForm').find('[name="grsss"]').val(gross)
                             var amount_received = $('#amount_received').val();
@@ -1113,6 +1139,7 @@ if ($language == 'english') {
                     tot = tot + sub_total;
                 });
                 var discount = $('#dis_id').val();
+                var spec_discount = $('#dis_spec_id').val();
                 <?php
                 if ($discount_type == 'flat') {
                 ?>
@@ -1120,6 +1147,7 @@ if ($language == 'english') {
                 <?php } else { ?>
                     var gross = tot - tot * discount / 100;
                 <?php } ?>
+                var gross = gross - (gross * spec_discount / 100);
                 $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
                 $('#editPaymentForm').find('[name="grsss"]').val(gross)
                 var amount_received = $('#amount_received').val();
@@ -1141,6 +1169,26 @@ if ($language == 'english') {
                 <?php } else { ?>
                     ggggg = amount - amount * val_dis / 100;
                 <?php } ?>
+                $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
+                var amount_received = $('#amount_received').val();
+                var change = amount_received - ggggg;
+                $('#editPaymentForm').find('[name="change"]').val(change).end()
+            });
+        });
+        $(document).ready(function() {
+            $('#dis_spec_id').keyup(function() {
+                var val_dis = 0;
+                var amount = 0;
+                var ggggg = 0;
+                <?php
+                if ($discount_type == 'flat') {
+                ?>
+                    amount = $('#subtotal').val() - $('#dis_id').val();
+                <?php } else { ?>
+                    amount = $('#subtotal').val() - $('#subtotal').val() * $('#dis_id').val() / 100;
+                <?php } ?>
+                val_dis = this.value;
+                ggggg = amount - (amount * val_dis / 100);
                 $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
                 var amount_received = $('#amount_received').val();
                 var change = amount_received - ggggg;
