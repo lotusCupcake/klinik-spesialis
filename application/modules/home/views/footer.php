@@ -447,6 +447,10 @@ if ($language == 'english') {
     var bahasa = <?php echo "'" . $this->language . "'"; ?>;
 </script>
 
+<?php if ($this->uri->segment(1) == 'doctor') : ?>
+    <script src="common/js/pagescript/details.js"></script>
+<?php endif ?>
+
 <?php if ($this->uri->segment(1) == 'appointment') : ?>
     <script src="common/js/pagescript/appointment.js"></script>
 <?php endif ?>
