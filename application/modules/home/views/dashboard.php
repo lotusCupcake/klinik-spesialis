@@ -69,7 +69,7 @@
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) { ?>
                         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-money-check"></i></a>
                             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                                 <div class="dropdown-header"><?= lang('payments'); ?></div>
@@ -111,7 +111,7 @@
                             </div>
                         </li>
                     <?php } ?>
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Nurse', 'Laboratorist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Nurse', 'Laboratorist', 'Receptionist'))) { ?>
                         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-user-injured"></i></a>
                             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                                 <div class="dropdown-header"><?= lang('patient'); ?></div>
@@ -457,7 +457,7 @@
                             </li>
                         <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
-                            <li class="nav-item dropdown"><a href="javascript:;" class="nav-link has-dropdown"><i class="fas fa-file-medical-alt"></i><span><?php echo lang('reports'); ?> (<?php echo lang('pharmacy'); ?>)</span></a>
+                            <li class="nav-item dropdown"><a href="javascript:;" class="nav-link has-dropdown"><i class="fas fa-file-medical-alt"></i><span><?php echo lang('reports'); ?> <?php echo lang('pharmacy'); ?></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a class="nav-link" href="finance/pharmacy/financialReport"><span><?php echo lang('pharmacy'); ?></a></li>
                                     <li><a class="nav-link" href="finance/pharmacy/monthly"></i><span><?php echo lang('monthly_sales'); ?></span></a></li>
