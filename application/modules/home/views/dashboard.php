@@ -69,7 +69,7 @@
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) { ?>
                         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-money-check"></i></a>
                             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                                 <div class="dropdown-header"><?= lang('payments'); ?></div>
@@ -111,7 +111,7 @@
                             </div>
                         </li>
                     <?php } ?>
-                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Nurse', 'Laboratorist'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Nurse', 'Laboratorist', 'Receptionist'))) { ?>
                         <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="fa fa-user-injured"></i></a>
                             <div class="dropdown-menu dropdown-list dropdown-menu-right">
                                 <div class="dropdown-header"><?= lang('patient'); ?></div>
@@ -412,7 +412,7 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
+                        <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
                             <li><a class="nav-link" href="prescription/all"><i class="fas fa-prescription"></i><span><?php echo lang('prescription') ?></span></a></li>
                         <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('Receptionist'))) { ?>
@@ -444,12 +444,10 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
+                        <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
                             <li class="nav-item dropdown"><a href="javascript:;" class="nav-link has-dropdown"><i class="fas fa-capsules"></i><span><?php echo lang('pharmacy'); ?></span></a>
                                 <ul class="dropdown-menu">
-                                    <?php if (!$this->ion_auth->in_group(array('Pharmacist'))) { ?>
-                                        <li><a class="nav-link" href="finance/pharmacy/home"><span><?php echo lang('dashboard'); ?></span></a></li>
-                                    <?php } ?>
+                                    <li><a class="nav-link" href="finance/pharmacy/home"><span><?php echo lang('dashboard'); ?></span></a></li>
                                     <li><a class="nav-link" href="finance/pharmacy/payment"><span><?php echo lang('sales'); ?></span></a></li>
                                     <li><a class="nav-link" href="finance/pharmacy/addPaymentView"></i><span><?php echo lang('add_new_sale'); ?></span></a></li>
                                     <li><a class="nav-link" href="finance/pharmacy/expense"></i><span><?php echo lang('expense'); ?></span></a></li>
@@ -458,8 +456,8 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
-                            <li class="nav-item dropdown"><a href="javascript:;" class="nav-link has-dropdown"><i class="fas fa-file-medical-alt"></i><span><?php echo lang('reports'); ?> (<?php echo lang('pharmacy'); ?>)</span></a>
+                        <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
+                            <li class="nav-item dropdown"><a href="javascript:;" class="nav-link has-dropdown"><i class="fas fa-file-medical-alt"></i><span><?php echo lang('reports'); ?> <?php echo lang('pharmacy'); ?></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a class="nav-link" href="finance/pharmacy/financialReport"><span><?php echo lang('pharmacy'); ?></a></li>
                                     <li><a class="nav-link" href="finance/pharmacy/monthly"></i><span><?php echo lang('monthly_sales'); ?></span></a></li>
