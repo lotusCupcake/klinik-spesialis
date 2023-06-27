@@ -120,7 +120,7 @@
 
 
                                                         <td class="no-print">
-                                                            <a class="btn-xs invoicebutton" title="<?php echo lang('invoice'); ?>" style="color: #fff; width: 23px;" href="patient/myInvoice?id=<?php echo $payment->id; ?>"><i class="fas fa-file-invoice"></i> </a>
+                                                            <a href="patient/myInvoice?id=<?php echo $payment->id; ?>"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-file-invoice"></i></button></a>
                                                         </td>
                                                     </tr>
 
@@ -246,7 +246,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card card-statistic-1" style="border: 2px solid red; color: red;">
+                                    <div class="card card-statistic-1">
                                         <div class="card-icon bg-danger">
                                             <i class="fas fa-trash"></i>
                                         </div>
@@ -315,7 +315,7 @@
                     <div class="form-group">
                         <label><?php echo lang('invoice'); ?></label>
                         <select class="form-control select2" name="deposit_type" required="">
-                            <option value="Card"> <?php echo lang('card'); ?> </option>  
+                            <option value="Card"> <?php echo lang('card'); ?> </option>
                         </select>
                     </div>
                     <?php
@@ -469,67 +469,67 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
-                                $dates = array();
-                                $datess = array();
-                                foreach ($payments as $payment) {
-                                    $dates[] = $payment->date;
-                                }
-                                foreach ($deposits as $deposit) {
-                                    $datess[] = $deposit->date;
-                                }
-                                $dat = array_merge($dates, $datess);
-                                $dattt = array_unique($dat);
-                                asort($dattt);
-
-                                $total_pur = array();
-
-                                $total_p = array();
-                                ?>
-
-                                <?php
-                                foreach ($dattt as $key => $value) {
+                                    <?php
+                                    $dates = array();
+                                    $datess = array();
                                     foreach ($payments as $payment) {
-                                        if ($payment->date == $value) {
-                                            ?>
-                                            <tr class="">
-                                                <td><?php echo date('d/m/y', $payment->date); ?></td>
-                                                <td> <?php echo $payment->id; ?></td>
-                                                <td><?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></td>
-                                                <td><?php
-                                                    if (!empty($payment->amount_received)) {
-                                                        echo $settings->currency;
-                                                    }
-                                                    ?> <?php echo $payment->amount_received; ?>
-                                                </td>
-
-
-                                            </tr>
-
-                                            <?php
-                                        }
+                                        $dates[] = $payment->date;
                                     }
-                                    ?>
+                                    foreach ($deposits as $deposit) {
+                                        $datess[] = $deposit->date;
+                                    }
+                                    $dat = array_merge($dates, $datess);
+                                    $dattt = array_unique($dat);
+                                    asort($dattt);
 
+                                    $total_pur = array();
+
+                                    $total_p = array();
+                                    ?>
 
                                     <?php
-                                    foreach ($deposits as $deposit) {
-                                        if ($deposit->date == $value) {
-                                            if (!empty($deposit->deposited_amount) && empty($deposit->amount_received_id)) {
-                                                ?>
-
+                                    foreach ($dattt as $key => $value) {
+                                        foreach ($payments as $payment) {
+                                            if ($payment->date == $value) {
+                                    ?>
                                                 <tr class="">
-                                                    <td><?php echo date('d-m-y', $deposit->date); ?></td>
-                                                    <td><?php echo $deposit->payment_id; ?></td>
-                                                    <td></td>
-                                                    <td><?php echo $settings->currency; ?> <?php echo $deposit->deposited_amount; ?></td>
+                                                    <td><?php echo date('d/m/y', $payment->date); ?></td>
+                                                    <td> <?php echo $payment->id; ?></td>
+                                                    <td><?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></td>
+                                                    <td><?php
+                                                        if (!empty($payment->amount_received)) {
+                                                            echo $settings->currency;
+                                                        }
+                                                        ?> <?php echo $payment->amount_received; ?>
+                                                    </td>
+
+
                                                 </tr>
-                                                <?php
+
+                                        <?php
                                             }
                                         }
-                                    }
-                                    ?>
-                                <?php } ?>
+                                        ?>
+
+
+                                        <?php
+                                        foreach ($deposits as $deposit) {
+                                            if ($deposit->date == $value) {
+                                                if (!empty($deposit->deposited_amount) && empty($deposit->amount_received_id)) {
+                                        ?>
+
+                                                    <tr class="">
+                                                        <td><?php echo date('d-m-y', $deposit->date); ?></td>
+                                                        <td><?php echo $deposit->payment_id; ?></td>
+                                                        <td></td>
+                                                        <td><?php echo $settings->currency; ?> <?php echo $deposit->deposited_amount; ?></td>
+                                                    </tr>
+                                        <?php
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>
