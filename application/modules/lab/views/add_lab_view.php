@@ -226,6 +226,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label><?php echo lang('files'); ?></label>
+                                    <input type="file" class="form-control" name="img_url" accept="image/*, application/pdf">
+                                    <p class="text-warning">file berformat image atau PDF</p>
+                                </div>
+                                <div class="form-group">
                                     <label class=""><?php echo lang('report'); ?></label>
                                     <textarea class="ckeditor form-control" id="editor" name="report" value="" rows="10"><?php
                                                                                                                             if (!empty($setval)) {

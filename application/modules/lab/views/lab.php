@@ -153,6 +153,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label><?php echo lang('files'); ?></label>
+                                    <input type="file" class="form-control" name="img_url" accept="image/*, application/pdf">
+                                    <p class="text-warning">file berformat image atau PDF</p>
+                                </div>
+                                <div class="form-group">
                                     <label class=""><?php echo lang('report'); ?></label>
                                     <textarea class="form-control ckeditor" id="editor" name="report" value="" rows=" 70" cols="70">
                                         <?php
@@ -211,9 +216,28 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
+</div>
+
+<div class="modal fade" role="dialog" id="fileModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php echo lang('files'); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="fileLab" style="text-align:center">
+
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a id="download" download><button type="button" class="btn btn-primary"><?php echo lang('download'); ?></button></a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="common/js/codearistos.min.js"></script>
@@ -341,4 +365,20 @@
             });
         });
     });
+</script>
+<script>
+    function fileLab(url) {
+        let fileFormat = url.substring(url.lastIndexOf('.') + 1)
+        html = ''
+        if (fileFormat == 'pdf') {
+            html += '<iframe src="' + url + '" width="100%" height="500px" frameborder="0"></iframe>'
+        } else {
+            html += '<img src="' + url + '" alt=""  width="100%" height="100%">'
+        }
+        $('#fileLab').empty()
+        $('#fileLab').append(html)
+        $('#download').removeAttr('href')
+        $('#download').attr('href', url)
+        $('#fileModal').modal('show')
+    }
 </script>

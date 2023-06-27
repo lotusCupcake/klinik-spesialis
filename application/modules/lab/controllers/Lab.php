@@ -145,6 +145,8 @@ class Lab extends MX_Controller
 
         $report = $this->input->post('report');
 
+        $img_url = $this->input->post('img_url');
+
         $patient = $this->input->post('patient');
 
         $redirect = $this->input->post('redirect');
@@ -279,44 +281,102 @@ class Lab extends MX_Controller
                 $doctor_name = 0;
             }
 
-            $data = array();
+            $file_name = $_FILES['img_url']['name'];
+            $file_name_pieces = explode('_', $file_name);
+            $new_file_name = '';
+            $count = 1;
+            foreach ($file_name_pieces as $piece) {
+                if ($count !== 1) {
+                    $piece = ucfirst($piece);
+                }
 
-            if (empty($id)) {
-                $data = array(
-                    // 'category_name' => $category_name,
-                    'report' => $report,
-                    'patient' => $patient,
-                    'date' => $date,
-                    'doctor' => $doctor,
-                    'user' => $user,
-                    'patient_name' => $patient_name,
-                    'patient_phone' => $patient_phone,
-                    'patient_address' => $patient_address,
-                    'doctor_name' => $doctor_name,
-                    'date_string' => $date_string
-                );
+                $new_file_name .= $piece;
+                $count++;
+            }
+            $config = array(
+                'file_name' => $new_file_name,
+                'upload_path' => "./uploads/",
+                'allowed_types' => "jpg|png|jpeg|pdf",
+                'overwrite' => False,
+                'max_size' => "48000000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+                'max_height' => "10000",
+                'max_width' => "10000"
+            );
 
+            $this->load->library('Upload', $config);
+            $this->upload->initialize($config);
 
-                $this->lab_model->insertLab($data);
-                $inserted_id = $this->db->insert_id();
-
-                $this->session->set_flashdata('feedback', lang('added'));
-                redirect($redirect);
+            if ($this->upload->do_upload('img_url')) {
+                $data = array();
+                $path = $this->upload->data();
+                $img_url = "uploads/" . $path['file_name'];
+                if (empty($id)) {
+                    $data = array(
+                        'url' => $img_url,
+                        'report' => $report,
+                        'patient' => $patient,
+                        'date' => $date,
+                        'doctor' => $doctor,
+                        'user' => $user,
+                        'patient_name' => $patient_name,
+                        'patient_phone' => $patient_phone,
+                        'patient_address' => $patient_address,
+                        'doctor_name' => $doctor_name,
+                        'date_string' => $date_string
+                    );
+                    $this->lab_model->insertLab($data);
+                    $inserted_id = $this->db->insert_id();
+                    $this->session->set_flashdata('feedback', lang('added'));
+                    redirect($redirect);
+                } else {
+                    $data = array(
+                        'url' => $img_url,
+                        'report' => $report,
+                        'patient' => $patient,
+                        'doctor' => $doctor,
+                        'user' => $user,
+                        'patient_name' => $patient_details->name,
+                        'patient_phone' => $patient_details->phone,
+                        'patient_address' => $patient_details->address,
+                        'doctor_name' => $doctor_details->name,
+                    );
+                    $this->lab_model->updateLab($id, $data);
+                    $this->session->set_flashdata('feedback', lang('updated'));
+                    redirect($redirect);
+                }
             } else {
-                $data = array(
-                    //   'category_name' => $category_name,
-                    'report' => $report,
-                    'patient' => $patient,
-                    'doctor' => $doctor,
-                    'user' => $user,
-                    'patient_name' => $patient_details->name,
-                    'patient_phone' => $patient_details->phone,
-                    'patient_address' => $patient_details->address,
-                    'doctor_name' => $doctor_details->name,
-                );
-                $this->lab_model->updateLab($id, $data);
-                $this->session->set_flashdata('feedback', lang('updated'));
-                redirect($redirect);
+                if (empty($id)) {
+                    $data = array(
+                        'report' => $report,
+                        'patient' => $patient,
+                        'date' => $date,
+                        'doctor' => $doctor,
+                        'user' => $user,
+                        'patient_name' => $patient_name,
+                        'patient_phone' => $patient_phone,
+                        'patient_address' => $patient_address,
+                        'doctor_name' => $doctor_name,
+                        'date_string' => $date_string
+                    );
+                    $this->lab_model->insertLab($data);
+                    $inserted_id = $this->db->insert_id();
+                    $this->session->set_flashdata('feedback', lang('added'));
+                    redirect($redirect);
+                } else {
+                    $data = array(
+                        'report' => $report,
+                        'patient' => $patient,
+                        'doctor' => $doctor,
+                        'user' => $user,
+                        'patient_name' => $patient_details->name,
+                        'patient_phone' => $patient_details->phone,
+                        'patient_address' => $patient_details->address,
+                        'doctor_name' => $doctor_details->name,
+                    );
+                    $this->lab_model->updateLab($id, $data);
+                    $this->session->set_flashdata('feedback', lang('updated'));
+                    redirect($redirect);
+                }
             }
         }
     }
@@ -660,6 +720,12 @@ class Lab extends MX_Controller
                 $options3 = '';
             }
 
+            if (!empty($lab->url)) {
+                $options4 = '<button class="btn btn-icon icon-left btn-info" onclick="fileLab(' . '`' . $lab->url . '`' . ')"><i class="fas fa-folder-open"></i></button>';
+            } else {
+                $options4 = '';
+            }
+
             $doctor_info = $this->doctor_model->getDoctorById($lab->doctor);
             if (!empty($doctor_info)) {
                 $doctor = $doctor_info->name;
@@ -682,7 +748,7 @@ class Lab extends MX_Controller
                 $lab->id,
                 $patient_details,
                 $date,
-                $options1 . ' ' . $options2 . ' ' . $options3,
+                $options1 . ' ' . $options4 . ' ' . $options2 . ' ' . $options3,
                 // $options2 . ' ' . $options3
             );
         }
