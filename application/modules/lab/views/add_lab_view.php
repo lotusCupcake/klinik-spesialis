@@ -32,27 +32,28 @@
                     <h2 class="section-title">Form Laporan Lab</h2>
                     <div class="card adv-table">
                         <div class="card-body clearfix">
-                            <style> 
-                                .lab{
+                            <style>
+                                .lab {
                                     padding-top: 10px;
                                     padding-bottom: 20px;
                                     border: none;
 
                                 }
-                                .pad_bot{
-                                    padding-bottom: 5px;
-                                }  
 
-                                form{
+                                .pad_bot {
+                                    padding-bottom: 5px;
+                                }
+
+                                form {
                                     padding: 20px 0px;
                                 }
 
-                                .modal-body form{
+                                .modal-body form {
                                     background: #fff;
                                     padding: 21px;
                                 }
 
-                                .remove{
+                                .remove {
                                     float: right;
                                     margin-top: -45px;
                                     margin-right: 42%;
@@ -61,11 +62,10 @@
                                     height: 29px;
                                 }
 
-                                .remove1 span{
+                                .remove1 span {
                                     width: 33%;
                                     height: 50px !important;
                                     padding: 10px
-
                                 }
 
                                 .qfloww {
@@ -82,7 +82,7 @@
                                 }
 
 
-                                .span2{
+                                .span2 {
                                     padding: 6px 12px;
                                     font-size: 14px;
                                     font-weight: 400;
@@ -92,7 +92,6 @@
                                     background-color: #eee;
                                     border: 1px solid #ccc
                                 }
-
                             </style>
                             <form role="form" id="editLabForm" class="clearfix" action="lab/addLab" method="post" enctype="multipart/form-data">
                                 <div class="form-row">
@@ -253,36 +252,35 @@
                     </div>
                 </div>
                 <style>
-
-                    th{
+                    th {
                         text-align: center;
                     }
 
-                    td{
+                    td {
                         text-align: center;
                     }
 
-                    tr.total{
+                    tr.total {
                         color: green;
                     }
 
 
 
-                    .control-label{
+                    .control-label {
                         width: 100px;
                     }
 
 
 
-                    h1{
+                    h1 {
                         margin-top: 5px;
                     }
 
 
-                    .print_width{
+                    .print_width {
                         width: 50%;
                         float: left;
-                    } 
+                    }
 
                     ul.amounts li {
                         padding: 0px !important;
@@ -295,7 +293,7 @@
 
 
 
-                    .page{
+                    .page {
                         border: 0px solid #5c5c47;
                         background: #fff !important;
                         height: 100%;
@@ -306,35 +304,35 @@
 
 
 
-                    .table.main{
+                    .table.main {
                         margin-top: -50px;
                     }
 
 
 
-                    .control-label{
+                    .control-label {
                         margin-bottom: 0px;
                     }
 
-                    tr.total td{
+                    tr.total td {
                         color: green !important;
                     }
 
-                    .theadd th{
+                    .theadd th {
                         background: #edfafa !important;
                     }
 
-                    td{
+                    td {
                         font-size: 12px;
                         padding: 5px;
                         font-weight: bold;
                     }
 
-                    .details{
+                    .details {
                         font-weight: bold;
                     }
 
-                    hr{
+                    hr {
                         border-bottom: 2px solid green !important;
                     }
 
@@ -348,14 +346,14 @@
 
 
 
-                    .btn{
+                    .btn {
                         margin: 10px 10px 10px 0px;
                     }
 
 
                     @media print {
 
-                        h1{
+                        h1 {
                             margin-top: 5px;
                         }
 
@@ -363,13 +361,17 @@
                             margin: 0;
                             padding-top: 0px;
                         }
-                        .card1, .section-header, .section-title, .card-footer {
+
+                        .card1,
+                        .section-header,
+                        .section-title,
+                        .card-footer {
                             display: none;
                         }
 
-                        .print_width{
+                        .print_width {
                             width: 100%;
-                        } 
+                        }
 
                         ul.amounts li {
                             padding: 0px !important;
@@ -379,59 +381,61 @@
                             margin-bottom: 10px;
                         }
 
-                        .wrapper{
+                        .wrapper {
                             margin-top: 0px;
                         }
 
-                        .wrapper{
+                        .wrapper {
                             padding: 0px 0px !important;
                             background: #fff !important;
 
                         }
-                        .wrapper{
+
+                        .wrapper {
                             border: 2px solid #777;
                             min-height: 910px;
                         }
 
-                        .card{
+                        .card {
                             border: 0px solid #5c5c47;
                             background: #fff !important;
                             padding: 0px 0px;
                             margin: 5px 5px 5px 5px;
                             border-radius: 0px !important;
-                            
+
                         }
 
 
 
-                        .table.main{
+                        .table.main {
                             margin-top: -50px;
                         }
 
 
 
-                        .control-label{
+                        .control-label {
                             margin-bottom: 0px;
                         }
 
-                        tr.total td{
+                        tr.total td {
                             color: green !important;
                         }
 
-                        .theadd th{
+                        .theadd th {
                             background: #edfafa !important;
                         }
 
-                        td{
+                        td {
                             font-size: 12px;
                             padding: 5px;
                             font-weight: bold;
                         }
-                        .details{
+
+                        .details {
                             font-weight: bold;
                         }
 
-                        hr{
+                        hr {
                             border-bottom: 2px solid green !important;
                         }
 
@@ -446,12 +450,12 @@
                 </style>
                 <div class="col">
                     <h2 class="section-title">
-                    <?php
-                    if (!empty($lab->id))
-                        echo lang('report');
-                    else
-                        echo lang('report');
-                    ?>
+                        <?php
+                        if (!empty($lab->id))
+                            echo lang('report');
+                        else
+                            echo lang('report');
+                        ?>
                     </h2>
                     <div class="card" style="margin: 2% 3%;">
                         <div class="card-body invoice-list" style="font-size: 10px;">
@@ -465,9 +469,9 @@
                                 <h4>
                                     Tel: <?php echo $settings->phone ?>
                                 </h4>
-                                <img alt="" src="<?php echo $this->settings_model->getSettings()->logo; ?>" width="200" height="170">
+                                <img alt="" src="<?php echo $this->settings_model->getSettings()->logo; ?>" width="200" height="185">
                                 <h4 style="font-weight: bold; margin-top: 20px; text-transform: uppercase;">
-                                     <?php echo lang('lab_report') ?>
+                                    <?php echo lang('lab_report') ?>
                                     <hr style="width: 200px; border-bottom: 1px solid #000; margin-top: 5px; margin-bottom: 5px;">
                                 </h4>
                             </div>
@@ -481,7 +485,7 @@
                                             }
                                             ?>
                                             <label class="control-label"><?php echo lang('patient'); ?> <?php echo lang('name'); ?> </label>
-                                            <span style="text-transform: uppercase;"> : 
+                                            <span style="text-transform: uppercase;"> :
                                                 <?php
                                                 if (!empty($patient_info)) {
                                                     echo $patient_info->name . ' <br>';
@@ -492,8 +496,8 @@
                                     </div>
                                     <div class="col-md-12 details">
                                         <p>
-                                            <label class="control-label"><?php echo lang('patient_id'); ?>  </label>
-                                            <span style="text-transform: uppercase;"> : 
+                                            <label class="control-label"><?php echo lang('patient_id'); ?> </label>
+                                            <span style="text-transform: uppercase;"> :
                                                 <?php
                                                 if (!empty($patient_info)) {
                                                     echo $patient_info->id . ' <br>';
@@ -505,7 +509,7 @@
                                     <div class="col-md-12 details">
                                         <p>
                                             <label class="control-label"> <?php echo lang('address'); ?> </label>
-                                            <span style="text-transform: uppercase;"> : 
+                                            <span style="text-transform: uppercase;"> :
                                                 <?php
                                                 if (!empty($patient_info)) {
                                                     echo $patient_info->address . ' <br>';
@@ -516,8 +520,8 @@
                                     </div>
                                     <div class="col-md-12 details">
                                         <p>
-                                            <label class="control-label"><?php echo lang('phone'); ?>  </label>
-                                            <span style="text-transform: uppercase;"> : 
+                                            <label class="control-label"><?php echo lang('phone'); ?> </label>
+                                            <span style="text-transform: uppercase;"> :
                                                 <?php
                                                 if (!empty($patient_info)) {
                                                     echo $patient_info->phone . ' <br>';
@@ -527,12 +531,12 @@
                                         </p>
                                     </div>
                                 </div>
-    
+
                                 <div class="col-md-6">
                                     <div class="col-md-12 details">
                                         <p>
-                                            <label class="control-label"> <?php echo lang('lab'); ?> <?php echo lang('report'); ?> <?php echo lang('id'); ?>  </label>
-                                            <span style="text-transform: uppercase;"> : 
+                                            <label class="control-label"> <?php echo lang('lab'); ?> <?php echo lang('report'); ?> <?php echo lang('id'); ?> </label>
+                                            <span style="text-transform: uppercase;"> :
                                                 <?php
                                                 if (!empty($lab->id)) {
                                                     echo $lab->id;
@@ -541,12 +545,12 @@
                                             </span>
                                         </p>
                                     </div>
-    
-    
+
+
                                     <div class="col-md-12 details">
                                         <p>
-                                            <label class="control-label"><?php echo lang('date'); ?>  </label>
-                                            <span style="text-transform: uppercase;"> : 
+                                            <label class="control-label"><?php echo lang('date'); ?> </label>
+                                            <span style="text-transform: uppercase;"> :
                                                 <?php
                                                 if (!empty($lab->date)) {
                                                     echo date('d-m-Y', $lab->date) . ' <br>';
@@ -555,11 +559,11 @@
                                             </span>
                                         </p>
                                     </div>
-    
+
                                     <div class="col-md-12 details">
                                         <p>
-                                            <label class="control-label"><?php echo lang('doctor'); ?>  </label>
-                                            <span style="text-transform: uppercase;"> : 
+                                            <label class="control-label"><?php echo lang('doctor'); ?> </label>
+                                            <span style="text-transform: uppercase;"> :
                                                 <?php
                                                 if (!empty($lab->doctor)) {
                                                     echo $this->doctor_model->getDoctorById($lab->doctor)->name . ' <br>';
@@ -589,7 +593,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
