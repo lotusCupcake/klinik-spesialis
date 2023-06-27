@@ -834,7 +834,7 @@ class Lab extends MX_Controller
             if ($patient_id == $lab->patient) {
                 $date = date('d-m-y', $lab->date);
 
-                $options2 = '<a class="btn btn-xs invoicebutton" title="' . lang('lab') . '" style="color: #fff;" href="lab/invoice?id=' . $lab->id . '"><i class="fa fa-file"></i> ' . lang('') . '</a>';
+                $options2 = '<a href="lab/invoice?id=' . $lab->id . '"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-file-invoice"></i></button></a>';
 
                 $doctor_info = $this->doctor_model->getDoctorById($lab->doctor);
                 if (!empty($doctor_info)) {

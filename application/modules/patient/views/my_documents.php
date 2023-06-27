@@ -3,7 +3,7 @@
 <div class="main-content">
     <div class="section">
         <div class="section-header">
-            <h1><?php echo lang('patient'); ?>  <?php echo lang('documents'); ?></h1>
+            <h1><?php echo lang('patient'); ?> <?php echo lang('documents'); ?></h1>
         </div>
         <?php
         $message = $this->session->flashdata('feedback');
@@ -22,7 +22,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
+                    <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -63,12 +63,33 @@
                                         </td>
                                         <td>
                                             <?php
-                                            echo   '<a class="example-image-link" href="'. $file->url .'" data-lightbox="example-1" data-title="'. $file->title .'">'. '<img class="example-image" src="' . $file->url . '" width="100px" height="100px"alt="image-1">'.'</a>'  ;
+                                            $extension_url = explode(".", $file->url);
+
+                                            $length = count($extension_url);
+                                            $extension = $extension_url[$length - 1];
+                                            if (strtolower($extension) == 'pdf') {
+                                                $files = '<a class="example-image-link" href="' . $file->url . '" data-title="' . $file->title . '" target="_blank">' . '<img class="example-image" src="uploads/image/pdf.png" width="100px" height="100px"alt="image-1">' . '</a>';
+                                            } elseif (
+                                                strtolower($extension) == 'docx'
+                                            ) {
+                                                $files = '<a class="example-image-link" href="' . $file->url . '" data-title="' . $file->title . '">' . '<img class="example-image" src="uploads/image/docx.png" width="100px" height="100px"alt="image-1">' . '</a>';
+                                            } elseif (
+                                                strtolower($extension) == 'doc'
+                                            ) {
+                                                $files = '<a class="example-image-link" href="' . $file->url . '" data-title="' . $file->title . '">' . '<img class="example-image" src="uploads/image/doc.png" width="100px" height="100px"alt="image-1">' . '</a>';
+                                            } elseif (
+                                                strtolower($extension) == 'odt'
+                                            ) {
+                                                $files = '<a class="example-image-link" href="' . $file->url . '" data-title="' . $file->title . '">' . '<img class="example-image" src="uploads/image/odt.png" width="100px" height="100px"alt="image-1">' . '</a>';
+                                            } else {
+                                                $files = '<a class="example-image-link" href="' . $file->url . '" data-lightbox="example-1" data-title="' . $file->title . '">' . '<img class="example-image" src="' . $file->url . '" width="100px" height="100px"alt="image-1">' . '</a>';
+                                            }
+                                            echo $files;
                                             ?>
                                         </td>
                                         <td>
                                             <?php
-                                            echo '<a class="btn btn-info btn-xs" href="' . $file->url . '" download> ' . lang('download') . ' </a>';
+                                            echo '<a class="btn btn-info btn-xs" href="' . $file->url . '" download><i class="fas fa-download"></i> ' . lang('download') . ' </a>';
                                             ?>
                                         </td>
 
@@ -148,43 +169,69 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $(".flashmessage").delay(3000).fadeOut(100);
     });
 </script>
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         var table = $('#editable-sample').DataTable({
             responsive: true,
             dom: "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-      
-             buttons: [
-                {extend: 'copyHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'excelHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'csvHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'pdfHtml5', exportOptions: {columns: [0, 1, 2, 3], }},
-                {extend: 'print', exportOptions: {columns: [0, 1, 2, 3], }},
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3],
+                    }
+                },
             ],
             aLengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
             iDisplayLength: -1,
-            "order": [[0, "desc"]],
+            "order": [
+                [0, "desc"]
+            ],
 
             "language": {
                 "lengthMenu": "_MENU_",
                 search: "_INPUT_",
-               "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
+                "url": "common/assets/DataTables/languages/<?php echo $this->language; ?>.json"
             },
 
         });
 
         table.buttons().container()
-                .appendTo('.custom_buttons');
+            .appendTo('.custom_buttons');
     });
 </script>
