@@ -565,7 +565,7 @@
                             <li><a class="nav-link" href="patient/myPrescription"><i class="fas fa-medkit"></i><span><?php echo lang('prescription'); ?></span></a></li>
                             <li><a class="nav-link" href="patient/myDocuments"><i class="fas fa-file-upload"></i><span><?php echo lang('documents'); ?></span></a></li>
                             <li><a class="nav-link" href="patient/myPaymentHistory"><i class="fas fa-money-bill-alt"></i><span><?php echo lang('payment'); ?></span></a></li>
-                            <li><a class="nav-link" href="report/myreports"><i class="fas fa-file-medical-alt"></i><span><?php echo lang('other'); ?> <?php echo lang('reports'); ?></span></a></li>
+                            <li><a class="nav-link" href="report/myreports"><i class="fas fa-file-medical-alt"></i><span><?php echo lang('reports'); ?> <?php echo lang('other'); ?></span></a></li>
                         <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('im'))) { ?>
                             <li><a class="nav-link" href="patient/addNewView"><i class="fas fa-user"></i><span><?php echo lang('add_patient'); ?></span></a></li>
