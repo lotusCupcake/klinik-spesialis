@@ -176,6 +176,27 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <th><?php echo lang('total'); ?> <?php echo lang('discount'); ?> Spesial</th>
+                                            <td></td>
+                                            <td>
+                                                <?php echo $settings->currency; ?>
+                                                <?php
+                                                if (!empty($payments)) {
+                                                    foreach ($payments as $payment) {
+                                                        $discount[] = $payment->spec_discount;
+                                                    }
+                                                    if ($paid_number > 0) {
+                                                        echo array_sum($discount);
+                                                    } else {
+                                                        echo '0';
+                                                    }
+                                                } else {
+                                                    echo '0';
+                                                }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <th><?php echo lang('gross_income'); ?></th>
                                             <td></td>
                                             <td>
