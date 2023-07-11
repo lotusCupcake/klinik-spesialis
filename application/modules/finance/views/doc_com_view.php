@@ -25,6 +25,11 @@
                                                                                                     }
                                                                                                     ?>">
                             </div>
+                            <input type="hidden" class="form-control dpd2" name="doctor" value="<?php
+                                                                                                if (!empty($doctor)) {
+                                                                                                    echo $doctor;
+                                                                                                }
+                                                                                                ?>">
                             <div class="form-group col-md-2" style="margin-top:32px">
                                 <button type="submit" name="submit" class="btn btn-icon icon-left btn-primary range_submit"><?php echo lang('submit'); ?></button>
                             </div>
