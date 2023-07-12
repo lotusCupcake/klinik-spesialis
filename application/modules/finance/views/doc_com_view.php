@@ -1,11 +1,11 @@
 <!--main content start-->
 <div class="main-content">
     <div class="section">
-        <div class="section-header">
+        <div class="section-header no-print">
             <h1><?php echo $this->doctor_model->getDoctorById($doctor)->name; ?></h1>
         </div>
         <div class="section-body">
-            <div class="row">
+            <div class="row no-print">
                 <div class="col-md-12">
                     <form role="form" class="f_report" action="finance/docComDetails" method="post" enctype="multipart/form-data">
                         <div class="form-row">
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8 print">
                     <h2 class="section-title"><?php echo lang('payments'); ?></h2>
                     <div class="card">
                         <div class="card-body">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 no-print">
                     <h2 class="section-title"><?php echo lang('report'); ?></h2>
                     <div class="card">
                         <div class="card-body">
@@ -127,3 +127,17 @@
 </div>
 <!--main content end-->
 <!--footer start-->
+
+<style>
+    @media print {
+        .print {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+        }
+    }
+</style>
