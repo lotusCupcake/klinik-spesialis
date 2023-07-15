@@ -2,7 +2,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1><?php echo lang('payment_procedures'); ?></h1>
+            <h1><?= ($this->ion_auth->in_group(array('Doctor'))) ? lang('procedures') . ' ' . lang('job') : lang('payment_procedures'); ?></h1>
         </div>
         <?php
         $message = $this->session->flashdata('feedback');
@@ -21,7 +21,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="finance/addPaymentCategoryView"><button class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i> <?php echo lang('create_payment_procedure'); ?></button></a>
+                    <a href="finance/addPaymentCategoryView"><button class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i><?= ($this->ion_auth->in_group(array('Doctor'))) ? lang('create') . ' ' . lang('procedures') . ' ' . lang('job') : lang('create_payment_procedure'); ?></button></a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -31,8 +31,10 @@
                                 <tr>
                                     <th><?php echo lang('category'); ?> <?php echo lang('name'); ?></th>
                                     <th><?php echo lang('description'); ?></th>
-                                    <th><?php echo lang('category'); ?> <?php echo lang('price'); ?> ( <?php echo $settings->currency; ?> )</th>
-                                    <th><?php echo lang('doctors_commission'); ?> ( <?php echo $settings->currency; ?> )</th>
+                                    <?php if (!$this->ion_auth->in_group(array('Doctor'))) { ?>
+                                        <th><?php echo lang('category'); ?> <?php echo lang('price'); ?> ( <?php echo $settings->currency; ?> )</th>
+                                        <th><?php echo lang('doctors_commission'); ?> ( <?php echo $settings->currency; ?> )</th>
+                                    <?php } ?>
                                     <th><?php echo lang('type'); ?></th>
                                     <?php if ($this->ion_auth->in_group(array('admin', 'Accountant'))) { ?>
                                         <th class="no-print"><?php echo lang('options'); ?></th>
@@ -44,8 +46,10 @@
                                     <tr class="">
                                         <td><?php echo $category->category; ?></td>
                                         <td> <?php echo $category->description; ?></td>
-                                        <td> <?php echo $category->c_price; ?></td>
-                                        <td> <?php echo $category->d_commission; ?></td>
+                                        <?php if (!$this->ion_auth->in_group(array('Doctor'))) { ?>
+                                            <td> <?php echo $category->c_price; ?></td>
+                                            <td> <?php echo $category->d_commission; ?></td>
+                                        <?php } ?>
                                         <td> <?php
                                                 if ($category->type == 'diagnostic') {
                                                     echo lang('diagnostic_test');

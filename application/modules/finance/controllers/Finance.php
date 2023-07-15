@@ -421,7 +421,11 @@ class Finance extends MX_Controller
                         } else {
                             $this->session->set_flashdata('feedback', lang('transaction_failed'));
                         }
-                        redirect("finance/invoice?id=" . "$inserted_id");
+                        if ($this->ion_auth->in_group(array('Doctor'))) {
+                            redirect("finance/payment");
+                        } else {
+                            redirect("finance/invoice?id=" . "$inserted_id");
+                        }
                     } elseif ($gateway == 'Pay U Money') {
                         if ($amount_received > 0) {
 
@@ -542,10 +546,18 @@ class Finance extends MX_Controller
                                 $this->smsAndEmail($dataupdate);
                             }
                             $this->session->set_flashdata('feedback', lang('added'));
-                            redirect("finance/invoice?id=" . "$inserted_id");
+                            if ($this->ion_auth->in_group(array('Doctor'))) {
+                                redirect("finance/payment");
+                            } else {
+                                redirect("finance/invoice?id=" . "$inserted_id");
+                            }
                         } else {
                             $this->session->set_flashdata('feedback', lang('transaction_failed'));
-                            redirect("finance/invoice?id=" . "$inserted_id");
+                            if ($this->ion_auth->in_group(array('Doctor'))) {
+                                redirect("finance/payment");
+                            } else {
+                                redirect("finance/invoice?id=" . "$inserted_id");
+                            }
                         }
                     } elseif ($gateway == 'SSLCOMMERZ') {
 
@@ -565,7 +577,11 @@ class Finance extends MX_Controller
                         // $email=$patient_email;
                     } else {
                         $this->session->set_flashdata('feedback', lang('payment_failed_no_gateway_selected'));
-                        redirect("finance/invoice?id=" . "$inserted_id");
+                        if ($this->ion_auth->in_group(array('Doctor'))) {
+                            redirect("finance/payment");
+                        } else {
+                            redirect("finance/invoice?id=" . "$inserted_id");
+                        }
                     }
                 } else {
                     $data1 = array(
@@ -587,7 +603,11 @@ class Finance extends MX_Controller
                         $this->smsAndEmail($dataupdate);
                     }
                     $this->session->set_flashdata('feedback', lang('added'));
-                    redirect("finance/invoice?id=" . "$inserted_id");
+                    if ($this->ion_auth->in_group(array('Doctor'))) {
+                        redirect("finance/payment");
+                    } else {
+                        redirect("finance/invoice?id=" . "$inserted_id");
+                    }
                 }
             } else {
                 $deposit_edit_amount = $this->input->post('deposit_edit_amount');
@@ -647,7 +667,11 @@ class Finance extends MX_Controller
                 }
                 $this->finance_model->updatePayment($id, $data);
                 $this->session->set_flashdata('feedback', lang('updated'));
-                redirect("finance/invoice?id=" . "$id");
+                if ($this->ion_auth->in_group(array('Doctor'))) {
+                    redirect("finance/payment");
+                } else {
+                    redirect("finance/invoice?id=" . "$id");
+                }
             }
         }
     }
@@ -702,7 +726,7 @@ class Finance extends MX_Controller
 
     function editPayment()
     {
-        if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) {
+        if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Doctor'))) {
             $data = array();
             $data['discount_type'] = $this->finance_model->getDiscountType();
             $data['settings'] = $this->settings_model->getSettings();
@@ -1988,7 +2012,10 @@ class Finance extends MX_Controller
         $limit = $requestData['length'];
         $search = $this->input->post('search')['value'];
         $settings = $this->settings_model->getSettings();
-
+        if ($this->ion_auth->in_group(array('Doctor'))) {
+            $doctor_ion_id = $this->ion_auth->get_user_id();
+            $doctor = $this->db->get_where('doctor', array('ion_user_id' => $doctor_ion_id))->row()->name;
+        }
         $order = $this->input->post("order");
         $columns_valid = array(
             "0" => "id",
@@ -2001,15 +2028,31 @@ class Finance extends MX_Controller
 
         if ($limit == -1) {
             if (!empty($search)) {
-                $data['payments'] = $this->finance_model->getPaymentBysearch($search, $order, $dir);
+                if ($this->ion_auth->in_group(array('Doctor'))) {
+                    $data['payments'] = $this->finance_model->getPaymentBysearchByDoctor($doctor, $search, $order, $dir);
+                } else {
+                    $data['payments'] = $this->finance_model->getPaymentBysearch($search, $order, $dir);
+                }
             } else {
-                $data['payments'] = $this->finance_model->getPaymentWitoutSearch($order, $dir);
+                if ($this->ion_auth->in_group(array('Doctor'))) {
+                    $data['payments'] = $this->finance_model->getPaymentWithoutSearchByDoctor($doctor, $order, $dir);
+                } else {
+                    $data['payments'] = $this->finance_model->getPaymentWithoutSearch($order, $dir);
+                }
             }
         } else {
             if (!empty($search)) {
-                $data['payments'] = $this->finance_model->getPaymentByLimitBySearch($limit, $start, $search, $order, $dir);
+                if ($this->ion_auth->in_group(array('Doctor'))) {
+                    $data['payments'] = $this->finance_model->getPaymentByLimitBySearchBySearch($doctor, $limit, $start, $search, $order, $dir);
+                } else {
+                    $data['payments'] = $this->finance_model->getPaymentByLimitBySearch($limit, $start, $search, $order, $dir);
+                }
             } else {
-                $data['payments'] = $this->finance_model->getPaymentByLimit($limit, $start, $order, $dir);
+                if ($this->ion_auth->in_group(array('Doctor'))) {
+                    $data['payments'] = $this->finance_model->getPaymentByLimitByDoctor($doctor, $limit, $start, $order, $dir);
+                } else {
+                    $data['payments'] = $this->finance_model->getPaymentByLimit($limit, $start, $order, $dir);
+                }
             }
         }
         //  $data['payments'] = $this->finance_model->getPayment();
@@ -2022,13 +2065,13 @@ class Finance extends MX_Controller
                 $discount = 0;
             }
 
-            if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
+            if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor'))) {
                 $options1 = '<a href="finance/editPayment?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-light editbutton"><i class="fas fa-edit"></i>' . lang('edit') . '</button></a>';
             }
 
-            $options2 = '<a href="finance/invoice?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-primary invoicebutton"><i class="fas fa-file-invoice"></i>' . lang('invoice') . '</button></a>';
-            $options4 = '<a href="finance/printInvoice?id=' . $payment->id . '" target="_blank"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-print"></i>' . lang('print') . '</button></a>';
             if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
+                $options2 = '<a href="finance/invoice?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-primary invoicebutton"><i class="fas fa-file-invoice"></i>' . lang('invoice') . '</button></a>';
+                $options4 = '<a href="finance/printInvoice?id=' . $payment->id . '" target="_blank"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-print"></i>' . lang('print') . '</button></a>';
                 $options3 = '<a href="finance/delete?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-danger delete_button" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fas fa-trash"></i>' . lang('delete') . '</button></a>';
             }
 
@@ -2059,20 +2102,30 @@ class Finance extends MX_Controller
                 $patient_details = ' ';
             }
 
-            $info[] = array(
-                $payment->id,
-                $patient_details,
-                $doctor,
-                $date,
-                $settings->currency . '' . $payment->amount,
-                $settings->currency . '' . $discount,
-                $settings->currency . '' . $payment->gross_total,
-                $settings->currency . '' . $this->finance_model->getDepositAmountByPaymentId($payment->id),
-                $settings->currency . '' . ($payment->gross_total - $this->finance_model->getDepositAmountByPaymentId($payment->id)),
-                $payment->remarks,
-                $options1 . ' ' . $options2 . ' ' . $options4 . ' ' . $options3,
-                //  $options2
-            );
+            if ($this->ion_auth->in_group(array('Doctor'))) {
+                $info[] = array(
+                    $payment->id,
+                    $patient_details,
+                    $doctor,
+                    $date,
+                    $options1
+                );
+            } else {
+                $info[] = array(
+                    $payment->id,
+                    $patient_details,
+                    $doctor,
+                    $date,
+                    $settings->currency . '' . $payment->amount,
+                    $settings->currency . '' . $discount,
+                    $settings->currency . '' . $payment->gross_total,
+                    $settings->currency . '' . $this->finance_model->getDepositAmountByPaymentId($payment->id),
+                    $settings->currency . '' . ($payment->gross_total - $this->finance_model->getDepositAmountByPaymentId($payment->id)),
+                    $payment->remarks,
+                    $options1 . ' ' . $options2 . ' ' . $options4 . ' ' . $options3,
+                    //  $options2
+                );
+            }
         }
 
 

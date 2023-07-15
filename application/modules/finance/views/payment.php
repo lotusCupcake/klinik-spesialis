@@ -2,7 +2,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1><?php echo lang('payments'); ?></h1>
+            <h1><?= ($this->ion_auth->in_group('Doctor')) ? lang('job') : lang('payments'); ?></h1>
         </div>
         <?php
         $message = $this->session->flashdata('feedback');
@@ -21,7 +21,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="finance/addPaymentView"><button class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i> <?php echo lang('add_payment'); ?></button></a>
+                    <a href="finance/addPaymentView"><button class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i> <?= ($this->ion_auth->in_group('Doctor')) ? lang('add') . ' ' . lang('job') : lang('add_payment'); ?></button></a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -33,12 +33,14 @@
                                     <th><?php echo lang('patient'); ?></th>
                                     <th><?php echo lang('doctor'); ?></th>
                                     <th><?php echo lang('date'); ?></th>
-                                    <th><?php echo lang('sub_total'); ?></t>
-                                    <th><?php echo lang('discount'); ?></th>
-                                    <th><?php echo lang('grand_total'); ?></th>
-                                    <th><?php echo lang('paid'); ?> <?php echo lang('amount'); ?></th>
-                                    <th><?php echo lang('due'); ?></th>
-                                    <th><?php echo lang('remarks'); ?></th>
+                                    <?php if (!$this->ion_auth->in_group(array('Doctor'))) { ?>
+                                        <th><?php echo lang('sub_total'); ?></t>
+                                        <th><?php echo lang('discount'); ?></th>
+                                        <th><?php echo lang('grand_total'); ?></th>
+                                        <th><?php echo lang('paid'); ?> <?php echo lang('amount'); ?></th>
+                                        <th><?php echo lang('due'); ?></th>
+                                        <th><?php echo lang('remarks'); ?></th>
+                                    <?php } ?>
                                     <th class="option_th no-print"><?php echo lang('options'); ?></th>
                                 </tr>
                             </thead>
