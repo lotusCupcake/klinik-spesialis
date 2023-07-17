@@ -2057,6 +2057,7 @@ class Finance extends MX_Controller
         }
         //  $data['payments'] = $this->finance_model->getPayment();
 
+        $i = 0;
         foreach ($data['payments'] as $payment) {
             $date = date('d-m-y', $payment->date);
 
@@ -2126,6 +2127,7 @@ class Finance extends MX_Controller
                     //  $options2
                 );
             }
+            $i = $i + 1;
         }
 
 
@@ -2137,8 +2139,8 @@ class Finance extends MX_Controller
         if (!empty($data['payments'])) {
             $output = array(
                 "draw" => intval($requestData['draw']),
-                "recordsTotal" => $this->db->get('payment')->num_rows(),
-                "recordsFiltered" => $this->db->get('payment')->num_rows(),
+                "recordsTotal" => $i,
+                "recordsFiltered" => $i,
                 "data" => $info
             );
         } else {
