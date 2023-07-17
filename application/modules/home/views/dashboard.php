@@ -412,6 +412,15 @@
                                 </ul>
                             </li>
                         <?php } ?>
+                        <?php if ($this->ion_auth->in_group(array('Doctor'))) { ?>
+                            <li class="nav-item dropdown"><a href="javascript:;" class="nav-link has-dropdown"><i class="fas fa-stethoscope"></i><span><?php echo lang('activity'); ?> <?php echo lang('job'); ?></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link" href="finance/payment"><span><?php echo lang('job'); ?></span></a></li>
+                                    <li><a class="nav-link" href="finance/addPaymentView"><span><?php echo lang('add'); ?> <?php echo lang('job'); ?></span></a></li>
+                                    <li><a class="nav-link" href="finance/paymentCategory"><span><?php echo lang('procedures'); ?> <?php echo lang('job'); ?></span></a></li>
+                                </ul>
+                            </li>
+                        <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
                             <li><a class="nav-link" href="prescription/all"><i class="fas fa-prescription"></i><span><?php echo lang('prescription') ?></span></a></li>
                         <?php } ?>

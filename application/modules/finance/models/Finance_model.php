@@ -3,24 +3,29 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Finance_model extends CI_model {
+class Finance_model extends CI_model
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->database();
     }
 
-    function insertPayment($data) {
+    function insertPayment($data)
+    {
         $this->db->insert('payment', $data);
     }
 
-    function getPayment() {
+    function getPayment()
+    {
         $this->db->order_by('id', 'desc');
         $query = $this->db->get('payment');
         return $query->result();
     }
 
-    function getPaymentWithoutSearch($order, $dir) {
+    function getPaymentWithoutSearch($order, $dir)
+    {
         if ($order != null) {
             $this->db->order_by($order, $dir);
         } else {
@@ -30,7 +35,20 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getPaymentBySearch($search, $order, $dir) {
+    function getPaymentWithoutSearchByDoctor($doctor, $order, $dir)
+    {
+        if ($order != null) {
+            $this->db->order_by($order, $dir);
+        } else {
+            $this->db->order_by('id', 'desc');
+        }
+        $this->db->where('doctor_name', $doctor);
+        $query = $this->db->get('payment');
+        return $query->result();
+    }
+
+    function getPaymentBySearch($search, $order, $dir)
+    {
         if ($order != null) {
             $this->db->order_by($order, $dir);
         } else {
@@ -50,7 +68,30 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getPaymentByLimit($limit, $start, $order, $dir) {
+    function getPaymentBysearchByDoctor($doctor, $search, $order, $dir)
+    {
+        if ($order != null) {
+            $this->db->order_by($order, $dir);
+        } else {
+            $this->db->order_by('id', 'desc');
+        }
+        $this->db->where('doctor_name', $doctor);
+        $this->db->like('id', $search);
+        $this->db->or_like('amount', $search);
+        $this->db->or_like('gross_total', $search);
+        $this->db->or_like('patient_name', $search);
+        $this->db->or_like('patient_phone', $search);
+        $this->db->or_like('patient_address', $search);
+        $this->db->or_like('remarks', $search);
+        $this->db->or_like('doctor_name', $search);
+        $this->db->or_like('flat_discount', $search);
+        $this->db->or_like('date_string', $search);
+        $query = $this->db->get('payment');
+        return $query->result();
+    }
+
+    function getPaymentByLimit($limit, $start, $order, $dir)
+    {
         if ($order != null) {
             $this->db->order_by($order, $dir);
         } else {
@@ -61,13 +102,28 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getGatewayByName($name) {
+    function getPaymentByLimitByDoctor($doctor, $limit, $start, $order, $dir)
+    {
+        if ($order != null) {
+            $this->db->order_by($order, $dir);
+        } else {
+            $this->db->order_by('id', 'desc');
+        }
+        $this->db->where('doctor_name', $doctor);
+        $this->db->limit($limit, $start);
+        $query = $this->db->get('payment');
+        return $query->result();
+    }
+
+    function getGatewayByName($name)
+    {
         $this->db->where('name', $name);
         $query = $this->db->get('paymentGateway')->row();
         return $query;
     }
 
-    function getPaymentByLimitBySearch($limit, $start, $search, $order, $dir) {
+    function getPaymentByLimitBySearch($limit, $start, $search, $order, $dir)
+    {
 
         if ($order != null) {
             $this->db->order_by($order, $dir);
@@ -90,20 +146,47 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getPaymentById($id) {
+    function getPaymentByLimitBySearchBySearch($doctor, $limit, $start, $search, $order, $dir)
+    {
+
+        if ($order != null) {
+            $this->db->order_by($order, $dir);
+        } else {
+            $this->db->order_by('id', 'desc');
+        }
+        $this->db->where('doctor_name', $doctor);
+        $this->db->like('id', $search);
+        $this->db->or_like('amount', $search);
+        $this->db->or_like('gross_total', $search);
+        $this->db->or_like('patient_name', $search);
+        $this->db->or_like('patient_phone', $search);
+        $this->db->or_like('patient_address', $search);
+        $this->db->or_like('remarks', $search);
+        $this->db->or_like('doctor_name', $search);
+        $this->db->or_like('flat_discount', $search);
+        $this->db->or_like('date_string', $search);
+        $this->db->limit($limit, $start);
+        $query = $this->db->get('payment');
+        return $query->result();
+    }
+
+    function getPaymentById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('payment');
         return $query->row();
     }
 
-    function getPaymentByPatientId($id) {
+    function getPaymentByPatientId($id)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('patient', $id);
         $query = $this->db->get('payment');
         return $query->result();
     }
 
-    function getPaymentByPatientIdByDate($id, $date_from, $date_to) {
+    function getPaymentByPatientIdByDate($id, $date_from, $date_to)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('patient', $id);
         $this->db->where('date >=', $date_from);
@@ -112,14 +195,16 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getPaymentByUserId($id) {
+    function getPaymentByUserId($id)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('user', $id);
         $query = $this->db->get('payment');
         return $query->result();
     }
 
-    function thisMonthPayment() {
+    function thisMonthPayment()
+    {
         $query = $this->db->get('payment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -134,7 +219,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisMonthExpense() {
+    function thisMonthExpense()
+    {
         $query = $this->db->get('expense')->result();
         $total = array();
         foreach ($query as $q) {
@@ -149,7 +235,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisMonthAppointment() {
+    function thisMonthAppointment()
+    {
         $query = $this->db->get('appointment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -164,7 +251,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisDayPayment() {
+    function thisDayPayment()
+    {
         $query = $this->db->get('payment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -179,7 +267,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisDayExpense() {
+    function thisDayExpense()
+    {
         $query = $this->db->get('expense')->result();
         $total = array();
         foreach ($query as $q) {
@@ -194,7 +283,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisDayAppointment() {
+    function thisDayAppointment()
+    {
         $query = $this->db->get('appointment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -209,7 +299,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisYearPayment() {
+    function thisYearPayment()
+    {
         $query = $this->db->get('payment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -224,7 +315,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisYearExpense() {
+    function thisYearExpense()
+    {
         $query = $this->db->get('expense')->result();
         $total = array();
         foreach ($query as $q) {
@@ -239,7 +331,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisYearAppointment() {
+    function thisYearAppointment()
+    {
         $query = $this->db->get('appointment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -254,7 +347,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisMonthAppointmentTreated() {
+    function thisMonthAppointmentTreated()
+    {
         $query = $this->db->get('appointment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -271,7 +365,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function thisMonthAppointmentCancelled() {
+    function thisMonthAppointmentCancelled()
+    {
         $query = $this->db->get('appointment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -288,7 +383,8 @@ class Finance_model extends CI_model {
         }
     }
 
-    function getPaymentPerMonthThisYear() {
+    function getPaymentPerMonthThisYear()
+    {
         $query = $this->db->get('payment')->result();
         $total = array();
         foreach ($query as $q) {
@@ -397,7 +493,8 @@ class Finance_model extends CI_model {
         return $total;
     }
 
-    function getExpensePerMonthThisYear() {
+    function getExpensePerMonthThisYear()
+    {
         $query = $this->db->get('expense')->result();
         $total = array();
         foreach ($query as $q) {
@@ -506,48 +603,56 @@ class Finance_model extends CI_model {
         return $total;
     }
 
-    function getOtPaymentByPatientId($id) {
+    function getOtPaymentByPatientId($id)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('patient', $id);
         $query = $this->db->get('ot_payment');
         return $query->result();
     }
 
-    function getOtPaymentByUserId($id) {
+    function getOtPaymentByUserId($id)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('user', $id);
         $query = $this->db->get('ot_payment');
         return $query->result();
     }
 
-    function insertDeposit($data) {
+    function insertDeposit($data)
+    {
         $this->db->insert('patient_deposit', $data);
     }
 
-    function getDeposit() {
+    function getDeposit()
+    {
         $query = $this->db->get('patient_deposit');
         return $query->result();
     }
 
-    function updateDeposit($id, $data) {
+    function updateDeposit($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('patient_deposit', $data);
     }
 
-    function getDepositById($id) {
+    function getDepositById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('patient_deposit');
         return $query->row();
     }
 
-    function getDepositByPatientId($id) {
+    function getDepositByPatientId($id)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('patient', $id);
         $query = $this->db->get('patient_deposit');
         return $query->result();
     }
 
-    function getDepositByPatientIdByDate($id, $date_from, $date_to) {
+    function getDepositByPatientIdByDate($id, $date_from, $date_to)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('patient', $id);
         $this->db->where('date >=', $date_from);
@@ -556,115 +661,136 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getDepositByUserId($id) {
+    function getDepositByUserId($id)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->where('user', $id);
         $query = $this->db->get('patient_deposit');
         return $query->result();
     }
 
-    function deleteDeposit($id) {
+    function deleteDeposit($id)
+    {
         $this->db->where('id', $id);
         $this->db->delete('patient_deposit');
     }
 
-    function deleteDepositByInvoiceId($id) {
+    function deleteDepositByInvoiceId($id)
+    {
         $this->db->where('payment_id', $id);
         $this->db->delete('patient_deposit');
     }
 
-    function getPaymentByPatientIdByStatus($id) {
+    function getPaymentByPatientIdByStatus($id)
+    {
         $this->db->where('patient', $id);
         $this->db->where('status', 'unpaid');
         $query = $this->db->get('payment');
         return $query->result();
     }
 
-    function getOtPaymentByPatientIdByStatus($id) {
+    function getOtPaymentByPatientIdByStatus($id)
+    {
         $this->db->where('patient', $id);
         $this->db->where('status', 'unpaid');
         $query = $this->db->get('ot_payment');
         return $query->result();
     }
 
-    function updatePayment($id, $data) {
+    function updatePayment($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('payment', $data);
     }
 
-    function insertOtPayment($data) {
+    function insertOtPayment($data)
+    {
         $this->db->insert('ot_payment', $data);
     }
 
-    function getOtPayment() {
+    function getOtPayment()
+    {
         $this->db->order_by('id', 'desc');
         $query = $this->db->get('ot_payment');
         return $query->result();
     }
 
-    function getOtPaymentById($id) {
+    function getOtPaymentById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('ot_payment');
         return $query->row();
     }
 
-    function updateOtPayment($id, $data) {
+    function updateOtPayment($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('ot_payment', $data);
     }
 
-    function deleteOtPayment($id) {
+    function deleteOtPayment($id)
+    {
         $this->db->where('id', $id);
         $this->db->delete('ot_payment');
     }
 
-    function insertPaymentCategory($data) {
+    function insertPaymentCategory($data)
+    {
 
         $this->db->insert('payment_category', $data);
     }
 
-    function getPaymentCategory() {
+    function getPaymentCategory()
+    {
         $query = $this->db->get('payment_category');
         return $query->result();
     }
 
-    function getPaymentCategoryById($id) {
+    function getPaymentCategoryById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('payment_category');
         return $query->row();
     }
 
-    function getDoctorCommissionByCategory($id) {
+    function getDoctorCommissionByCategory($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('payment_category');
         return $query->row();
     }
 
-    function updatePaymentCategory($id, $data) {
+    function updatePaymentCategory($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('payment_category', $data);
     }
 
-    function deletePayment($id) {
+    function deletePayment($id)
+    {
         $this->db->where('id', $id);
         $this->db->delete('payment');
     }
 
-    function deletePaymentCategory($id) {
+    function deletePaymentCategory($id)
+    {
         $this->db->where('id', $id);
         $this->db->delete('payment_category');
     }
 
-    function insertExpense($data) {
+    function insertExpense($data)
+    {
         $this->db->insert('expense', $data);
     }
 
-    function getExpense() {
+    function getExpense()
+    {
         $query = $this->db->get('expense');
         return $query->result();
     }
 
-    function getExpenseWithoutSearch() {
+    function getExpenseWithoutSearch($order, $dir)
+    {
         if ($order != null) {
             $this->db->order_by($order, $dir);
         } else {
@@ -674,7 +800,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getExpenseBySearch($search, $order, $dir) {
+    function getExpenseBySearch($search, $order, $dir)
+    {
         if ($order != null) {
             $this->db->order_by($order, $dir);
         } else {
@@ -688,7 +815,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getExpenseByLimit($limit, $start, $order, $dir) {
+    function getExpenseByLimit($limit, $start, $order, $dir)
+    {
         if ($order != null) {
             $this->db->order_by($order, $dir);
         } else {
@@ -699,7 +827,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getExpenseByLimitBySearch($limit, $start, $search, $order, $dir) {
+    function getExpenseByLimitBySearch($limit, $start, $search, $order, $dir)
+    {
         if ($order != null) {
             $this->db->order_by($order, $dir);
         } else {
@@ -714,53 +843,63 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getExpenseById($id) {
+    function getExpenseById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('expense');
         return $query->row();
     }
 
-    function updateExpense($id, $data) {
+    function updateExpense($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('expense', $data);
     }
 
-    function insertExpenseCategory($data) {
+    function insertExpenseCategory($data)
+    {
         $this->db->insert('expense_category', $data);
     }
 
-    function getExpenseCategory() {
+    function getExpenseCategory()
+    {
         $query = $this->db->get('expense_category');
         return $query->result();
     }
 
-    function getExpenseCategoryById($id) {
+    function getExpenseCategoryById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('expense_category');
         return $query->row();
     }
 
-    function updateExpenseCategory($id, $data) {
+    function updateExpenseCategory($id, $data)
+    {
         $this->db->where('id', $id);
         $this->db->update('expense_category', $data);
     }
 
-    function deleteExpense($id) {
+    function deleteExpense($id)
+    {
         $this->db->where('id', $id);
         $this->db->delete('expense');
     }
 
-    function deleteExpenseCategory($id) {
+    function deleteExpenseCategory($id)
+    {
         $this->db->where('id', $id);
         $this->db->delete('expense_category');
     }
 
-    function getDiscountType() {
+    function getDiscountType()
+    {
         $query = $this->db->get('settings');
         return $query->row()->discount;
     }
 
-    function getPaymentByDoctor($doctor) {
+    function getPaymentByDoctor($doctor)
+    {
         $this->db->select('*');
         $this->db->from('payment');
         $this->db->where('doctor', $doctor);
@@ -768,7 +907,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getDepositAmountByPaymentId($payment_id) {
+    function getDepositAmountByPaymentId($payment_id)
+    {
         $this->db->select('*');
         $this->db->from('patient_deposit');
         $this->db->where('payment_id', $payment_id);
@@ -790,7 +930,8 @@ class Finance_model extends CI_model {
         return $deposited_total;
     }
 
-    function getPaymentByDate($date_from, $date_to) {
+    function getPaymentByDate($date_from, $date_to)
+    {
         $this->db->select('*');
         $this->db->from('payment');
         $this->db->where('date >=', $date_from);
@@ -799,7 +940,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getPaymentByDoctorDate($doctor, $date_from, $date_to) {
+    function getPaymentByDoctorDate($doctor, $date_from, $date_to)
+    {
         $this->db->select('*');
         $this->db->from('payment');
         $this->db->where('doctor', $doctor);
@@ -809,7 +951,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getDepositByPaymentId($payment_id) {
+    function getDepositByPaymentId($payment_id)
+    {
         $this->db->select('*');
         $this->db->from('patient_deposit');
         $this->db->where('payment_id', $payment_id);
@@ -820,7 +963,8 @@ class Finance_model extends CI_model {
         return $total;
     }
 
-    function getOtPaymentByDate($date_from, $date_to) {
+    function getOtPaymentByDate($date_from, $date_to)
+    {
         $this->db->select('*');
         $this->db->from('ot_payment');
         $this->db->where('date >=', $date_from);
@@ -829,7 +973,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getDepositsByDate($date_from, $date_to) {
+    function getDepositsByDate($date_from, $date_to)
+    {
         $this->db->select('*');
         $this->db->from('patient_deposit');
         $this->db->where('date >=', $date_from);
@@ -838,7 +983,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getExpenseByDate($date_from, $date_to) {
+    function getExpenseByDate($date_from, $date_to)
+    {
         $this->db->select('*');
         $this->db->from('expense');
         $this->db->where('date >=', $date_from);
@@ -847,7 +993,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function makeStatusPaid($id, $patient_id, $data, $data1) {
+    function makeStatusPaid($id, $patient_id, $data, $data1)
+    {
         $this->db->where('patient', $patient_id);
         $this->db->where('status', 'paid-last');
         $this->db->update('payment', $data);
@@ -855,7 +1002,8 @@ class Finance_model extends CI_model {
         $this->db->update('payment', $data1);
     }
 
-    function makePaidByPatientIdByStatus($id, $data, $data1) {
+    function makePaidByPatientIdByStatus($id, $data, $data1)
+    {
         $this->db->where('patient', $id);
         $this->db->where('status', 'paid-last');
         $this->db->update('payment', $data1);
@@ -873,36 +1021,42 @@ class Finance_model extends CI_model {
         $this->db->update('ot_payment', $data);
     }
 
-    function makeOtStatusPaid($id) {
+    function makeOtStatusPaid($id)
+    {
         $this->db->where('id', $id);
         $this->db->update('ot_payment', array('status' => 'paid'));
     }
 
-    function lastPaidInvoice($id) {
+    function lastPaidInvoice($id)
+    {
         $this->db->where('patient', $id);
         $this->db->where('status', 'paid-last');
         $query = $this->db->get('payment');
         return $query->result();
     }
 
-    function lastOtPaidInvoice($id) {
+    function lastOtPaidInvoice($id)
+    {
         $this->db->where('patient', $id);
         $this->db->where('status', 'paid-last');
         $query = $this->db->get('ot_payment');
         return $query->result();
     }
 
-    function amountReceived($id, $data) {
+    function amountReceived($id, $data)
+    {
         $this->db->where('id', $id);
         $query = $this->db->update('payment', $data);
     }
 
-    function otAmountReceived($id, $data) {
+    function otAmountReceived($id, $data)
+    {
         $this->db->where('id', $id);
         $query = $this->db->update('ot_payment', $data);
     }
 
-    function getThisMonth() {
+    function getThisMonth()
+    {
         $payments = $this->db->get('payment')->result();
         foreach ($payments as $payment) {
             if (date('m/y', $payment->date) == date('m/y', time())) {
@@ -945,7 +1099,8 @@ class Finance_model extends CI_model {
         return $this_month_details;
     }
 
-    function getPaymentByUserIdByDate($user, $date_from, $date_to) {
+    function getPaymentByUserIdByDate($user, $date_from, $date_to)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->select('*');
         $this->db->from('payment');
@@ -956,7 +1111,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getOtPaymentByUserIdByDate($user, $date_from, $date_to) {
+    function getOtPaymentByUserIdByDate($user, $date_from, $date_to)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->select('*');
         $this->db->from('ot_payment');
@@ -967,7 +1123,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getDepositByUserIdByDate($user, $date_from, $date_to) {
+    function getDepositByUserIdByDate($user, $date_from, $date_to)
+    {
         $this->db->order_by('id', 'desc');
         $this->db->select('*');
         $this->db->from('patient_deposit');
@@ -978,7 +1135,8 @@ class Finance_model extends CI_model {
         return $query->result();
     }
 
-    function getDueBalanceByPatientId($patient) {
+    function getDueBalanceByPatientId($patient)
+    {
         $query = $this->db->get_where('payment', array('patient' => $patient->id))->result();
         $deposits = $this->db->get_where('patient_deposit', array('patient' => $patient->id))->result();
         $balance = array();
@@ -1001,36 +1159,39 @@ class Finance_model extends CI_model {
         return $due_balance = $bill_balance - $deposit_balance;
     }
 
-    function getFirstRowPaymentById() {
+    function getFirstRowPaymentById()
+    {
 
         //  $this->load->database();
         $last = $this->db->order_by('id', "asc")
-                ->limit(1)
-                ->get('payment')
-                ->row();
+            ->limit(1)
+            ->get('payment')
+            ->row();
         return $last;
     }
 
-    function getLastRowPaymentById() {
+    function getLastRowPaymentById()
+    {
 
         // $this->load->database();
         $last = $this->db->order_by('id', "desc")
-                ->limit(1)
-                ->get('payment')
-                ->row();
+            ->limit(1)
+            ->get('payment')
+            ->row();
         return $last;
     }
 
-    function getPreviousPaymentById($id) {
+    function getPreviousPaymentById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('payment');
         return $query->previous_row();
     }
 
-    function getNextPaymentById($id) {
+    function getNextPaymentById($id)
+    {
         $this->db->where('id', $id);
         $query = $this->db->get('payment');
         return $query->row();
     }
-
 }

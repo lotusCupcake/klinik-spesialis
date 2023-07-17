@@ -2,12 +2,23 @@
 <div class="main-content no-print">
     <section class="section">
         <div class="section-header">
-            <h1><?php
-                if (!empty($payment->id))
-                    echo lang('edit_payment');
-                else
-                    echo lang('add_new_payment');
-                ?></h1>
+            <h1>
+                <?php
+                if (!empty($payment->id)) {
+                    if ($this->ion_auth->in_group(array('Doctor'))) {
+                        echo lang('edit') . ' ' . lang('job');
+                    } else {
+                        echo lang('edit_payment');
+                    }
+                } else {
+                    if ($this->ion_auth->in_group(array('Doctor'))) {
+                        echo lang('add') . ' ' . lang('job') .  ' ' . lang('new');
+                    } else {
+                        echo lang('add_new_payment');
+                    }
+                }
+                ?>
+            </h1>
         </div>
         <div class="section-body">
             <div class="card">
@@ -180,7 +191,7 @@
                                 <div class="row" style="padding-right:30px">
                                     <div class="col-md-12 row mb-4">
                                         <div class="col-md-3 text-right">
-                                            <label class="col-form-label"><?php echo lang('select'); ?> <?php echo lang('payments'); ?></label>
+                                            <label class="col-form-label"><?php echo lang('select'); ?> <?= ($this->ion_auth->in_group(array('Doctor'))) ? lang('job') : lang('payments'); ?></label>
                                         </div>
                                         <div class="col-md-9">
                                             <select name="category_name[]" class="multi-select select2" multiple="" id="my_multi_select3">
@@ -232,98 +243,100 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="padding-right:30px">
-                                    <div class="col-md-12 row mb-4">
-                                        <div class="col-md-4 text-right">
-                                            <label class="col-form-label"><?php echo lang('discount'); ?> <?php
-                                                                                                            if ($discount_type == 'percentage') {
-                                                                                                                echo ' (%)';
-                                                                                                            }
-                                                                                                            ?></label>
+                                <?php if (!$this->ion_auth->in_group(array('Doctor'))) { ?>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4 text-right">
+                                                <label class="col-form-label"><?php echo lang('discount'); ?> <?php
+                                                                                                                if ($discount_type == 'percentage') {
+                                                                                                                    echo ' (%)';
+                                                                                                                }
+                                                                                                                ?></label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control pay_in" name="discount" id="dis_id" value='<?php
+                                                                                                                                    if (!empty($payment->discount)) {
+                                                                                                                                        $discount = explode('*', $payment->discount);
+                                                                                                                                        echo $discount[0];
+                                                                                                                                    }
+                                                                                                                                    ?>' placeholder="">
+                                            </div>
                                         </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control pay_in" name="discount" id="dis_id" value='<?php
-                                                                                                                                if (!empty($payment->discount)) {
-                                                                                                                                    $discount = explode('*', $payment->discount);
-                                                                                                                                    echo $discount[0];
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4 text-right">
+                                                <label class="col-form-label"><?php echo lang('discount'); ?> Spesial (%)</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control pay_in" name="spec_discount" id="dis_spec_id" value='<?php
+                                                                                                                                            if (!empty($payment->spec_discount)) {
+                                                                                                                                                $spec_discount = explode('*', $payment->spec_discount);
+                                                                                                                                                echo $spec_discount[0];
+                                                                                                                                            }
+                                                                                                                                            ?>' placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4 text-right">
+                                                <label class="col-form-label"><?php echo lang('gross_total'); ?></label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control pay_in" name="grsss" id="gross" value='<?php
+                                                                                                                                if (!empty($payment->gross_total)) {
+
+                                                                                                                                    echo $payment->gross_total;
                                                                                                                                 }
-                                                                                                                                ?>' placeholder="">
+                                                                                                                                ?>' placeholder=" " readonly>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row" style="padding-right:30px">
-                                    <div class="col-md-12 row mb-4">
-                                        <div class="col-md-4 text-right">
-                                            <label class="col-form-label"><?php echo lang('discount'); ?> Spesial (%)</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control pay_in" name="spec_discount" id="dis_spec_id" value='<?php
-                                                                                                                                        if (!empty($payment->spec_discount)) {
-                                                                                                                                            $spec_discount = explode('*', $payment->spec_discount);
-                                                                                                                                            echo $spec_discount[0];
-                                                                                                                                        }
-                                                                                                                                        ?>' placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-right:30px">
-                                    <div class="col-md-12 row mb-4">
-                                        <div class="col-md-4 text-right">
-                                            <label class="col-form-label"><?php echo lang('gross_total'); ?></label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control pay_in" name="grsss" id="gross" value='<?php
-                                                                                                                            if (!empty($payment->gross_total)) {
-
-                                                                                                                                echo $payment->gross_total;
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4 text-right">
+                                                <label class="col-form-label"><?php echo lang('note'); ?></label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control pay_in" name="remarks" id="" value='<?php
+                                                                                                                            if (!empty($payment->remarks)) {
+                                                                                                                                echo $payment->remarks;
                                                                                                                             }
-                                                                                                                            ?>' placeholder=" " readonly>
+                                                                                                                            ?>' placeholder="">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row" style="padding-right:30px">
-                                    <div class="col-md-12 row mb-4">
-                                        <div class="col-md-4 text-right">
-                                            <label class="col-form-label"><?php echo lang('note'); ?></label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control pay_in" name="remarks" id="" value='<?php
-                                                                                                                        if (!empty($payment->remarks)) {
-                                                                                                                            echo $payment->remarks;
-                                                                                                                        }
-                                                                                                                        ?>' placeholder=" ">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="padding-right:30px">
-                                    <div class="col-md-12 row mb-4">
-                                        <div class="col-md-4 text-right">
-                                            <label class="col-form-label"><?php
-                                                                            if (empty($payment)) {
-                                                                                echo lang('deposited_amount');
-                                                                            } else {
-                                                                                echo lang('deposit') . ' 1 <br>';
-                                                                                echo date('d/m/Y', $payment->date);
-                                                                            };
-                                                                            ?></label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control pay_in" name="amount_received" id="amount_received" value='<?php
-                                                                                                                                                if (!empty($payment->amount_received)) {
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-4 text-right">
+                                                <label class="col-form-label"><?php
+                                                                                if (empty($payment)) {
+                                                                                    echo lang('deposited_amount');
+                                                                                } else {
+                                                                                    echo lang('deposit') . ' 1 <br>';
+                                                                                    echo date('d/m/Y', $payment->date);
+                                                                                };
+                                                                                ?></label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control pay_in" name="amount_received" id="amount_received" value='<?php
+                                                                                                                                                    if (!empty($payment->amount_received)) {
 
-                                                                                                                                                    echo $payment->amount_received;
-                                                                                                                                                }
-                                                                                                                                                ?>' placeholder=" " <?php
-                                                                                                                                                                    if (!empty($payment->deposit_type)) {
-                                                                                                                                                                        if ($payment->deposit_type == 'Card') {
-                                                                                                                                                                            echo 'readonly';
+                                                                                                                                                        echo $payment->amount_received;
+                                                                                                                                                    }
+                                                                                                                                                    ?>' placeholder=" " <?php
+                                                                                                                                                                        if (!empty($payment->deposit_type)) {
+                                                                                                                                                                            if ($payment->deposit_type == 'Card') {
+                                                                                                                                                                                echo 'readonly';
+                                                                                                                                                                            }
                                                                                                                                                                         }
-                                                                                                                                                                    }
-                                                                                                                                                                    ?>>
+                                                                                                                                                                        ?>>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <?php if (empty($payment->id)) { ?>
+                                <?php } ?>
+                                <?php if (empty($payment->id) && !$this->ion_auth->in_group(array('Doctor'))) { ?>
                                     <div class="row" style="padding-right:30px">
                                         <div class="col-md-12 row mb-4">
                                             <div class="col-md-4 text-right">
@@ -421,7 +434,7 @@
                                     </div>
                                 <?php } ?>
                                 <?php
-                                if (!empty($payment)) {
+                                if (!empty($payment) && !$this->ion_auth->in_group(array('Doctor'))) {
                                     $deposits = $this->finance_model->getDepositByPaymentId($payment->id);
                                     $i = 1;
                                     foreach ($deposits as $deposit) {
@@ -443,7 +456,7 @@
                                                                                                                                                                                                                 echo 'readonly';
                                                                                                                                                                                                             }
                                                                                                                                                                                                             ?>>
-                                                        <input type="hidden" class="form-control pay_in" name="deposit_edit_id[]" id="amount_received" value='<?php echo $deposit->id; ?>' placeholder=" ">
+                                                        <input type="hidden" class="form-control pay_in" name="deposit_edit_id[]" id="amount_received" value='<?php echo $deposit->id; ?>' placeholder="">
                                                     </div>
                                                 </div>
                                             </div>

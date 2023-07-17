@@ -3,10 +3,14 @@
     <section class="section">
         <div class="section-header">
             <h1><?php
-                if (!empty($category->id))
-                    echo lang('edit_payment_category');
-                else
-                    echo lang('create_payment_procedure');
+                if ($this->ion_auth->in_group(array('Doctor'))) {
+                    echo lang('create') . ' ' . lang('procedure') . ' ' . lang('job');
+                } else {
+                    if (!empty($category->id))
+                        echo lang('edit_payment_category');
+                    else
+                        echo lang('create_payment_procedure');
+                }
                 ?>
             </h1>
         </div>
@@ -62,40 +66,42 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-right:30px">
-                            <div class="col-md-12 row mb-4">
-                                <div class="col-md-4 text-right">
-                                    <label class="col-form-label"><?php echo lang('category'); ?> <?php echo lang('price'); ?></label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" name="c_price" id="exampleInputEmail1" value='<?php
-                                                                                                                            if (!empty($setval)) {
-                                                                                                                                echo set_value('c_price');
-                                                                                                                            }
-                                                                                                                            if (!empty($category->c_price)) {
-                                                                                                                                echo $category->c_price;
-                                                                                                                            }
-                                                                                                                            ?>' placeholder="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-right:30px">
-                            <div class="col-md-12 row mb-4">
-                                <div class="col-md-4 text-right">
-                                    <label class="col-form-label"><?php echo lang('doctors_commission'); ?> <?php echo lang('rate'); ?></label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" name="d_commission" id="exampleInputEmail1" value='<?php
+                        <?php if (!$this->ion_auth->in_group(array('Doctor'))) { ?>
+                            <div class="row" style="padding-right:30px">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-4 text-right">
+                                        <label class="col-form-label"><?php echo lang('category'); ?> <?php echo lang('price'); ?></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="c_price" id="exampleInputEmail1" value='<?php
                                                                                                                                 if (!empty($setval)) {
-                                                                                                                                    echo set_value('d_commission');
+                                                                                                                                    echo set_value('c_price');
                                                                                                                                 }
-                                                                                                                                if (!empty($category->d_commission)) {
-                                                                                                                                    echo $category->d_commission;
+                                                                                                                                if (!empty($category->c_price)) {
+                                                                                                                                    echo $category->c_price;
                                                                                                                                 }
                                                                                                                                 ?>' placeholder="">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="row" style="padding-right:30px">
+                                <div class="col-md-12 row mb-4">
+                                    <div class="col-md-4 text-right">
+                                        <label class="col-form-label"><?php echo lang('doctors_commission'); ?> <?php echo lang('rate'); ?></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="d_commission" id="exampleInputEmail1" value='<?php
+                                                                                                                                    if (!empty($setval)) {
+                                                                                                                                        echo set_value('d_commission');
+                                                                                                                                    }
+                                                                                                                                    if (!empty($category->d_commission)) {
+                                                                                                                                        echo $category->d_commission;
+                                                                                                                                    }
+                                                                                                                                    ?>' placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                         <div class="row" style="padding-right:30px">
                             <div class="col-md-12 row mb-4">
                                 <div class="col-md-4 text-right">

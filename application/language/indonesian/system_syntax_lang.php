@@ -41,6 +41,7 @@ $lang['departments'] = 'Departemen';
 $lang['department'] = 'Departemen';
 $lang['human_resources'] = 'Sumber daya manusia';
 $lang['financial_activities'] = 'Aktivitas Keuangan';
+$lang['job'] = 'Jasa';
 $lang['settings'] = 'Pengaturan';
 $lang['profile'] = 'Profil';
 $lang['my_profile'] = 'Profil saya';
