@@ -266,7 +266,7 @@
                                     <div class="row" style="padding-right:30px">
                                         <div class="col-md-12 row mb-4">
                                             <div class="col-md-4 text-right">
-                                                <label class="col-form-label"><?php echo lang('discount'); ?> Spesial (%)</label>
+                                                <label class="col-form-label"><?php echo lang('discount'); ?> Spesial</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control pay_in" name="spec_discount" id="dis_spec_id" value='<?php
@@ -331,7 +331,7 @@
                                                                                                                                                                                 echo 'readonly';
                                                                                                                                                                             }
                                                                                                                                                                         }
-                                                                                                                                                                        ?>>
+                                                                                                                                                                        ?> required>
                                             </div>
                                         </div>
                                     </div>

@@ -970,7 +970,7 @@ if ($language == 'english') {
                         var discount = $('#dis_id').val();
                         var spec_discount = $('#dis_spec_id').val();
                         var gross = tot - discount;
-                        var gross = gross - (gross * spec_discount / 100);
+                        var gross = gross - spec_discount;
                         $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
                         $('#editPaymentForm').find('[name="grsss"]').val(gross)
                         var amount_received = $('#amount_received').val();
@@ -1030,7 +1030,7 @@ if ($language == 'english') {
                     amount = $('#subtotal').val() - $('#subtotal').val() * $('#dis_id').val() / 100;
                 <?php } ?>
                 val_dis = this.value;
-                ggggg = amount - (amount * val_dis / 100);
+                ggggg = amount - val_dis;
                 $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
                 var amount_received = $('#amount_received').val();
                 var change = amount_received - ggggg;
@@ -1131,7 +1131,7 @@ if ($language == 'english') {
                             var discount = $('#dis_id').val();
                             var spec_discount = $('#dis_spec_id').val();
                             var gross = tot - discount;
-                            var gross = gross - (gross * spec_discount / 100);
+                            var gross = gross - spec_discount;
                             $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
                             $('#editPaymentForm').find('[name="grsss"]').val(gross)
                             var amount_received = $('#amount_received').val();
@@ -1151,7 +1151,7 @@ if ($language == 'english') {
                 <?php } else { ?>
                     var gross = tot - tot * discount / 100;
                 <?php } ?>
-                var gross = gross - (gross * spec_discount / 100);
+                var gross = gross - spec_discount;
                 $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
                 $('#editPaymentForm').find('[name="grsss"]').val(gross)
                 var amount_received = $('#amount_received').val();
@@ -1192,7 +1192,7 @@ if ($language == 'english') {
                     amount = $('#subtotal').val() - $('#subtotal').val() * $('#dis_id').val() / 100;
                 <?php } ?>
                 val_dis = this.value;
-                ggggg = amount - (amount * val_dis / 100);
+                ggggg = amount - val_dis;
                 $('#editPaymentForm').find('[name="grsss"]').val(ggggg)
                 var amount_received = $('#amount_received').val();
                 var change = amount_received - ggggg;

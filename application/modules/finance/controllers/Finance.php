@@ -263,7 +263,7 @@ class Finance extends MX_Controller
                     $doctor_disc = $flat_discount * (75 / 100);
                     $hospital_amount = $hospital_amount - $hospital_disc;
                     $gross_total = $sub_total - $flat_discount;
-                    $flat_spec_discount = $gross_total * ($spec_discount / 100);
+                    $flat_spec_discount = $spec_discount;
                     $gross_total = $gross_total - $flat_spec_discount;
                     $doctor_amount = $doctor_amount - $doctor_disc - $flat_spec_discount;
                 } else {
@@ -272,7 +272,7 @@ class Finance extends MX_Controller
                     $doctor_disc = $flat_discount * (75 / 100);
                     $hospital_amount = $hospital_amount - $hospital_disc;
                     $gross_total = $sub_total - $flat_discount;
-                    $flat_spec_discount = $gross_total * ($spec_discount / 100);
+                    $flat_spec_discount = $spec_discount;
                     $gross_total = $gross_total - $flat_spec_discount;
                     $doctor_amount = $doctor_amount - $doctor_disc - $flat_spec_discount;
                 }
@@ -2066,13 +2066,15 @@ class Finance extends MX_Controller
                 $discount = 0;
             }
 
-            if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor'))) {
+            if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Receptionist'))) {
                 $options1 = '<a href="finance/editPayment?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-light editbutton"><i class="fas fa-edit"></i>' . lang('edit') . '</button></a>';
             }
 
-            if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
+            if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) {
                 $options2 = '<a href="finance/invoice?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-primary invoicebutton"><i class="fas fa-file-invoice"></i>' . lang('invoice') . '</button></a>';
                 $options4 = '<a href="finance/printInvoice?id=' . $payment->id . '" target="_blank"><button class="btn btn-icon icon-left btn-success invoicebutton"><i class="fas fa-print"></i>' . lang('print') . '</button></a>';
+            }
+            if ($this->ion_auth->in_group(array('admin', 'Accountant'))) {
                 $options3 = '<a href="finance/delete?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-danger delete_button" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fas fa-trash"></i>' . lang('delete') . '</button></a>';
             }
 
