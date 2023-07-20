@@ -135,39 +135,26 @@
                     <hr class="mt-5 mb-5">
                     <div align="right" style="font-size:17px">
                         <p><strong><?php echo lang('sub_total'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $payment->amount; ?></p>
+                        <?php
+                        $dis = 0;
+                        ?>
                         <?php if (!empty($payment->discount)) { ?>
                             <?php
-                            $type = "";
-                            $dis = "";
-                            if ($discount_type == 'percentage') {
-                                $type = '(%) : ';
-                            } else {
-                                $type = ': ';
-                            }
-                            ?> <?php
-                                $discount = explode('*', $payment->discount);
-                                if (!empty($discount[1])) {
-                                    $dis = $discount[0] . ' %  =  ' . $settings->currency . ' ' . $discount[1];
-                                } else {
-                                    $dis = $discount[0];
-                                }
-                                ?>
+                            $dis = $payment->discount;
+                            ?>
                         <?php } ?>
+                        <?php
+                        $dis_spec = 0;
+                        ?>
                         <?php if (!empty($payment->spec_discount)) { ?>
                             <?php
-                            $dis_spec = "";
-                            ?> <?php
-                                $spec_discount = $payment->spec_discount;
-                                $dis_spec = ($payment->amount - $payment->flat_discount) * $spec_discount / 100;
-                                ?>
+                            $dis_spec = $payment->spec_discount;
+                            ?>
                         <?php } ?>
-                        <p><strong><?php echo lang('discount'); ?></strong> <?php echo $type; ?> <?php echo $settings->currency . " " . $dis; ?></p>
-                        <?php if (!empty($payment->spec_discount)) { ?>
-                            <p><strong><?php echo lang('discount'); ?> Spesial</strong> <?php echo $type; ?> <?php echo $settings->currency . " " . $dis_spec; ?></p>
-                        <?php } ?>
+                        <p><strong><?php echo lang('discount'); ?></strong> : <?php echo $settings->currency . " " . $dis; ?></p>
+                        <p><strong><?php echo lang('discount'); ?> Spesial</strong> : <?php echo $settings->currency . " " . $dis_spec; ?></p>
                         <p><strong><?php echo lang('grand_total'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $g = $payment->gross_total; ?></p>
                         <p><strong><?php echo lang('amount_received'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $r = $this->finance_model->getDepositAmountByPaymentId($payment->id); ?></p>
-                        <p><strong><?php echo lang('amount_to_be_paid'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $g - $r; ?></p>
                     </div>
                     <hr class="mt-5 mb-5">
                     <p style="font-size:17px"><?php echo lang('user'); ?> : <?php echo $this->ion_auth->user($payment->user)->row()->username; ?></p>

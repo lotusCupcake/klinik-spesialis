@@ -990,7 +990,7 @@ if ($language == 'english') {
             <?php } else { ?>
                 var gross = tot - tot * discount / 100;
             <?php } ?>
-            var gross = gross - (gross * spec_discount / 100);
+            var gross = gross - spec_discount;
             $('#editPaymentForm').find('[name="subtotal"]').val(tot).end()
             $('#editPaymentForm').find('[name="grsss"]').val(gross)
             var amount_received = $('#amount_received').val()

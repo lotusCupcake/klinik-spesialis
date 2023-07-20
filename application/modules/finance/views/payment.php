@@ -36,6 +36,7 @@
                                     <?php if (!$this->ion_auth->in_group(array('Doctor'))) { ?>
                                         <th><?php echo lang('sub_total'); ?></t>
                                         <th><?php echo lang('discount'); ?></th>
+                                        <th><?php echo lang('discount'); ?> Spesial</th>
                                         <th><?php echo lang('grand_total'); ?></th>
                                         <th><?php echo lang('paid'); ?> <?php echo lang('amount'); ?></th>
                                         <th><?php echo lang('due'); ?></th>
