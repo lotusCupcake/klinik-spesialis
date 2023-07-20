@@ -183,10 +183,10 @@
                                                 <?php
                                                 if (!empty($payments)) {
                                                     foreach ($payments as $payment) {
-                                                        $discount[] = $payment->spec_discount;
+                                                        $spec_discount[] = $payment->spec_discount;
                                                     }
                                                     if ($paid_number > 0) {
-                                                        echo array_sum($discount);
+                                                        echo array_sum($spec_discount);
                                                     } else {
                                                         echo '0';
                                                     }

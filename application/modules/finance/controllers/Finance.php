@@ -317,7 +317,7 @@ class Finance extends MX_Controller
                     'amount' => $sub_total,
                     'doctor' => $doctor,
                     'discount' => $discount,
-                    'spec_discount' => $spec_discount,
+                    'spec_discount' => $flat_spec_discount,
                     'flat_discount' => $flat_discount,
                     'gross_total' => $gross_total,
                     'status' => 'unpaid',
@@ -359,6 +359,7 @@ class Finance extends MX_Controller
                             'doctor' => $doctor,
                             'discount' => $discount,
                             'flat_discount' => $flat_discount,
+                            'spec_discount' => $flat_spec_discount,
                             'gross_total' => $gross_total,
                             'status' => 'unpaid',
                             'hospital_amount' => $hospital_amount,
@@ -633,6 +634,7 @@ class Finance extends MX_Controller
                     'amount' => $sub_total,
                     'discount' => $discount,
                     'flat_discount' => $flat_discount,
+                    'spec_discount' => $flat_spec_discount,
                     'gross_total' => $gross_total,
                     'amount_received' => $amount_received,
                     'hospital_amount' => $hospital_amount,
@@ -2066,6 +2068,11 @@ class Finance extends MX_Controller
                 $discount = 0;
             }
 
+            $spec_discount = $payment->spec_discount;
+            if (empty($spec_discount)) {
+                $spec_discount = 0;
+            }
+
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Receptionist'))) {
                 $options1 = '<a href="finance/editPayment?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-light editbutton"><i class="fas fa-edit"></i>' . lang('edit') . '</button></a>';
             }
@@ -2121,6 +2128,7 @@ class Finance extends MX_Controller
                     $date,
                     $settings->currency . '' . $payment->amount,
                     $settings->currency . '' . $discount,
+                    $settings->currency . '' . $spec_discount,
                     $settings->currency . '' . $payment->gross_total,
                     $settings->currency . '' . $this->finance_model->getDepositAmountByPaymentId($payment->id),
                     $settings->currency . '' . ($payment->gross_total - $this->finance_model->getDepositAmountByPaymentId($payment->id)),
