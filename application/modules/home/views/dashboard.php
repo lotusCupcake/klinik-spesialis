@@ -421,7 +421,7 @@
                                 </ul>
                             </li>
                         <?php } ?>
-                        <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist'))) { ?>
+                        <?php if ($this->ion_auth->in_group(array('admin', 'Receptionist', 'Pharmacist'))) { ?>
                             <li><a class="nav-link" href="prescription/all"><i class="fas fa-prescription"></i><span><?php echo lang('prescription') ?></span></a></li>
                         <?php } ?>
                         <?php if ($this->ion_auth->in_group(array('Receptionist'))) { ?>
