@@ -527,7 +527,7 @@
             }).success(function(response) {
                 var de = response.appointment.date * 1000;
                 var d = new Date(de);
-                var da = d.getFullYear() + '-' + ("0"+ (d.getMonth() + 1)).slice(-2) + '-' + d.getDate();
+                var da = d.getFullYear() + '-' + ("0" + (d.getMonth() + 1)).slice(-2) + '-' + ("0" + d.getDate()).slice(-2);
                 // Populate the form fields with the data returned from server
                 $('#editAppointmentForm').find('[name="id"]').val(response.appointment.id).end()
                 $('#editAppointmentForm').find('[name="patient"]').val(response.appointment.patient).end()
@@ -545,7 +545,7 @@
 
 
 
-                var date = $('#date1').val();
+                var date = response.appointment.date;
                 var doctorr = $('#adoctors1').val();
                 var appointment_id = $('#appointment_id').val();
                 // $('#default').trigger("reset");
