@@ -3,17 +3,20 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Medicine extends MX_Controller {
+class Medicine extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('medicine_model');
-        if (!$this->ion_auth->in_group(array('admin', 'Pharmacist', 'Doctor'))) {
+        if (!$this->ion_auth->in_group(array('admin', 'Pharmacist', 'Doctor', 'Receptionist'))) {
             redirect('home/permission');
         }
     }
 
-    public function index() {
+    public function index()
+    {
 
         $data['medicines'] = $this->medicine_model->getMedicine();
         $data['categories'] = $this->medicine_model->getMedicineCategory();
@@ -24,7 +27,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function medicineByPageNumber() {
+    public function medicineByPageNumber()
+    {
         $page_number = $this->input->get('page_number');
         if (empty($page_number)) {
             $page_number = 0;
@@ -39,7 +43,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function medicineStockAlert() {
+    public function medicineStockAlert()
+    {
         $page_number = $this->input->get('page_number');
         if (empty($page_number)) {
             $page_number = 0;
@@ -56,7 +61,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function medicineStockAlertByPageNumber() {
+    public function medicineStockAlertByPageNumber()
+    {
         $page_number = $this->input->get('page_number');
         if (empty($page_number)) {
             $page_number = 0;
@@ -72,7 +78,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function searchMedicine() {
+    function searchMedicine()
+    {
         $page_number = $this->input->get('page_number');
         if (empty($page_number)) {
             $page_number = 0;
@@ -89,7 +96,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    function searchMedicineInAlertStock() {
+    function searchMedicineInAlertStock()
+    {
         $page_number = $this->input->get('page_number');
         if (empty($page_number)) {
             $page_number = 0;
@@ -106,7 +114,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addMedicineView() {
+    public function addMedicineView()
+    {
         $data = array();
         $data['settings'] = $this->settings_model->getSettings();
         $data['categories'] = $this->medicine_model->getMedicineCategory();
@@ -115,7 +124,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNewMedicine() {
+    public function addNewMedicine()
+    {
         $id = $this->input->post('id');
         $name = $this->input->post('name');
         $category = $this->input->post('category');
@@ -166,7 +176,8 @@ class Medicine extends MX_Controller {
             $this->load->view('home/footer'); // just the header file
         } else {
             $data = array();
-            $data = array('name' => $name,
+            $data = array(
+                'name' => $name,
                 'category' => $category,
                 'price' => $price,
                 'box' => $box,
@@ -189,7 +200,8 @@ class Medicine extends MX_Controller {
         }
     }
 
-    function editMedicine() {
+    function editMedicine()
+    {
         $data = array();
         $data['categories'] = $this->medicine_model->getMedicineCategory();
         $id = $this->input->get('id');
@@ -200,7 +212,8 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function load() {
+    function load()
+    {
         $id = $this->input->post('id');
         $qty = $this->input->post('qty');
         $previous_qty = $this->db->get_where('medicine', array('id' => $id))->row()->quantity;
@@ -212,20 +225,23 @@ class Medicine extends MX_Controller {
         redirect('medicine');
     }
 
-    function editMedicineByJason() {
+    function editMedicineByJason()
+    {
         $id = $this->input->get('id');
         $data['medicine'] = $this->medicine_model->getMedicineById($id);
         echo json_encode($data);
     }
 
-    function delete() {
+    function delete()
+    {
         $id = $this->input->get('id');
         $this->medicine_model->deleteMedicine($id);
         $this->session->set_flashdata('feedback', lang('deleted'));
         redirect('medicine');
     }
 
-    public function medicineCategory() {
+    public function medicineCategory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -236,14 +252,16 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addCategoryView() {
+    public function addCategoryView()
+    {
         $data['settings'] = $this->settings_model->getSettings();
         $this->load->view('home/dashboard', $data); // just the header file
         $this->load->view('add_new_category_view');
         $this->load->view('home/footer'); // just the header file
     }
 
-    public function addNewCategory() {
+    public function addNewCategory()
+    {
         $id = $this->input->post('id');
         $category = $this->input->post('category');
         $description = $this->input->post('description');
@@ -261,7 +279,8 @@ class Medicine extends MX_Controller {
             $this->load->view('home/footer'); // just the header file
         } else {
             $data = array();
-            $data = array('category' => $category,
+            $data = array(
+                'category' => $category,
                 'description' => $description
             );
             if (empty($id)) {
@@ -275,7 +294,8 @@ class Medicine extends MX_Controller {
         }
     }
 
-    function edit_category() {
+    function edit_category()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['medicine'] = $this->medicine_model->getMedicineCategoryById($id);
@@ -285,20 +305,23 @@ class Medicine extends MX_Controller {
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function editMedicineCategoryByJason() {
+    function editMedicineCategoryByJason()
+    {
         $id = $this->input->get('id');
         $data['medicinecategory'] = $this->medicine_model->getMedicineCategoryById($id);
         echo json_encode($data);
     }
 
-    function deleteMedicineCategory() {
+    function deleteMedicineCategory()
+    {
         $id = $this->input->get('id');
         $this->medicine_model->deleteMedicineCategory($id);
         $this->session->set_flashdata('feedback', lang('deleted'));
-        redirect('medicine/medicineCategory'); 
+        redirect('medicine/medicineCategory');
     }
 
-    function getMedicineList() {
+    function getMedicineList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -356,7 +379,7 @@ class Medicine extends MX_Controller {
                 $medicine->effects,
                 $medicine->e_date,
                 $option1 . ' ' . $option2
-                    //  $options2
+                //  $options2
             );
         }
 
@@ -379,7 +402,8 @@ class Medicine extends MX_Controller {
         echo json_encode($output);
     }
 
-    function getMedicineExpireAlertList() {
+    function getMedicineExpireAlertList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
@@ -438,7 +462,7 @@ class Medicine extends MX_Controller {
                 $medicine->effects,
                 $medicine->e_date,
                 $option1 . ' ' . $option2
-                    //  $options2
+                //  $options2
             );
             $count = $count + 1;
         }
@@ -462,7 +486,8 @@ class Medicine extends MX_Controller {
         echo json_encode($output);
     }
 
-    public function getMedicinenamelist() {
+    public function getMedicinenamelist()
+    {
         $searchTerm = $this->input->post('searchTerm');
 
         $response = $this->medicine_model->getMedicineNameByAvailablity($searchTerm);
@@ -474,27 +499,30 @@ class Medicine extends MX_Controller {
         echo json_encode($data);
     }
 
-    public function getMedicineListForSelect2() {
-// Search term
+    public function getMedicineListForSelect2()
+    {
+        // Search term
         $searchTerm = $this->input->post('searchTerm');
 
-// Get users
+        // Get users
         $response = $this->medicine_model->getMedicineInfo($searchTerm);
 
         echo json_encode($response);
     }
 
-    public function getMedicineForPharmacyMedicine() {
-// Search term
+    public function getMedicineForPharmacyMedicine()
+    {
+        // Search term
         $searchTerm = $this->input->post('searchTerm');
 
-// Get users
+        // Get users
         $response = $this->medicine_model->getMedicineInfoForPharmacySale($searchTerm);
 
         echo json_encode($response);
     }
 
-    public function medicineExpireAlert() {
+    public function medicineExpireAlert()
+    {
 
         $data['medicines'] = $this->medicine_model->getMedicineExpireAlert();
         //  $data['medicines'] = $this->medicine_model->getMedicineByStockAlertByPageNumber($page_number);
@@ -506,7 +534,6 @@ class Medicine extends MX_Controller {
         $this->load->view('medicine_expire_alert', $data);
         $this->load->view('home/footer'); // just the header file
     }
-
 }
 
 /* End of file medicine.php */

@@ -284,7 +284,7 @@ class Pharmacy extends MX_Controller
 
     function editPayment()
     {
-        if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Pharmacist'))) {
+        if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Pharmacist', 'Receptionist'))) {
             $data = array();
             $data['discount_type'] = $this->pharmacy_model->getDiscountType();
             $data['settings'] = $this->settings_model->getSettings();
@@ -670,7 +670,7 @@ class Pharmacy extends MX_Controller
         foreach ($data['payments'] as $payment) {
             //$i = $i + 1;
             $settings = $this->settings_model->getSettings();
-            if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) {
+            if ($this->ion_auth->in_group(array('admin', 'Pharmacist', 'Receptionist'))) {
                 $option1 = '<a href="finance/pharmacy/editPayment?id=' . $payment->id . '"><button class="btn btn-icon icon-left btn-light editbutton"><i class="fas fa-edit"></i> ' . lang('edit') . '</button></a>';
             }
             if ($this->ion_auth->in_group('admin')) {
