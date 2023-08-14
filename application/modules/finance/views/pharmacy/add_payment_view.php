@@ -18,6 +18,124 @@
                                 <div class="row" style="padding-right:30px">
                                     <div class="col-md-12 row mb-4">
                                         <div class="col-md-3 text-right">
+                                            <label class="col-form-label"><?php echo lang('patient'); ?></label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <select class="form-control select2  pos_select" id="pos_select" name="patient" value=''>
+                                                <?php if (!empty($payment)) { ?>
+                                                    <option value="<?php echo $patients->id; ?>" selected="selected"><?php echo $patients->name; ?> - <?php echo $patients->id; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pos_client">
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-3 text-right">
+                                                <label class="col-form-label"><?php echo lang('name'); ?></label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control pay_in" name="p_name" value='<?php
+                                                                                                                    if (!empty($payment->p_name)) {
+                                                                                                                        echo $payment->p_name;
+                                                                                                                    }
+                                                                                                                    ?>' placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-3 text-right">
+                                                <label class="col-form-label"><?php echo lang('email'); ?></label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control pay_in" name="p_email" value='<?php
+                                                                                                                        if (!empty($payment->p_email)) {
+                                                                                                                            echo $payment->p_email;
+                                                                                                                        }
+                                                                                                                        ?>' placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-3 text-right">
+                                                <label class="col-form-label"><?php echo lang('phone'); ?></label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control pay_in" name="p_phone" value='<?php
+                                                                                                                        if (!empty($payment->p_phone)) {
+                                                                                                                            echo $payment->p_phone;
+                                                                                                                        }
+                                                                                                                        ?>' placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-3 text-right">
+                                                <label class="col-form-label"><?php echo lang('address'); ?></label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control pay_in" name="p_address" value='<?php
+                                                                                                                        if (!empty($payment->p_address)) {
+                                                                                                                            echo $payment->p_address;
+                                                                                                                        }
+                                                                                                                        ?>' placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-3 text-right">
+                                                <label class="col-form-label"><?php echo lang('age'); ?></label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control pay_in" name="p_age" value='<?php
+                                                                                                                    if (!empty($payment->p_age)) {
+                                                                                                                        echo $payment->p_age;
+                                                                                                                    }
+                                                                                                                    ?>' placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-3 text-right">
+                                                <label class="col-form-label"><?php echo lang('gender'); ?></label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select class="form-control select2" name="p_gender" value=''>
+                                                    <option value="Male" <?php
+                                                                            if (!empty($patient->sex)) {
+                                                                                if ($patient->sex == 'Male') {
+                                                                                    echo 'selected';
+                                                                                }
+                                                                            }
+                                                                            ?>> Male </option>
+                                                    <option value="Female" <?php
+                                                                            if (!empty($patient->sex)) {
+                                                                                if ($patient->sex == 'Female') {
+                                                                                    echo 'selected';
+                                                                                }
+                                                                            }
+                                                                            ?>> Female </option>
+                                                    <option value="Others" <?php
+                                                                            if (!empty($patient->sex)) {
+                                                                                if ($patient->sex == 'Others') {
+                                                                                    echo 'selected';
+                                                                                }
+                                                                            }
+                                                                            ?>> Others </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-right:30px">
+                                    <div class="col-md-12 row mb-4">
+                                        <div class="col-md-3 text-right">
                                             <label class="col-form-label"><?php echo lang('select_item'); ?> <?php echo lang('medicine'); ?></label>
                                         </div>
                                         <div class="col-md-9">

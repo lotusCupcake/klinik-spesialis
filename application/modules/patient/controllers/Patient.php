@@ -80,7 +80,7 @@ class Patient extends MX_Controller
         $address = $this->input->post('address');
         $phone = $this->input->post('phone');
         $sex = $this->input->post('sex');
-        $birthdate = $this->input->post('birthdate');
+        $birthdate = date("d-m-Y", strtotime($this->input->post('birthdate')));
         $bloodgroup = $this->input->post('bloodgroup');
         $patient_id = $this->input->post('p_id');
         if (empty($patient_id)) {
