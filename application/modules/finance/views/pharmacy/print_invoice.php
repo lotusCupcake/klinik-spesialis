@@ -39,11 +39,52 @@
                         </div>
                     </div>
                     <hr>
+                    <?php $patient_info = $this->db->get_where('patient', array('id' => $payment->patient))->row(); ?>
                     <div class="row mb-3 mt-5" style="font-size:17px">
+                        <div class="col-md-2"><?php echo lang('patient'); ?> <?php echo lang('name'); ?></div>
+                        <div class="col-md-4"> : <strong><?php
+                                                            if (!empty($patient_info)) {
+                                                                echo $patient_info->name . ' <br>';
+                                                            }
+                                                            ?></strong></div>
+                        <div class="col-md-2"><?php echo lang('invoice'); ?></div>
+                        <div class="col-md-4"> : <strong>
+                                <?php
+                                if (!empty($payment->id)) {
+                                    echo $payment->id;
+                                }
+                                ?></strong></div>
+                    </div>
+                    <div class="row mb-3" style="font-size:17px">
+                        <div class=" col-md-2"><?php echo lang('patient_id'); ?></div>
+                        <div class="col-md-4"> : <strong><?php
+                                                            if (!empty($patient_info)) {
+                                                                echo $patient_info->id . ' <br>';
+                                                            }
+                                                            ?></strong></div>
                         <div class="col-md-2"><?php echo lang('date'); ?></div>
-                        <div class="col-md-4"> : <strong><?php echo date('m/d/Y', $payment->date); ?></strong></div>
-                        <div class="col-md-2"><?php echo lang('invoice_number'); ?></div>
-                        <div class="col-md-4"> : <strong>00<?php echo $payment->id; ?></strong></div>
+                        <div class="col-md-4"> : <strong>
+                                <?php
+                                if (!empty($payment->date)) {
+                                    echo date('d-m-Y', $payment->date) . ' <br>';
+                                }
+                                ?></strong></div>
+                    </div>
+                    <div class="row mb-3" style="font-size:17px">
+                        <div class=" col-md-2"><?php echo lang('address'); ?></div>
+                        <div class="col-md-4"> : <strong> <?php
+                                                            if (!empty($patient_info)) {
+                                                                echo $patient_info->address . ' <br>';
+                                                            }
+                                                            ?></strong></div>
+                    </div>
+                    <div class="row" style="font-size:17px">
+                        <div class=" col-md-2"><?php echo lang('phone'); ?></div>
+                        <div class="col-md-4"> : <strong> <?php
+                                                            if (!empty($patient_info)) {
+                                                                echo $patient_info->phone . ' <br>';
+                                                            }
+                                                            ?></strong></div>
                     </div>
                     <hr class="mt-5 mb-5">
                     <div class="row" style="font-size:17px">
@@ -94,7 +135,7 @@
                                                                                 if (!empty($discount[1])) {
                                                                                     echo $discount[0] . ' %  =  ' . $settings->currency . ' ' . $discount[1];
                                                                                 } else {
-                                                                                    echo $discount[0];
+                                                                                    echo (($discount[0]) ? $discount[0] : 0);
                                                                                 }
                                                                                 ?></p>
                         <p><strong><?php echo lang('grand_total'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></p>

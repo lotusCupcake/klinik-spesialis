@@ -135,7 +135,7 @@
                                                                                 if (!empty($discount[1])) {
                                                                                     echo $discount[0] . ' %  =  ' . $settings->currency . ' ' . $discount[1];
                                                                                 } else {
-                                                                                    echo $discount[0] . ' ' . 0;
+                                                                                    echo (($discount[0]) ? $discount[0] : 0);
                                                                                 }
                                                                                 ?></p>
                         <p><strong><?php echo lang('grand_total'); ?></strong> : <?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></p>
