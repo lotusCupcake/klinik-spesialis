@@ -355,6 +355,7 @@ class Pharmacy extends MX_Controller
             $data['medicines'] = $this->medicine_model->getMedicine();
             $id = $this->input->get('id');
             $data['payment'] = $this->pharmacy_model->getPaymentById($id);
+            $data['patients'] = $this->patient_model->getPatientById($data['payment']->patient);
             $this->load->view('home/dashboard', $data); // just the header file
             $this->load->view('pharmacy/add_payment_view', $data);
             $this->load->view('home/footer'); // just the footer file
