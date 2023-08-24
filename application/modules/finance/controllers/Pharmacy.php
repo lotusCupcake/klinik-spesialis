@@ -12,6 +12,7 @@ class Pharmacy extends MX_Controller
         $this->load->model('pharmacy_model');
         $this->load->model('medicine/medicine_model');
         $this->load->model('settings/settings_model');
+        $this->load->model('patient/patient_model');
         $data['settings'] = $this->settings_model->getSettings();
         if (!$this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', "Pharmacist"))) {
             redirect('home/permission');
@@ -188,7 +189,7 @@ class Pharmacy extends MX_Controller
             $qty = $value;
             if ($current_stock < $qty) {
                 $this->session->set_flashdata('quantity_check', 'Unsufficient Quantity selected for Medicine ' . $current_medicine->name);
-                redirect('pharmacy/addPaymentView');
+                redirect('finance/pharmacy/addPaymentView');
             }
             $item_price[] = $unit_price * $value;
             $category_name[] = $key . '*' . $unit_price . '*' . $qty . '*' . $cost;
@@ -197,6 +198,21 @@ class Pharmacy extends MX_Controller
         $category_name = implode(',', $category_name);
 
         $patient = $this->input->post('patient');
+        $p_name = $this->input->post('p_name');
+        $p_email = $this->input->post('p_email');
+        if (empty($p_email)) {
+            $p_email = $p_name . '-' . rand(1, 1000) . '-' . $p_name . '-' . rand(1, 1000) . '@example.com';
+        }
+        if (!empty($p_name)) {
+            $password = $p_name . '-' . rand(1, 100000000);
+        }
+        $p_phone = $this->input->post('p_phone');
+        $p_age = $this->input->post('p_age');
+        $p_gender = $this->input->post('p_gender');
+        $p_address = $this->input->post('p_address');
+        $add_date = date('m/d/y');
+        $patient_id = rand(10000, 1000000);
+
         $date = time();
         $discount = $this->input->post('discount');
         $amount_received = $this->input->post('amount_received');
@@ -210,9 +226,40 @@ class Pharmacy extends MX_Controller
         $this->form_validation->set_rules('discount', 'Discount', 'trim|min_length[1]|max_length[100]|xss_clean');
 
         if ($this->form_validation->run() == FALSE) {
-            echo 'form validate noe nai re';
-            // redirect('accountant/add_new'); 
+            redirect('finance/pharmacy/addPaymentView');
         } else {
+            if (!empty($p_name)) {
+                $data_p = array(
+                    'patient_id' => $patient_id,
+                    'name' => $p_name,
+                    'email' => $p_email,
+                    'phone' => $p_phone,
+                    'sex' => $p_gender,
+                    'address' => $p_address,
+                    'age' => $p_age,
+                    'add_date' => $add_date,
+                    'how_added' => 'from_pos'
+                );
+                $username = $this->input->post('p_name');
+                // Adding New Patient
+                if ($this->ion_auth->email_check($p_email)) {
+                    $this->session->set_flashdata('feedback', lang('this_email_address_is_already_registered'));
+                    redirect('finance/pharmacy/addPaymentView');
+                } else {
+                    $dfg = 5;
+                    $this->ion_auth->register($username, $password, $p_email, $dfg);
+                    $ion_user_id = $this->db->get_where('users', array('email' => $p_email))->row()->id;
+                    $this->patient_model->insertPatient($data_p);
+                    $patient_user_id = $this->db->get_where('patient', array('email' => $p_email))->row()->id;
+                    $id_info = array('ion_user_id' => $ion_user_id);
+                    $this->patient_model->updatePatient($patient_user_id, $id_info);
+                }
+            }
+
+            if ($patient == 'add_new') {
+                $patient = $patient_user_id;
+            }
+
             $amount = array_sum($item_price);
             $sub_total = $amount;
             $discount_type = $this->pharmacy_model->getDiscountType();
@@ -225,11 +272,25 @@ class Pharmacy extends MX_Controller
                 $gross_total = $sub_total - $flat_discount;
             }
 
+            if (!empty($patient)) {
+                $patient_details = $this->patient_model->getPatientById($patient);
+                $patient_name = $patient_details->name;
+                $patient_phone = $patient_details->phone;
+                $patient_address = $patient_details->address;
+            } else {
+                $patient_name = 0;
+                $patient_phone = 0;
+                $patient_address = 0;
+            }
+
             $data = array();
             if (empty($id)) {
                 $data = array(
                     'category_name' => $category_name,
                     'patient' => $patient,
+                    'patient_name' => $patient_name,
+                    'patient_phone' => $patient_phone,
+                    'patient_address' => $patient_address,
                     'date' => $date,
                     'amount' => $sub_total,
                     'discount' => $discount,
@@ -252,6 +313,9 @@ class Pharmacy extends MX_Controller
                 $data = array(
                     'category_name' => $category_name,
                     'patient' => $patient,
+                    'patient_name' => $patient_name,
+                    'patient_phone' => $patient_phone,
+                    'patient_address' => $patient_address,
                     'amount' => $sub_total,
                     'discount' => $discount,
                     'flat_discount' => $flat_discount,

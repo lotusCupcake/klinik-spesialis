@@ -86,6 +86,20 @@
                                     <div class="row" style="padding-right:30px">
                                         <div class="col-md-12 row mb-4">
                                             <div class="col-md-3 text-right">
+                                                <label class="col-form-label"><?php echo lang('address'); ?></label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control pay_in" name="p_address" value='<?php
+                                                                                                                        if (!empty($payment->p_address)) {
+                                                                                                                            echo $payment->p_address;
+                                                                                                                        }
+                                                                                                                        ?>' placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding-right:30px">
+                                        <div class="col-md-12 row mb-4">
+                                            <div class="col-md-3 text-right">
                                                 <label class="col-form-label"><?php echo lang('age'); ?></label>
                                             </div>
                                             <div class="col-md-9">

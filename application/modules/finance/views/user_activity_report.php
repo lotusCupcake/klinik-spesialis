@@ -29,19 +29,20 @@
                                 <div class="form-group col-md-3">
                                     <label><?php echo lang('date_from'); ?></label>
                                     <input type="date" class="form-control dpd1" name="date_from" value="<?php
-                                                                                                            if (!empty($from)) {
-                                                                                                                echo $from;
+                                                                                                            if (!empty($date_from)) {
+                                                                                                                echo date('Y-m-d', $date_from);
                                                                                                             }
                                                                                                             ?>">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label><?php echo lang('date_to'); ?></label>
                                     <input type="date" class="form-control dpd2" name="date_to" value="<?php
-                                                                                                        if (!empty($to)) {
-                                                                                                            echo $to;
+                                                                                                        if (!empty($date_to)) {
+                                                                                                            echo date('Y-m-d', $date_to);
                                                                                                         }
                                                                                                         ?>">
                                 </div>
+                                <input type="hidden" class="form-control dpd2" name="user" value="<?php echo $user->ion_user_id; ?>">
                                 <div class="form-group col-md-3" style="margin-top:32px">
                                     <button type="submit" name="submit" class="btn btn-icon icon-left btn-primary range_submit"><?php echo lang('submit'); ?></button>
                                 </div>
@@ -54,19 +55,20 @@
                                 <div class="form-group col-md-3">
                                     <label><?php echo lang('date_from'); ?></label>
                                     <input type="date" class="form-control dpd1" name="date_from" value="<?php
-                                                                                                            if (!empty($from)) {
-                                                                                                                echo $from;
+                                                                                                            if (!empty($date_from)) {
+                                                                                                                echo date('Y-m-d', $date_from);
                                                                                                             }
                                                                                                             ?>">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label><?php echo lang('date_to'); ?></label>
                                     <input type="date" class="form-control dpd2" name="date_to" value="<?php
-                                                                                                        if (!empty($to)) {
-                                                                                                            echo $to;
+                                                                                                        if (!empty($date_to)) {
+                                                                                                            echo date('Y-m-d', $date_to);
                                                                                                         }
                                                                                                         ?>">
                                 </div>
+                                <input type="hidden" class="form-control dpd2" name="user" value="<?php echo $user->ion_user_id; ?>">
                                 <div class="form-group col-md-3" style="margin-top:32px">
                                     <button type="submit" name="submit" class="btn btn-icon icon-left btn-primary range_submit"><?php echo lang('submit'); ?></button>
                                 </div>

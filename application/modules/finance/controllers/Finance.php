@@ -74,7 +74,6 @@ class Finance extends MX_Controller
 
     public function addPayment()
     {
-
         $id = $this->input->post('id');
         $item_selected = array();
         $quantity = array();
@@ -122,6 +121,7 @@ class Finance extends MX_Controller
         }
         $p_phone = $this->input->post('p_phone');
         $p_age = $this->input->post('p_age');
+        $p_address = $this->input->post('p_address');
         $p_gender = $this->input->post('p_gender');
         $add_date = date('m/d/y');
 
@@ -176,6 +176,7 @@ class Finance extends MX_Controller
                     'email' => $p_email,
                     'phone' => $p_phone,
                     'sex' => $p_gender,
+                    'address' => $p_address,
                     'age' => $p_age,
                     'add_date' => $add_date,
                     'how_added' => 'from_pos'
