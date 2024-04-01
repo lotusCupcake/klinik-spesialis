@@ -173,6 +173,7 @@ class Pharmacy extends MX_Controller
         $quantity = array();
         $item_selected = $this->input->post('medicine_id');
         $quantity = $this->input->post('quantity');
+        $remarks = $this->input->post('remarks');
 
         if (empty($item_selected)) {
             $this->session->set_flashdata('feedback', lang('select_an_item'));
@@ -297,6 +298,7 @@ class Pharmacy extends MX_Controller
                     'flat_discount' => $flat_discount,
                     'gross_total' => $gross_total,
                     'amount_received' => $amount_received,
+                    'remarks' => $remarks,
                     'status' => 'unpaid',
                 );
                 $this->pharmacy_model->insertPayment($data);
@@ -321,6 +323,7 @@ class Pharmacy extends MX_Controller
                     'flat_discount' => $flat_discount,
                     'gross_total' => $gross_total,
                     'amount_received' => $amount_received,
+                    'remarks' => $remarks
                 );
 
                 $original_sale = $this->pharmacy_model->getPaymentById($id);
@@ -754,6 +757,7 @@ class Pharmacy extends MX_Controller
                 $settings->currency . '' . number_format($payment->amount, 2, '.', ','),
                 $settings->currency . '' . $discount,
                 $settings->currency . '' . number_format($payment->gross_total, 2, '.', ','),
+                $payment->remarks,
                 $option1 . ' ' . $option3 . ' ' . $options4 . ' ' . $option2
             );
             $i = $i + 1;

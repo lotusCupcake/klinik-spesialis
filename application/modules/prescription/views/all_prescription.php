@@ -6,7 +6,7 @@
         </div>
         <div class="section-body">
             <div class="card">
-                <?php if ($this->ion_auth->in_group(array('admin', 'Doctor'))) { ?>
+                <?php if ($this->ion_auth->in_group(array('admin', 'Doctor', 'Pharmacist'))) { ?>
                     <div class="card-header">
                         <a href="prescription/addPrescriptionView"><button class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i> <?php echo lang('add_new'); ?></button></a>
                     </div>

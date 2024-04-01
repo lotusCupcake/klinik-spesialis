@@ -17,7 +17,7 @@ class Doctor extends MX_Controller
         $this->load->model('schedule/schedule_model');
         $this->load->module('patient');
         $this->load->module('sms');
-        if (!$this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Receptionist', 'Nurse', 'Laboratorist', 'Patient'))) {
+        if (!$this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Receptionist', 'Nurse', 'Laboratorist', 'Patient', 'Pharmacist'))) {
             redirect('home/permission');
         }
     }
