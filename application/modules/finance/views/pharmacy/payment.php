@@ -20,6 +20,7 @@
                                     <th> <?php echo lang('sub_total'); ?> </th>
                                     <th> <?php echo lang('discount'); ?> </th>
                                     <th> <?php echo lang('grand_total'); ?> </th>
+                                    <th><?php echo lang('remarks'); ?></th>
                                     <th class="option_th"> <?php echo lang('options'); ?> </th>
                                 </tr>
                             </thead>

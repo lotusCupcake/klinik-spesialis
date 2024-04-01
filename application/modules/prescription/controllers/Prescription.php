@@ -58,7 +58,7 @@ class Prescription extends MX_Controller
     public function addPrescriptionView()
     {
 
-        if (!$this->ion_auth->in_group(array('admin', 'Doctor'))) {
+        if (!$this->ion_auth->in_group(array('admin', 'Doctor', 'Pharmacist'))) {
             redirect('home/permission');
         }
 
@@ -76,7 +76,7 @@ class Prescription extends MX_Controller
     public function addNewPrescription()
     {
 
-        if (!$this->ion_auth->in_group(array('admin', 'Doctor'))) {
+        if (!$this->ion_auth->in_group(array('admin', 'Doctor', 'Pharmacist'))) {
             redirect('home/permission');
         }
 
@@ -516,7 +516,7 @@ class Prescription extends MX_Controller
                 $doctorname = $prescription->doctorname;
             }
 
-            if ($this->ion_auth->in_group(array('Pharmacist', 'Receptionist'))) {
+            if ($this->ion_auth->in_group(array('Receptionist'))) {
                 $option2 = '';
                 $option3 = '';
             }
